@@ -7,7 +7,7 @@
 #undef YY_DECL
 #define YY_DECL yy::parser::symbol_type Scanner::ScanToken()
 
-#include "parser.hh"
+#include "parser.h"
 
 class Driver;
 
@@ -15,8 +15,7 @@ class Scanner: public yyFlexLexer {
 public:
     Driver& driver;
     explicit Scanner(Driver& driver): driver(driver){}
-    virtual ~Scanner {}
-
-
-
+    virtual ~Scanner() {}
+    virtual yy::parser::symbol_type ScanToken();
+    void UpdateLocation();
 };
