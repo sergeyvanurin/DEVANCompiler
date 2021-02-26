@@ -4,6 +4,8 @@
 %define api.value.type variant
 %define api.token.constructor
 %define parse.assert
+%define parse.trace
+%define parse.error verbose
 
 %code requires {
     #include <string>
@@ -39,6 +41,7 @@
 %token <std::string> IDENTIFIER "id"
 %token <int> NUMBER "num"
 %nterm <int> expr
+%nterm <int> global_body
 
 %%
 
@@ -46,19 +49,8 @@
 
 %start program;
 
-program: main_class {};
+program: expr {std::cout << $1 << '\n';};
 
-main_class: "class" "Main" "{" "public static void main" "(" ")" "{" global_body "}" "}"  {};
-
-global_body:
-    %empty {}
-    | global_statement global_statement {};
-
-global_statement:
-    %empty {}
-    | expr {
-        std::cout << $1 << "\n";
-    };
 
 expr:
     "num" "+" "num" {
@@ -66,3 +58,8 @@ expr:
     };
 
 %%
+
+void yy::parser::error(const std::string& m)
+{
+    std::cout << m << "\n";
+}

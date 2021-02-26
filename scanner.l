@@ -31,3 +31,4 @@ number      [0-9]+
 ":="                return yy::parser::make_ASSIGN();
 
 
+%%
