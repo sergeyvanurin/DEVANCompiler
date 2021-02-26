@@ -4,7 +4,7 @@
 #include <fstream>
 
 #include "scanner.hpp"
-#include "parser.h"
+#include "parser.hpp"
 
 
 class Driver {

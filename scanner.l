@@ -3,7 +3,7 @@
     #include <string>
     #include <iostream>
     #include "driver.hpp"
-    #include "parser.h"
+    #include "parser.hpp"
 %}
 
 %option noyywrap nounput noinput batch debug
