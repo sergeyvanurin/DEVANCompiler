@@ -142,8 +142,8 @@ statement:
     "assert" "(" expr ")" { std::cout << "assert " << $3; }
   | local_variable_declaration {}
   | "{" statement "}" {}
-  | "if" "(" expr ")" statement { if ($3) { std::cout << "true"; } else { std::cout << "false";} }
-  | "if" "(" expr ")" statement "else" statement {}
+  | "if" "(" expr ")" statement {}
+  | "if" "(" expr ")" statement "else" statement { if ($3) { std::cout << "true"; } else { std::cout << "false";} }
   | "while" "(" expr ")" statement {}
   | "System.out.println" "(" expr ")" ";" { std::cout << "print " << $3; }
   | lvalue "=" expr ";" {}
