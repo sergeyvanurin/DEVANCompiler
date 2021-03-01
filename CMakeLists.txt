@@ -1,5 +1,7 @@
 cmake_minimum_required(VERSION 3.16)
 
+include_directories(/usr/local/opt/flex/include)
+
 project(DEVANCompiler)
 set(
         HEADERS
@@ -32,6 +34,7 @@ add_executable(
         driver.cpp
         ${BISON_MyParser_OUTPUTS}
         ${FLEX_MyScanner_OUTPUTS}
-)
+        Expressions/AddExpression.cpp Expressions/AddExpression.h Expressions/Expression.h Bases/BaseElement.h Visitors/Visitor.h Visitors/ForwardDeclaration.h Expressions/SubExpression.cpp Expressions/SubExpression.h Expressions/MulExpression.cpp Expressions/MulExpression.h Expressions/DivClass.cpp Expressions/DivClass.h Statements/MainClass.cpp Statements/MainClass.h Statements/Statement.h Statements/Assert.cpp Statements/Assert.h Statements/VarDeclaration.cpp Statements/VarDeclaration.h Statements/IfElse.cpp Statements/IfElse.h Statements/While.cpp Statements/While.h Statements/VarAssignment.cpp Statements/VarAssignment.h AST/AST.cpp AST/AST.h)
+
 target_include_directories(Compiler PRIVATE ${DEVANCompiler_SOURCE_DIR})
 

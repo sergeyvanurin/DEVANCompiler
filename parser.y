@@ -13,6 +13,7 @@
     #include <iostream>
     class Scanner;
     class Driver;
+    class AST
 }
 
 
