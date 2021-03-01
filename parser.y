@@ -86,8 +86,8 @@
 
 %%
 
-%left "+" "*";
-
+%left "+" "-";
+%left "*" "/";
 
 %start program;
 
@@ -105,7 +105,7 @@ statements:
     %empty {} | statements statement {};
 
 class_declaration:
-  | "class" "id" "extends" "id" "{" declarations "}" {}
+  "class" "id" "extends" "id" "{" declarations "}" {}
   | "class" "id" "{" declarations "}" {};
 
 declarations:
@@ -119,7 +119,9 @@ method_declaration:
   | "public" type "id" "(" ")" "{" statements "}" {};
 
 variable_declaration:
-    type "id" ";" {};
+    type "id" ";" {
+        driver.variables[$2] = 0;
+    };
 
 formals:
     type "id" {} | formals "," type "id" {};
@@ -140,7 +142,7 @@ statement:
     "assert" "(" expr ")" { std::cout << "assert " << $3; }
   | local_variable_declaration {}
   | "{" statement "}" {}
-  | "if" "(" expr ")" statement {}
+  | "if" "(" expr ")" statement { if ($3) { std::cout << "true"; } else { std::cout << "false";} }
   | "if" "(" expr ")" statement "else" statement {}
   | "while" "(" expr ")" statement {}
   | "System.out.println" "(" expr ")" ";" { std::cout << "print " << $3; }
@@ -172,7 +174,8 @@ expr:
   | "new" type_identifier "(" ")" {}
   | "!" expr {}
   | "(" expr ")" {}
-  | "id" {} | "num" { $$ = $1; }
+  | "id" { $$ = driver.variables[$1]; }
+  | "num" { $$ = $1; }
   | "this" {} | "true" {} | "false" {}
   | method_invocation {} | field_invocation {};
 
