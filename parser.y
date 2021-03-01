@@ -1,8 +1,9 @@
 %skeleton "lalr1.cc"
 %require "3.7"
 
-%define api.value.type variant
+%defines
 %define api.token.constructor
+%define api.value.type variant
 %define parse.assert
 %define parse.trace
 %define parse.error verbose
@@ -77,21 +78,29 @@
 %token <std::string> IDENTIFIER "id"
 %token <int> NUMBER "num"
 %nterm <int> expr
-%nterm binary_operator
 %nterm main_class
-%nterm class_declaration;
+%nterm class_declaration
 %nterm statement
 
-%nonassoc "then"
-%nonassoc "else"
 
 %%
 
-%left "&&" "||";
+%left ";";
+%left "=";
+%left "||";
+%left "&&";
 %left "==";
-%left "<" ">";
+%left ">" "<";
 %left "+" "-";
 %left "*" "/" "%";
+%left "(";
+%left "[";
+%left ".";
+%left "!";
+
+
+%nonassoc "then";
+%nonassoc "else";
 
 %start program;
 
@@ -109,7 +118,7 @@ statements:
     %empty {} | statements statement {};
 
 class_declaration:
-  "class" "id" "extends" "id" "{" declarations "}" {}
+    "class" "id" "extends" "id" "{" declarations "}" {}
   | "class" "id" "{" declarations "}" {};
 
 declarations:
@@ -172,8 +181,18 @@ field_invocation:
 lvalue:
     "id" {} | "id" "[" expr "]" {} | field_invocation {};
 
+
 expr:
-    expr binary_operator expr {}
+    expr "&&" expr {}
+  | expr "||" expr {}
+  | expr "<" expr {}
+  | expr ">" expr {}
+  | expr "==" expr {}
+  | expr "+" expr {}
+  | expr "-" expr {}
+  | expr "*" expr {}
+  | expr "/" expr {}
+  | expr "%" expr {}
   | expr "[" expr "]" {}
   | expr "." "length" {}
   | "new" simple_type "[" expr "]" {}
@@ -189,8 +208,7 @@ expr:
   | "this" {} | "true" {} | "false" {}
   | method_invocation {} | field_invocation {};
 
-binary_operator:
-        "&&" {} |  "||" {} |  "<" {}  | ">" {}  |  "==" {}  | "+" {}  |  "-" {}  | "*" {} | "/" {} | "%" {};
+
 %%
 
 void yy::parser::error(const std::string& m)
