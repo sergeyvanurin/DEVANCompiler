@@ -91,27 +91,89 @@
 
 %start program;
 
-program: main_class class_declaration;
+program:
+    main_class class_declarations;
+
+class_declarations:
+    %empty | class_declarations class_declaration
 
 main_class:
-    "class" "id" "{" "public static void main" "(" ")" "{" statement "}" "}"
+    "class" "id" "{" "public static void main" "(" ")" "{" statements "}" "}"
+
+statements:
+    %empty | statements statement
 
 class_declaration:
-    %empty
-  | class_declaration
-  | "class" "id" "{" "}"
+  | "class" "id" "extends" "id" {" declarations "}"
+  | "class" "id" "{" declarations "}"
+
+declarations:
+    %empty | declarations declaration
+
+declaration:
+    variable_declaration | method_declaration
+
+method_declaration:
+    "public" type "id" "(" formals ")" "{" statements "}"
+  | "public" type "id" "(" ")" "{" statements "}"
+
+variable_declaration:
+    type "id" ";"
+
+formals:
+    type "id" | formals "," type "id"
+
+type:
+    simple_type | array_type
+
+simple_type:
+    "int" | "boolean" | "void" | type_identifier
+
+array_type:
+    simple_type "[" "]"
+
+type_identifier:
+    "id"
 
 statement:
+    "assert" "(" expr ")"
+  | local_variable_declaration
+  | "{" statement "}"
+  | "if" "(" expr ")" statement
+  | "if" "(" expr ")" statement "else" statement
+  | "while" "(" expr ")" statement
+  | "System.out.println" "(" expr ")" ";"
+  | lvalue "=" expr ";"
+  | "return" expr ";"
+  | method_invocation ";"
 
+local_variable_declaration:
+    variable_declaration
+
+method_invocation:
+    expr "." "id" "(" ")"
+  | expr "." "id" "(" exprs ")"
+
+exprs:
+    expr | exprs "," expr
+
+field_invocation:
+    "this" "." "id" | "this" "." "id" "[" expr "]"
+
+lvalue:
+    "id" | "id" "[" expr "]" | field_invocation
 
 expr:
     expr binary_operator expr
-  | "num"
-  | "id"
+  | expr "[" expr "]"
+  | expr "." "length"
+  | "new" simple_type "[" expr "]"
+  | "new" type_identifier "(" ")"
   | "!" expr
   | "(" expr ")"
-  | "true"
-  | "false"
+  | "id" | "num"
+  | "this" | "true" | "false"
+  | method_invocation | field_invocation
 
 binary_operator:
         "&&"   |  "||"   |  "<"   | ">"   |  "=="   | "+"   |  "-"   | "*"  | "/"  | "%"
