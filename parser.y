@@ -77,17 +77,21 @@
 %token <std::string> IDENTIFIER "id"
 %token <int> NUMBER "num"
 %nterm <int> expr
-%nterm <int> global_body
 %nterm binary_operator
 %nterm main_class
 %nterm class_declaration;
 %nterm statement
 
+%nonassoc "then"
+%nonassoc "else"
 
 %%
 
+%left "&&" "||";
+%left "==";
+%left "<" ">";
 %left "+" "-";
-%left "*" "/";
+%left "*" "/" "%";
 
 %start program;
 
@@ -142,11 +146,13 @@ statement:
     "assert" "(" expr ")" { std::cout << "assert " << $3; }
   | local_variable_declaration {}
   | "{" statement "}" {}
-  | "if" "(" expr ")" statement {}
+  | "if" "(" expr ")" statement {}     %prec "then"
   | "if" "(" expr ")" statement "else" statement { if ($3) { std::cout << "true"; } else { std::cout << "false";} }
   | "while" "(" expr ")" statement {}
   | "System.out.println" "(" expr ")" ";" { std::cout << "print " << $3; }
-  | lvalue "=" expr ";" {}
+  | lvalue "=" expr ";" {
+
+    }
   | "return" expr ";" {}
   | method_invocation ";" {};
 
@@ -174,8 +180,12 @@ expr:
   | "new" type_identifier "(" ")" {}
   | "!" expr {}
   | "(" expr ")" {}
-  | "id" { $$ = driver.variables[$1]; }
-  | "num" { $$ = $1; }
+  | "id" {
+        $$ = driver.variables[$1];
+    }
+  | "num" {
+        $$ = $1;
+    }
   | "this" {} | "true" {} | "false" {}
   | method_invocation {} | field_invocation {};
 
