@@ -11,9 +11,10 @@
 %code requires {
     #include <string>
     #include <iostream>
+    #include "Expressions/Expression.h"
+    #include "Expressions/IdentExpression.h"
     class Scanner;
     class Driver;
-    class AST
 }
 
 
@@ -80,7 +81,7 @@
 %token <std::string> IDENTIFIER "id"
 %token <int> NUMBER "num"
 
-%nterm <int> expr
+%nterm <Expression*> expr
 %nterm main_class
 %nterm class_declaration
 %nterm statement
@@ -197,11 +198,9 @@ expr:
   | "new" type_identifier "(" ")" {}
   | "!" expr {}
   | "(" expr ")" {}
-  | "id" {
-        $$ = driver.variables[$1];
-    }
+  | "id" {$$ = new IdentExpression($1);}
   | "num" {
-        $$ = $1;
+        $$ = new NumExpression($1);
     }
   | "this" {} | "true" {} | "false" {}
   | method_invocation {} | field_invocation {};

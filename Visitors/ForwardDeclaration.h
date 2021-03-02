@@ -15,5 +15,7 @@ class VarDeclaration;
 class IfElse;
 class While;
 class VarAssignment;
+class IdentExpression;
+class NumExpression;
 
 #endif //DEVANCOMPILER_FORWARDDECLARATION_H

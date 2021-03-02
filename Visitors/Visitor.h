@@ -19,6 +19,8 @@ public:
     virtual void Visit(IfElse* statement) = 0;
     virtual void Visit(While* statement) = 0;
     virtual void Visit(VarAssignment* statement) = 0;
+    virtual void Visit(IdentExpression* statement) = 0;
+    virtual void Visit(NumExpression* statement) = 0;
 
 };
 
