@@ -13,12 +13,14 @@
 
 id          [_a-zA-Z][_a-zA-Z0-9]*
 number      [0-9]+
+brackets    [\[][ ]*[\]]
 
 %%
 
 \n\r|\r\b|\n;
 
 "public static void main"   return yy::parser::make_BOYLERPLATE();
+{brackets}                  return yy::parser::make_EMPTYBRACKETS();
 
 "+"                         return yy::parser::make_PLUS();
 "*"                         return yy::parser::make_STAR();

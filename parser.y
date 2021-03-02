@@ -74,10 +74,12 @@
     TRUE "true"
     FALSE "false"
     BOYLERPLATE "public static void main"
+    EMPTYBRACKETS "[]"
 ;
 
 %token <std::string> IDENTIFIER "id"
 %token <int> NUMBER "num"
+
 %nterm <int> expr
 %nterm main_class
 %nterm class_declaration
@@ -147,7 +149,7 @@ simple_type:
     "int" {} | "boolean" {} | "void" {} | type_identifier {};
 
 array_type:
-    simple_type "[" "]" {};
+    simple_type "[]" {};
 
 type_identifier:
     "id" {};
@@ -160,8 +162,7 @@ statement:
   | "if" "(" expr ")" statement "else" statement { if ($3) { std::cout << "true"; } else { std::cout << "false";} }
   | "while" "(" expr ")" statement {}
   | "System.out.println" "(" expr ")" ";" { std::cout << "print " << $3; }
-  | lvalue "=" expr ";" {
-
+  | expr "=" expr ";" {
     }
   | "return" expr ";" {}
   | method_invocation ";" {};
@@ -177,14 +178,10 @@ exprs:
     expr {} | exprs "," expr {};
 
 field_invocation:
-    "this" "." "id" {} | "this" "." "id" "[" expr "]" {};
-
-lvalue:
-    "id" {} | "id" "[" expr "]" {} | field_invocation {};
-
+    expr "." "id" {};
 
 expr:
-    expr "&&" expr {}
+    expr "&&" expr { }
   | expr "||" expr {}
   | expr "<" expr {}
   | expr ">" expr {}
