@@ -2,7 +2,7 @@
 // Created by Sergey Vanurin on 01.03.2021.
 //
 
-#include "DivClass.h"
+#include "DivExpression.h"
 
 
 DivExpression::DivExpression(Expression *expr1, Expression *expr2): expr1(expr1), expr2(expr2) {}

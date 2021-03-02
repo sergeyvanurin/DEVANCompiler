@@ -34,7 +34,7 @@ add_executable(
         driver.cpp
         ${BISON_MyParser_OUTPUTS}
         ${FLEX_MyScanner_OUTPUTS}
-        Expressions/AddExpression.cpp Expressions/AddExpression.h Expressions/Expression.h Bases/BaseElement.h Visitors/Visitor.h Visitors/ForwardDeclaration.h Expressions/SubExpression.cpp Expressions/SubExpression.h Expressions/MulExpression.cpp Expressions/MulExpression.h Expressions/DivClass.cpp Expressions/DivClass.h Statements/MainClass.cpp Statements/MainClass.h Statements/Statement.h Statements/Assert.cpp Statements/Assert.h Statements/VarDeclaration.cpp Statements/VarDeclaration.h Statements/IfElse.cpp Statements/IfElse.h Statements/While.cpp Statements/While.h Statements/VarAssignment.cpp Statements/VarAssignment.h AST/AST.cpp AST/AST.h Expressions/IdentExpression.cpp Expressions/IdentExpression.h Expressions/NumExpression.cpp Expressions/NumExpression.h)
+        Expressions/AddExpression.cpp Expressions/AddExpression.h Expressions/Expression.h Bases/BaseElement.h Visitors/Visitor.h Visitors/ForwardDeclaration.h Expressions/SubExpression.cpp Expressions/SubExpression.h Expressions/MulExpression.cpp Expressions/MulExpression.h Expressions/DivExpression.cpp Expressions/DivExpression.h Statements/MainClass.cpp Statements/MainClass.h Statements/Statement.h Statements/Assert.cpp Statements/Assert.h Statements/VarDeclaration.cpp Statements/VarDeclaration.h Statements/IfElse.cpp Statements/IfElse.h Statements/While.cpp Statements/While.h Statements/VarAssignment.cpp Statements/VarAssignment.h AST/AST.cpp AST/AST.h Expressions/IdentExpression.cpp Expressions/IdentExpression.h Expressions/NumExpression.cpp Expressions/NumExpression.h)
 
 target_include_directories(Compiler PRIVATE ${DEVANCompiler_SOURCE_DIR})
 

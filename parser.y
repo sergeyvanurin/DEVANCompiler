@@ -13,6 +13,18 @@
     #include <iostream>
     #include "Expressions/Expression.h"
     #include "Expressions/IdentExpression.h"
+    #include "Expressions/AddExpression.h"
+    #include "Expressions/MulExpression.h"
+    #include "Expressions/DivExpression.h"
+    #include "Expressions/SubExpression.h"
+    #include "Expressions/NumExpression.h"
+    #include "Statements/Assert.h"
+    #include "Statements/IfElse.h"
+    #include "Statements/MainClass.h"
+    #include "Statements/Statement.h"
+    #include "Statements/VarAssignment.h"
+    #include "Statements/VarDeclaration.h"
+    #include "Statements/While.h"
     class Scanner;
     class Driver;
 }
@@ -84,7 +96,7 @@
 %nterm <Expression*> expr
 %nterm main_class
 %nterm class_declaration
-%nterm statement
+%nterm <Statement*> statement
 
 
 %%
@@ -156,7 +168,7 @@ type_identifier:
     "id" {};
 
 statement:
-    "assert" "(" expr ")" { std::cout << "assert " << $3; }
+    "assert" "(" expr ")" {$$ = new Assert($3);}
   | local_variable_declaration {}
   | "{" statement "}" {}
   | "if" "(" expr ")" statement {}     %prec "then"
@@ -187,10 +199,10 @@ expr:
   | expr "<" expr {}
   | expr ">" expr {}
   | expr "==" expr {}
-  | expr "+" expr {}
-  | expr "-" expr {}
-  | expr "*" expr {}
-  | expr "/" expr {}
+  | expr "+" expr {$$ = new AddExpression($1, $3);}
+  | expr "-" expr {$$ = new SubExpression($1, $3);}
+  | expr "*" expr {$$ = new MulExpression($1, $3);}
+  | expr "/" expr {$$ = new DivExpression($1, $3);}
   | expr "%" expr {}
   | expr "[" expr "]" {}
   | expr "." "length" {}
@@ -199,9 +211,7 @@ expr:
   | "!" expr {}
   | "(" expr ")" {}
   | "id" {$$ = new IdentExpression($1);}
-  | "num" {
-        $$ = new NumExpression($1);
-    }
+  | "num" {$$ = new NumExpression($1);}
   | "this" {} | "true" {} | "false" {}
   | method_invocation {} | field_invocation {};
 
