@@ -21,5 +21,6 @@ class VarAssignment;
 class IdentExpression;
 class NumExpression;
 class Scope;
+class Statements;
 
 #endif //DEVANCOMPILER_FORWARDDECLARATION_H

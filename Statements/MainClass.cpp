@@ -8,6 +8,4 @@ void MainClass::Accept(Visitor *visitor) {
     visitor->Visit(this);
 }
 
-void MainClass::add_statement(Statement *statement) {
-    statements.push(statement);
-}
+MainClass::MainClass(Statements *statements, Scope *scope): statements(statements), Statement(scope) {}

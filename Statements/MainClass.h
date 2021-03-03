@@ -3,6 +3,7 @@
 //
 
 #include "Statement.h"
+#include "Statements.h"
 #include <queue>
 #ifndef DEVANCOMPILER_MAINCLASS_H
 #define DEVANCOMPILER_MAINCLASS_H
@@ -10,11 +11,9 @@
 
 class MainClass: public Statement {
 public:
+    MainClass(Statements* statements, Scope* scope);
     void Accept(Visitor* visitor) override;
-    void add_statement(Statement* statement);
-
-private:
-    std::queue<Statement*> statements;
+    Statements* statements;
 };
 
 

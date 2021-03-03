@@ -19,3 +19,12 @@ void Driver::add_scope() {
     scopes.push_back(new Scope(current_scope, current_scope != 0 ? scopes[current_scope - 1] : nullptr));
     current_scope++;
 }
+
+Scope *Driver::get_scope() {
+    return this->scopes[current_scope];
+}
+
+void Driver::remove_scope() {
+    scopes.pop_back();
+    current_scope--;
+}

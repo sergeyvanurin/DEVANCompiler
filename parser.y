@@ -27,6 +27,9 @@
     #include "Statements/VarDeclaration.h"
     #include "Statements/While.h"
     #include "Statements/Scope.h"
+    #include "Statements/Statements.h"
+    #include "Statements/Program.h"
+    #include "Statements/ClassDeclaration.h"
     class Scanner;
     class Driver;
 }
@@ -99,10 +102,13 @@
 %token <int> NUMBER "num"
 
 %nterm <Expression*> expr
-%nterm main_class
 %nterm class_declaration
 %nterm <Statement*> statement
-%nterm <Scope*> statements
+%nterm <Statements*> statements
+%nterm <Program*> program
+%nterm <MainClass*> main_class;
+%nterm <Statement*> variable_declaration;
+%nterm <Statement*> local_variable_declaration;
 
 
 %%
@@ -129,17 +135,17 @@
 %start program;
 
 program:
-    main_class class_declarations {};
+    main_class class_declarations {$$ = new Program($1, nullptr);};
 
 class_declarations:
     %empty {}
     | class_declarations class_declaration {};
 
 main_class:
-    "class" "id" "{" "public static void main" "(" ")" "{" statements "}" "}" { std::cout << "main\n"; };
+    "class" "id" "{" "public static void main" "(" ")" "{" statements "}" "}" {$$ = new MainClass($8, nullptr);};
 
 statements:
-    %empty {driver.add_scope();} | statements statement {};
+    %empty {driver.add_scope(); $$ = new Statements(driver.get_scope());} | statements statement {$1->statements.push($2);};
 
 class_declaration:
     "class" "id" "extends" "id" "{" declarations "}" {}
@@ -156,9 +162,7 @@ method_declaration:
   | "public" type "id" "(" ")" "{" statements "}" {};
 
 variable_declaration:
-    type "id" ";" {
-        driver.variables[$2] = 0;
-    };
+    type "id" ";" {$$ = new VarDeclaration($2, driver.get_scope());};
 
 formals:
     type "id" {} | formals "," type "id" {};
@@ -176,20 +180,19 @@ type_identifier:
     "id" {};
 
 statement:
-    "assert" "(" expr ")" {$$ = new Assert($3, driver.scopes[driver.current_scope]);}
-  | local_variable_declaration {}
-  | "{" statements "}" {}
-  | "if" "(" expr ")" statement {}     %prec "then"
-  | "if" "(" expr ")" statement "else" statement { if ($3) { std::cout << "true"; } else { std::cout << "false";} }
-  | "while" "(" expr ")" statement {}
-  | "System.out.println" "(" expr ")" ";" { std::cout << "print " << $3; }
-  | expr "=" expr ";" {
-    }
+    "assert" "(" expr ")" {$$ = new Assert($3, driver.get_scope());}
+  | local_variable_declaration {$$ = $1;}
+  | "{" statements "}" {$$ = $2; driver.remove_scope();}
+  | "if" "(" expr ")" statement {$$ = new IfElse($3, $5, nullptr, driver.get_scope());}     %prec "then"
+  | "if" "(" expr ")" statement "else" statement {$$ = new IfElse($3, $5, $7, driver.get_scope());}
+  | "while" "(" expr ")" statement {$$ = new While($3, $5, driver.get_scope());}
+  | "System.out.println" "(" expr ")" ";" {}
+  | expr "=" expr ";" {}
   | "return" expr ";" {}
   | method_invocation ";" {};
 
 local_variable_declaration:
-    variable_declaration {};
+    variable_declaration {$$ = $1;};
 
 method_invocation:
     "this." "id" "(" ")" {}
