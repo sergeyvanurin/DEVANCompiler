@@ -136,7 +136,7 @@ main_class:
     "class" "id" "{" "public static void main" "(" ")" "{" statements "}" "}" { std::cout << "main\n"; };
 
 statements:
-    %empty {$$ = new Scope();} | statements statement {};
+    %empty {driver.add_scope();} | statements statement {};
 
 class_declaration:
     "class" "id" "extends" "id" "{" declarations "}" {}
@@ -173,7 +173,7 @@ type_identifier:
     "id" {};
 
 statement:
-    "assert" "(" expr ")" {$$ = new Assert($3);}
+    "assert" "(" expr ")" {$$ = new Assert($3, driver.scopes[driver.current_scope]);}
   | local_variable_declaration {}
   | "{" statements "}" {}
   | "if" "(" expr ")" statement {}     %prec "then"

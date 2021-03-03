@@ -4,7 +4,8 @@
 
 #include "IfElse.h"
 
-IfElse::IfElse(Expression *expression, Statement *If, Statement *Else): expr(expression), If(If), Else(Else) {}
+IfElse::IfElse(Expression *expression, Statement *If, Statement *Else, Scope *scope)
+        : expr(expression), If(If), Else(Else), Statement(scope) {}
 
 void IfElse::Accept(Visitor *visitor) {
     visitor->Visit(this);

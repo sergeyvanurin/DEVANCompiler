@@ -4,7 +4,7 @@
 
 #include "Assert.h"
 
-Assert::Assert(Expression *expr): expr(expr) {}
+Assert::Assert(Expression *expr, Scope* scope): expr(expr), Statement(scope) {}
 
 void Assert::Accept(Visitor *visitor) {
     visitor->Visit(this);

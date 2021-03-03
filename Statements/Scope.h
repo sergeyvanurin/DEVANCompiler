@@ -1,7 +1,7 @@
 //
 // Created by Sergey Vanurin on 03.03.2021.
 //
-
+#pragma once
 #include <map>
 #include <string>
 #include "Visitors/Visitor.h"
@@ -12,11 +12,13 @@
 class Scope{
 private:
     std::map<std::string, int> variables;
-    Scope* upper_scope = nullptr;
+    int scope_num;
+    Scope* upper_scope;
 public:
+    explicit Scope(int scope_num, Scope* upper_scope);
     void add_variable(std::string& var_name, int var_value);
-    void modify_variable(std::string& varn_name, int new_value);
-    Scope* find_scope(std::string* var_name);
+    void modify_variable(std::string& var_name, int new_value);
+    Scope* find_scope(std::string& var_name);
     void Accept(Visitor* visitor);
 };
 

@@ -1,7 +1,7 @@
 //
 // Created by Sergey Vanurin on 02.03.2021.
 //
-
+#pragma once
 #include "Statement.h"
 #include "Expressions/Expression.h"
 #ifndef DEVANCOMPILER_IFELSE_H
@@ -10,7 +10,7 @@
 
 class IfElse: public Statement {
 public:
-    IfElse(Expression* expression, Statement* If, Statement* Else);
+    IfElse(Expression *expression, Statement *If, Statement *Else, Scope *scope);
     void Accept(Visitor* visitor) override;
 
 private:

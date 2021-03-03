@@ -1,7 +1,7 @@
 //
 // Created by Sergey Vanurin on 01.03.2021.
 //
-
+#pragma once
 #include "Bases/BaseElement.h"
 #include "Scope.h"
 #ifndef DEVANCOMPILER_KETWORD_H
@@ -13,7 +13,5 @@ public:
     explicit Statement(Scope* scope);
     Scope* scope;
 };
-
-Statement::Statement(Scope *scope): scope(scope) {}
 #endif //DEVANCOMPILER_KETWORD_H
 

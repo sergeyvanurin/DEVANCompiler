@@ -1,5 +1,6 @@
 #pragma once
 #include <string>
+#include <vector>
 #include <map>
 #include <fstream>
 
@@ -12,6 +13,10 @@ public:
     Driver();
 
     std::map<std::string, int> variables;
+
+    std::vector<Scope*> scopes;
+    int current_scope = 0;
+    void add_scope();
 
     int parse(const std::string& filename);
     std::string file;

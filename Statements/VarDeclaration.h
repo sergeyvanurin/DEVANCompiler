@@ -10,7 +10,7 @@
 
 class VarDeclaration: public Statement {
 public:
-    VarDeclaration(std::string& var_name);
+    VarDeclaration(std::string& var_name, Scope* scope);
     void Accept(Visitor* visitor) override;
 
 private:

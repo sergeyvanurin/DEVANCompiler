@@ -10,7 +10,7 @@
 
 class While: public Statement {
 public:
-    While(Expression* expr, Statement* statement);
+    While(Expression *expr, Statement *statement, Scope *scope);
     void Accept(Visitor* visitor) override;
 
 private:

@@ -4,11 +4,8 @@
 
 #include "VarDeclaration.h"
 
-VarDeclaration::VarDeclaration(std::string& var_name): var_name(var_name) {
-
-}
+VarDeclaration::VarDeclaration(std::string& var_name, Scope* scope): var_name(var_name), Statement(scope) {}
 
 void VarDeclaration::Accept(Visitor *visitor) {
     visitor->Visit(this);
-
 }
