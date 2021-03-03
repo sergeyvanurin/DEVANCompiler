@@ -135,17 +135,17 @@
 %start program;
 
 program:
-    main_class class_declarations {$$ = new Program($1, nullptr);};
+    main_class class_declarations {$$ = new Program($1, nullptr, driver.loc);};
 
 class_declarations:
     %empty {}
     | class_declarations class_declaration {};
 
 main_class:
-    "class" "id" "{" "public static void main" "(" ")" "{" statements "}" "}" {$$ = new MainClass($8, nullptr);};
+    "class" "id" "{" "public static void main" "(" ")" "{" statements "}" "}" {$$ = new MainClass($8, nullptr, driver.loc);};
 
 statements:
-    %empty {driver.add_scope(); $$ = new Statements(driver.get_scope());} | statements statement {$1->statements.push($2);};
+    %empty {driver.add_scope(); $$ = new Statements(driver.get_scope(), driver.loc);} | statements statement {$1->statements.push($2);};
 
 class_declaration:
     "class" "id" "extends" "id" "{" declarations "}" {}
@@ -162,7 +162,7 @@ method_declaration:
   | "public" type "id" "(" ")" "{" statements "}" {};
 
 variable_declaration:
-    type "id" ";" {$$ = new VarDeclaration($2, driver.get_scope());};
+    type "id" ";" {$$ = new VarDeclaration($2, driver.get_scope(), driver.loc);};
 
 formals:
     type "id" {} | formals "," type "id" {};
@@ -180,12 +180,12 @@ type_identifier:
     "id" {};
 
 statement:
-    "assert" "(" expr ")" {$$ = new Assert($3, driver.get_scope());}
+    "assert" "(" expr ")" {$$ = new Assert($3, driver.get_scope(), driver.loc);}
   | local_variable_declaration {$$ = $1;}
   | "{" statements "}" {$$ = $2; driver.remove_scope();}
-  | "if" "(" expr ")" statement {$$ = new IfElse($3, $5, nullptr, driver.get_scope());}     %prec "then"
-  | "if" "(" expr ")" statement "else" statement {$$ = new IfElse($3, $5, $7, driver.get_scope());}
-  | "while" "(" expr ")" statement {$$ = new While($3, $5, driver.get_scope());}
+  | "if" "(" expr ")" statement {$$ = new IfElse($3, $5, nullptr, driver.get_scope(), driver.loc);}     %prec "then"
+  | "if" "(" expr ")" statement "else" statement {$$ = new IfElse($3, $5, $7, driver.get_scope(), driver.loc);}
+  | "while" "(" expr ")" statement {$$ = new While($3, $5, driver.get_scope(), driver.loc);}
   | "System.out.println" "(" expr ")" ";" {}
   | expr "=" expr ";" {}
   | "return" expr ";" {}

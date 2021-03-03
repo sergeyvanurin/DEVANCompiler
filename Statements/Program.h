@@ -11,11 +11,11 @@
 
 class Program : public Statement {
 public:
-    explicit Program(MainClass* main_clas, Scope* scope);
+    explicit Program(MainClass* main_clas, Scope* scope, yy::location loc);
     void Accept(Visitor* visitor) override;
     MainClass* main_class;
 
-}
+};
 
 
 #endif //DEVANCOMPILER_PROGRAM_H

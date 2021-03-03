@@ -5,6 +5,7 @@
 #include <map>
 #include <string>
 #include "Visitors/Visitor.h"
+#include "location.hh"
 #ifndef DEVANCOMPILER_CREATESCOPE_H
 #define DEVANCOMPILER_CREATESCOPE_H
 
@@ -15,7 +16,8 @@ private:
     int scope_num;
     Scope* upper_scope;
 public:
-    explicit Scope(int scope_num, Scope* upper_scope);
+    yy::location loc;
+    explicit Scope(int scope_num, Scope* upper_scope, yy::location loc);
     void add_variable(std::string& var_name, int var_value);
     void modify_variable(std::string& var_name, int new_value);
     Scope* find_scope(std::string& var_name);

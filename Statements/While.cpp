@@ -4,7 +4,7 @@
 
 #include "While.h"
 
-While::While(Expression *expr, Statement *statement, Scope *scope) : expr(expr), statement(statement), Statement(scope) {}
+While::While(Expression *expr, Statement *statement, Scope *scope, yy::location loc) : expr(expr), statement(statement), Statement(scope, loc) {}
 
 void While::Accept(Visitor *visitor) {
     visitor->Visit(this);

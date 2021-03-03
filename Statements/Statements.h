@@ -10,7 +10,7 @@
 
 class Statements: public Statement {
 public:
-    Statements(Scope* Scope);
+    Statements(Scope* Scope, yy::location loc);
     std::queue<Statement*> statements;
     void Accept(Visitor* visitor) override;
 };

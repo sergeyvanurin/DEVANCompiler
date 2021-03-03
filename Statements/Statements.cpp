@@ -4,7 +4,7 @@
 
 #include "Statements.h"
 
-Statements::Statements(Scope *Scope) : Statement(Scope) {}
+Statements::Statements(Scope *Scope, yy::location loc) : Statement(Scope, loc) {}
 
 void Statements::Accept(Visitor *visitor) {
     visitor->Visit(this);

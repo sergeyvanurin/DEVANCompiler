@@ -32,5 +32,5 @@ void Scope::modify_variable(std::string &var_name, int new_value) {
 
 }
 
-Scope::Scope(int scope_num, Scope* upper_scope): scope_num(scope_num), upper_scope(upper_scope) {
+Scope::Scope(int scope_num, Scope* upper_scope, yy::location loc): scope_num(scope_num), upper_scope(upper_scope), loc(loc) {
 }

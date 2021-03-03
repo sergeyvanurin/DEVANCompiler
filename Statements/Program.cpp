@@ -10,4 +10,4 @@ void Program::Accept(Visitor *visitor) {
 }
 
 
-Program::Program(MainClass* main_class, Scope* scope): main_class(main_class), Statement(scope) {}
+Program::Program(MainClass* main_class, Scope* scope, yy::location loc): main_class(main_class), Statement(scope, loc) {}

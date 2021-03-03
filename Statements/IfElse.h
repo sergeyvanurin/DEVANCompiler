@@ -10,7 +10,7 @@
 
 class IfElse: public Statement {
 public:
-    IfElse(Expression *expression, Statement *If, Statement *Else, Scope *scope);
+    IfElse(Expression *expression, Statement *If, Statement *Else, Scope *scope, yy::location loc);
     void Accept(Visitor* visitor) override;
 
 private:

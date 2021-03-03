@@ -10,7 +10,7 @@
 
 class Assert: public Statement {
 public:
-    Assert(Expression* expr, Scope* scope);
+    Assert(Expression* expr, Scope* scope, yy::location loc);
     void Accept(Visitor* visitor) override;
 
 private:
