@@ -1,0 +1,14 @@
+//
+// Created by deliza on 03.03.2021.
+//
+
+#ifndef DEVANCOMPILER_CLASSDECLARATION_H
+#define DEVANCOMPILER_CLASSDECLARATION_H
+
+
+class ClassDeclaration {
+
+};
+
+
+#endif //DEVANCOMPILER_CLASSDECLARATION_H

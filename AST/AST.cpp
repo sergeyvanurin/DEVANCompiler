@@ -4,4 +4,4 @@
 
 #include "AST.h"
 
-AST::AST(MainClass *main_class): main_class(main_class) {}
+AST::AST(Program *program): program(program) {}

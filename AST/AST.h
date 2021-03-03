@@ -9,10 +9,10 @@
 
 class AST {
 public:
-    explicit AST(MainClass* main_class);
+    explicit AST(Program* program);
 
 private:
-    MainClass* main_class;
+    Program* program;
 
 };
 

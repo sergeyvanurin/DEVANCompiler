@@ -16,6 +16,7 @@
     #include "Expressions/AddExpression.h"
     #include "Expressions/MulExpression.h"
     #include "Expressions/DivExpression.h"
+    #include "Expressions/ModExpression.h"
     #include "Expressions/SubExpression.h"
     #include "Expressions/NumExpression.h"
     #include "Statements/Assert.h"
@@ -207,7 +208,7 @@ expr:
   | expr "-" expr {$$ = new SubExpression($1, $3, driver.loc);}
   | expr "*" expr {$$ = new MulExpression($1, $3, driver.loc);}
   | expr "/" expr {$$ = new DivExpression($1, $3, driver.loc);}
-  | expr "%" expr {}
+  | expr "%" expr {$$ = new ModExpression($1, $3, driver.loc);}
   | expr "[" expr "]" {}
   | expr "." "length" {}
   | "new" simple_type "[" expr "]" {}

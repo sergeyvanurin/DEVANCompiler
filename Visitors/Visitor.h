@@ -13,7 +13,10 @@ public:
     virtual void Visit(SubExpression* expression) = 0;
     virtual void Visit(MulExpression* expression) = 0;
     virtual void Visit(DivExpression* expression) = 0;
+    virtual void Visit(ModExpression* expression) = 0;
+    virtual void Visit(Program* program) = 0;
     virtual void Visit(MainClass* main_class) = 0;
+    virtual void Visit(ClassDeclaration* class_declaration) = 0;
     virtual void Visit(Assert* statement) = 0;
     virtual void Visit(VarDeclaration* statement) = 0;
     virtual void Visit(IfElse* statement) = 0;
