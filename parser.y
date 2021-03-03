@@ -86,7 +86,7 @@
     PRINT "System.out.println"
     RETURN "return"
     THIS "this"
-    LENGTH "length"
+    LENGTH ".length"
     NEW "new"
     TRUE "true"
     FALSE "false"
@@ -116,7 +116,9 @@
 %left "*" "/" "%";
 %left "(";
 %left "[";
+
 %left ".";
+
 %left "!";
 
 
@@ -196,7 +198,7 @@ exprs:
     expr {} | exprs "," expr {};
 
 field_invocation:
-    expr "." "id" {};
+    "this" "." "id" {};
 
 expr:
     expr "&&" expr {}
