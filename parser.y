@@ -85,6 +85,7 @@
     ELSE "else"
     PRINT "System.out.println"
     RETURN "return"
+    THISINV "this."
     THIS "this"
     LENGTH "length"
     NEW "new"
@@ -191,14 +192,17 @@ local_variable_declaration:
     variable_declaration {};
 
 method_invocation:
-    expr "." "id" "(" ")" {}
+    "this." "id" "(" ")" {}
+  | "this." "id" "(" exprs ")" {};
+  | expr "." "id" "(" ")" {}
   | expr "." "id" "(" exprs ")" {};
+
 
 exprs:
     expr {} | exprs "," expr {};
 
 field_invocation:
-    "this" "." "id" {};
+    "this." "id" {};
 
 expr:
     expr "&&" expr {}

@@ -21,6 +21,7 @@
 id          [_a-zA-Z][_a-zA-Z0-9]*
 number      [0-9]+
 brackets    [\[][ ]*[\]]
+this_invocation "this"[ ]*"."
 blank       [ \t\r]
 
 %{
@@ -39,6 +40,7 @@ blank       [ \t\r]
 
 "public static void main"   return yy::parser::make_BOYLERPLATE(loc);
 {brackets}                  return yy::parser::make_EMPTYBRACKETS(loc);
+{this_invocation}           return yy::parser::make_THISINV(loc);
 
 "+"                         return yy::parser::make_PLUS(loc);
 "*"                         return yy::parser::make_STAR(loc);
