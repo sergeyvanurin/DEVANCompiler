@@ -25,6 +25,7 @@
     #include "Statements/VarAssignment.h"
     #include "Statements/VarDeclaration.h"
     #include "Statements/While.h"
+    #include "Statements/Scope.h"
     class Scanner;
     class Driver;
 }
@@ -99,6 +100,7 @@
 %nterm main_class
 %nterm class_declaration
 %nterm <Statement*> statement
+%nterm <Scope*> statements
 
 
 %%
@@ -133,7 +135,7 @@ main_class:
     "class" "id" "{" "public static void main" "(" ")" "{" statements "}" "}" { std::cout << "main\n"; };
 
 statements:
-    %empty {} | statements statement {};
+    %empty {$$ = new Scope();} | statements statement {};
 
 class_declaration:
     "class" "id" "extends" "id" "{" declarations "}" {}
