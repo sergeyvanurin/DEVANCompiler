@@ -1,6 +1,7 @@
 //
 // Created by Sergey Vanurin on 01.03.2021.
 //
+#include "location.hh"
 #include "Visitors/Visitor.h"
 #ifndef DEVANCOMPILER_BASEELEMENT_H
 #define DEVANCOMPILER_BASEELEMENT_H

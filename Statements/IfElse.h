@@ -17,7 +17,6 @@ private:
     Expression* expr;
     Statement* If;
     Statement* Else;
-
 };
 
 

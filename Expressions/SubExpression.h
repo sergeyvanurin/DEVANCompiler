@@ -9,13 +9,14 @@
 
 class SubExpression: public Expression {
 public:
-    SubExpression(Expression* expr1, Expression* expr2);
+    SubExpression(Expression* expr1, Expression* expr2, yy::location loc);
     int eval() const override;
     void Accept(Visitor* visitor) override;
 
 private:
     Expression* expr1;
     Expression* expr2;
+    yy::location loc;
 };
 
 

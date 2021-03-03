@@ -9,13 +9,13 @@
 
 class NumExpression: public Expression {
 public:
-    explicit NumExpression(int value);
+    explicit NumExpression(int value, yy::location loc);
     void Accept(Visitor* visitor) override;
     int eval() const override;
 
 private:
     int value;
-
+    yy::location loc;
 };
 
 

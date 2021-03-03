@@ -31,7 +31,7 @@
 
 
 %code {
-
+    #include "location.hh"
     #include "driver.hpp"
 
     static yy::parser::symbol_type yylex(Scanner &scanner) {
@@ -42,6 +42,8 @@
 %lex-param { Scanner& scanner }
 %parse-param { Scanner& scanner }
 %parse-param { Driver &driver }
+
+%locations
 
 %define api.token.prefix {TOK_}
 
@@ -170,7 +172,7 @@ type_identifier:
 statement:
     "assert" "(" expr ")" {$$ = new Assert($3);}
   | local_variable_declaration {}
-  | "{" statement "}" {}
+  | "{" statements "}" {}
   | "if" "(" expr ")" statement {}     %prec "then"
   | "if" "(" expr ")" statement "else" statement { if ($3) { std::cout << "true"; } else { std::cout << "false";} }
   | "while" "(" expr ")" statement {}
@@ -194,15 +196,15 @@ field_invocation:
     expr "." "id" {};
 
 expr:
-    expr "&&" expr { }
+    expr "&&" expr {}
   | expr "||" expr {}
   | expr "<" expr {}
   | expr ">" expr {}
   | expr "==" expr {}
-  | expr "+" expr {$$ = new AddExpression($1, $3);}
-  | expr "-" expr {$$ = new SubExpression($1, $3);}
-  | expr "*" expr {$$ = new MulExpression($1, $3);}
-  | expr "/" expr {$$ = new DivExpression($1, $3);}
+  | expr "+" expr {$$ = new AddExpression($1, $3, driver.loc);}
+  | expr "-" expr {$$ = new SubExpression($1, $3, driver.loc);}
+  | expr "*" expr {$$ = new MulExpression($1, $3, driver.loc);}
+  | expr "/" expr {$$ = new DivExpression($1, $3, driver.loc);}
   | expr "%" expr {}
   | expr "[" expr "]" {}
   | expr "." "length" {}
@@ -210,15 +212,15 @@ expr:
   | "new" type_identifier "(" ")" {}
   | "!" expr {}
   | "(" expr ")" {}
-  | "id" {$$ = new IdentExpression($1);}
-  | "num" {$$ = new NumExpression($1);}
+  | "id" {$$ = new IdentExpression($1, driver.loc);}
+  | "num" {$$ = new NumExpression($1, driver.loc);}
   | "this" {} | "true" {} | "false" {}
   | method_invocation {} | field_invocation {};
 
 
 %%
 
-void yy::parser::error(const std::string& m)
+void yy::parser::error(const location_type& l, const std::string& m)
 {
-    std::cout << m << "\n";
+  std::cerr << l << ": " << m << '\n';
 }
