@@ -9,7 +9,9 @@
 
 class BaseElement {
 public:
+    yy::location loc;
     virtual void Accept(Visitor* visitor) = 0;
+    explicit BaseElement(yy::location loc): loc(loc) {};
 };
 
 

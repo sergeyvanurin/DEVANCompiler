@@ -4,7 +4,7 @@
 
 #include "NumExpression.h"
 
-NumExpression::NumExpression(int value, yy::location loc): value(value), loc(loc) {}
+NumExpression::NumExpression(int value, yy::location loc): value(value), Expression(loc) {}
 
 void NumExpression::Accept(Visitor *visitor) {
     visitor->Visit(this);

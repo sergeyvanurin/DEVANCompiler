@@ -16,7 +16,6 @@ public:
 
 private:
     std::string var_name;
-    yy::location loc;
 };
 
 

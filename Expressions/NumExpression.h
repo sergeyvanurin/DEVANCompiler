@@ -15,7 +15,6 @@ public:
 
 private:
     int value;
-    yy::location loc;
 };
 
 

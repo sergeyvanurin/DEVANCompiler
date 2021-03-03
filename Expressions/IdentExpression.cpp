@@ -4,7 +4,7 @@
 
 #include "IdentExpression.h"
 
-IdentExpression::IdentExpression(std::string& var_name, yy::location loc): var_name(var_name), loc(loc) {}
+IdentExpression::IdentExpression(std::string& var_name, yy::location loc): var_name(var_name), Expression(loc) {}
 
 void IdentExpression::Accept(Visitor *visitor) {
     visitor->Visit(this);
