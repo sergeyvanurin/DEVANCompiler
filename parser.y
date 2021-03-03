@@ -86,7 +86,7 @@
     PRINT "System.out.println"
     RETURN "return"
     THIS "this"
-    LENGTH ".length"
+    LENGTH "length"
     NEW "new"
     TRUE "true"
     FALSE "false"
