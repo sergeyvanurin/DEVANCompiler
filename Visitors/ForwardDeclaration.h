@@ -15,6 +15,8 @@ class MainClass;
 class ClassDeclaration;
 class Assert;
 class VarDeclaration;
+class MethodDeclaration;
+class Declarations;
 class IfElse;
 class While;
 class VarAssignment;

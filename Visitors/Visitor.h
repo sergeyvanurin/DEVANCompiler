@@ -19,6 +19,8 @@ public:
     virtual void Visit(ClassDeclaration* class_declaration) = 0;
     virtual void Visit(Assert* statement) = 0;
     virtual void Visit(VarDeclaration* statement) = 0;
+    virtual void Visit(MethodDeclaration* statement) = 0;
+    virtual void Visit(Declarations* statement) = 0;
     virtual void Visit(IfElse* statement) = 0;
     virtual void Visit(While* statement) = 0;
     virtual void Visit(VarAssignment* statement) = 0;
