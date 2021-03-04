@@ -28,3 +28,8 @@ void Driver::remove_scope() {
     scopes.pop_back();
     current_scope--;
 }
+
+void Driver::print_tree() {
+    PrintVisitor visitor;
+    program->Accept(&visitor);
+}

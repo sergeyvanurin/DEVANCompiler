@@ -1,6 +1,7 @@
 cmake_minimum_required(VERSION 3.16)
 
 include_directories(/usr/local/opt/flex/include)
+add_compile_options(-std=c++11)
 
 project(DEVANCompiler)
 set(

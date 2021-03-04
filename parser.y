@@ -135,7 +135,7 @@
 %start program;
 
 program:
-    main_class class_declarations {$$ = new Program($1, nullptr, driver.loc);};
+    main_class class_declarations {$$ = new Program($1, nullptr, driver.loc); driver.program = $$;};
 
 class_declarations:
     %empty {}
@@ -145,7 +145,7 @@ main_class:
     "class" "id" "{" "public static void main" "(" ")" "{" statements "}" "}" {$$ = new MainClass($8, nullptr, driver.loc);};
 
 statements:
-    %empty {driver.add_scope(); $$ = new Statements(driver.get_scope(), driver.loc);} | statements statement {$1->statements.push($2);};
+    %empty {driver.add_scope(); $$ = new Statements(driver.get_scope(), driver.loc);} | statements statement {$1->statements.push_back($2); $$ = $1;};
 
 class_declaration:
     "class" "id" "extends" "id" "{" declarations "}" {}
@@ -187,7 +187,7 @@ statement:
   | "if" "(" expr ")" statement "else" statement {$$ = new IfElse($3, $5, $7, driver.get_scope(), driver.loc);}
   | "while" "(" expr ")" statement {$$ = new While($3, $5, driver.get_scope(), driver.loc);}
   | "System.out.println" "(" expr ")" ";" {}
-  | expr "=" expr ";" {}
+  | expr "=" expr ";" {$$ = new VarAssignment($1, $3, driver.get_scope(), driver.loc);}
   | "return" expr ";" {}
   | method_invocation ";" {};
 

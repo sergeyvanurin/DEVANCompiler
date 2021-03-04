@@ -57,20 +57,27 @@ void PrintVisitor::Visit(Scope *scope) {
 
 }
 
-void PrintVisitor::Visit(Statements *scope) {
+void PrintVisitor::Visit(Statements *statements) {
+    for (auto & statement : statements->statements){
+        statement->Accept(this);
+    }
+
 
 }
+
 
 void PrintVisitor::Visit(SubExpression *expression) {
 
 }
 
 void PrintVisitor::Visit(VarAssignment *statement) {
+    std::cout << "var_assignment: " << statement->var_name << std::endl;
+    std::cout << "new_Value: " << statement->new_value->eval() << std::endl;
 
 }
 
 void PrintVisitor::Visit(VarDeclaration *statement) {
-
+    std::cout << "var_assignment: " << statement->var_name << std::endl;
 }
 
 void PrintVisitor::Visit(While *statement) {

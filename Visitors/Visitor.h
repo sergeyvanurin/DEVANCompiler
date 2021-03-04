@@ -27,7 +27,7 @@ public:
     virtual void Visit(IdentExpression* statement) = 0;
     virtual void Visit(NumExpression* statement) = 0;
     virtual void Visit(Scope* scope) = 0;
-    virtual void Visit(Statements* scope) = 0;
+    virtual void Visit(Statements* statements) = 0;
 
 };
 

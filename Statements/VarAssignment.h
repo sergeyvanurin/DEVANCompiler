@@ -11,11 +11,9 @@
 
 class VarAssignment: public Statement {
 public:
-    VarAssignment(std::string &var_name, Expression *new_value, Scope *scope, yy::location loc);
+    VarAssignment(Expression* var_name, Expression *new_value, Scope *scope, yy::location loc);
     void Accept(Visitor* visitor) override;
-
-private:
-    std::string var_name;
+    Expression* var_name;
     Expression* new_value;
 };
 

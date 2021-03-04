@@ -13,8 +13,6 @@ public:
     explicit IdentExpression(std::string& var_name, yy::location loc);
     void Accept(Visitor* visitor) override;
     int eval() const override;
-
-private:
     std::string var_name;
 };
 

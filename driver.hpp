@@ -6,6 +6,7 @@
 
 #include "scanner.hpp"
 #include "parser.hpp"
+#include "Visitors/PrintVisitor.h"
 
 
 class Driver {
@@ -30,5 +31,8 @@ public:
 
     Scanner scanner;
     yy::parser parser;
+
+    Program* program;
+    void print_tree();
 
 };

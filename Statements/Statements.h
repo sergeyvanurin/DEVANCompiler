@@ -3,7 +3,7 @@
 //
 
 #include "Statement.h"
-#include <queue>
+#include <vector>
 #ifndef DEVANCOMPILER_STATEMENTS_H
 #define DEVANCOMPILER_STATEMENTS_H
 
@@ -11,7 +11,7 @@
 class Statements: public Statement {
 public:
     Statements(Scope* Scope, yy::location loc);
-    std::queue<Statement*> statements;
+    std::vector<Statement*> statements;
     void Accept(Visitor* visitor) override;
 };
 

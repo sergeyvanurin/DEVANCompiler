@@ -12,8 +12,6 @@ class VarDeclaration: public Statement {
 public:
     VarDeclaration(const std::string& var_name, Scope* scope, yy::location loc);
     void Accept(Visitor* visitor) override;
-
-private:
     std::string var_name;
 };
 
