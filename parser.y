@@ -208,17 +208,17 @@ field_invocation:
     "this." "id" {};
 
 expr:
-    expr "&&" expr {}
-  | expr "||" expr {}
-  | expr "<" expr {}
-  | expr ">" expr {}
-  | expr "==" expr {}
+    expr "&&" expr {$$ = new LogicalAndExpression($1, $3, driver.loc);}
+  | expr "||" expr {$$ = new LogicalOrExpression($1, $3, driver.loc);}
+  | expr "<" expr {$$ = new LessExpression($1, $3, driver.loc);}
+  | expr ">" expr {$$ = new GreaterExpression($1, $3, driver.loc);}
+  | expr "==" expr {$$ = new EqualExpression($1, $3, driver.loc);}
   | expr "+" expr {$$ = new AddExpression($1, $3, driver.loc);}
   | expr "-" expr {$$ = new SubExpression($1, $3, driver.loc);}
   | expr "*" expr {$$ = new MulExpression($1, $3, driver.loc);}
   | expr "/" expr {$$ = new DivExpression($1, $3, driver.loc);}
   | expr "%" expr {$$ = new ModExpression($1, $3, driver.loc);}
-  | expr "[" expr "]" {}
+  | expr "[" expr "]" {$$ = new IndexExpression($1, $3, driver.loc);}
   | expr "." "length" {}
   | "new" simple_type "[" expr "]" {}
   | "new" type_identifier "(" ")" {}
