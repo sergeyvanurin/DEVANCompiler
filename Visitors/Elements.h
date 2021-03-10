@@ -11,6 +11,7 @@
 #include "Expressions/MulExpression.h"
 #include "Expressions/DivExpression.h"
 #include "Expressions/ModExpression.h"
+#include "Expressions/IndexExpression.h"
 #include "Expressions/SubExpression.h"
 #include "Expressions/NumExpression.h"
 #include "Statements/Assert.h"

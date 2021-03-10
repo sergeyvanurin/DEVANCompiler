@@ -10,6 +10,7 @@ class SubExpression;
 class MulExpression;
 class DivExpression;
 class ModExpression;
+class IndexExpression;
 class Program;
 class MainClass;
 class ClassDeclaration;
