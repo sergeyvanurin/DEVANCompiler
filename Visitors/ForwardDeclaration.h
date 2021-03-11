@@ -16,6 +16,7 @@ class LogicalOrExpression;
 class GreaterExpression;
 class LessExpression;
 class EqualExpression;
+class NotExpression;
 class Program;
 class MainClass;
 class ClassDeclaration;

@@ -222,8 +222,8 @@ expr:
   | expr "." "length" {}
   | "new" simple_type "[" expr "]" {}
   | "new" type_identifier "(" ")" {}
-  | "!" expr {}
-  | "(" expr ")" {}
+  | "!" expr {$$ = new NotExpression($2, driver.loc);}
+  | "(" expr ")" {$$ = $2;}
   | "id" {$$ = new IdentExpression($1, driver.loc);}
   | "num" {$$ = new NumExpression($1, driver.loc);}
   | "this" {} | "true" {} | "false" {}

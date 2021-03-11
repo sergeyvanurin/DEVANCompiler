@@ -17,6 +17,7 @@
 #include "Expressions/GreaterExpression.h"
 #include "Expressions/LessExpression.h"
 #include "Expressions/EqualExpression.h"
+#include "Expressions/NotExpression.h"
 #include "Expressions/SubExpression.h"
 #include "Expressions/NumExpression.h"
 #include "Statements/Assert.h"

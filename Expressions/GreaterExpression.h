@@ -9,7 +9,7 @@
 class GreaterExpression : Expression {
 public:
     GreaterExpression(Expression* expr1, Expression* expr2, yy::location loc);
-    int eval() const override;
+    bool eval() const override;
     void Accept(Visitor* visitor) override;
 private:
     Expression* expr1;

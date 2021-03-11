@@ -20,6 +20,7 @@ public:
     virtual void Visit(GreaterExpression* expression) = 0;
     virtual void Visit(LessExpression* expression) = 0;
     virtual void Visit(EqualExpression* expression) = 0;
+    virtual void Visit(NotExpression* expression) = 0;
     virtual void Visit(Program* program) = 0;
     virtual void Visit(MainClass* main_class) = 0;
     virtual void Visit(ClassDeclaration* class_declaration) = 0;
