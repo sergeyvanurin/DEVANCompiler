@@ -4,7 +4,7 @@
 
 #include "MethodDeclaration.h"
 
-MethodDeclaration::MethodDeclaration(const std::string& method_name, std::vector<int>& formals, Statements* statements, Scope* scope, yy::location loc):
+MethodDeclaration::MethodDeclaration(const std::string& method_name, std::vector<int>& formals, StatementList* statements, Scope* scope, yy::location loc):
         method_name(method_name), formals(formals), statements(statements), Statement(scope, loc) {}
 
 void MethodDeclaration::Accept(Visitor *visitor) {

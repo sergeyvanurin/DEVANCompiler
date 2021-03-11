@@ -21,9 +21,12 @@ public:
     virtual void Visit(LessExpression* expression) = 0;
     virtual void Visit(EqualExpression* expression) = 0;
     virtual void Visit(NotExpression* expression) = 0;
+    virtual void Visit(TrueExpression* expression) = 0;
+    virtual void Visit(FalseExpression* expression) = 0;
     virtual void Visit(Program* program) = 0;
     virtual void Visit(MainClass* main_class) = 0;
     virtual void Visit(ClassDeclaration* class_declaration) = 0;
+    virtual void Visit(ClassDeclarationList* class_declaration_list) = 0;
     virtual void Visit(Assert* statement) = 0;
     virtual void Visit(VarDeclaration* statement) = 0;
     virtual void Visit(MethodDeclaration* statement) = 0;
@@ -34,7 +37,7 @@ public:
     virtual void Visit(IdentExpression* statement) = 0;
     virtual void Visit(NumExpression* statement) = 0;
     virtual void Visit(Scope* scope) = 0;
-    virtual void Visit(Statements* statements) = 0;
+    virtual void Visit(StatementList* statements) = 0;
 
 };
 

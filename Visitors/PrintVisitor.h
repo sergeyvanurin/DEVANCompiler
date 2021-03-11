@@ -21,7 +21,7 @@ class PrintVisitor: public Visitor {
     void Visit(NumExpression *statement) override;
     void Visit(Program *program) override;
     void Visit(Scope *scope) override;
-    void Visit(Statements *statements) override;
+    void Visit(StatementList *statements) override;
     void Visit(SubExpression *expression) override;
     void Visit(VarAssignment *statement) override;
     void Visit(VarDeclaration *statement) override;

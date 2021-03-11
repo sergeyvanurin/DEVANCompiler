@@ -18,6 +18,8 @@
 #include "Expressions/LessExpression.h"
 #include "Expressions/EqualExpression.h"
 #include "Expressions/NotExpression.h"
+#include "Expressions/TrueExpression.h"
+#include "Expressions/FalseExpression.h"
 #include "Expressions/SubExpression.h"
 #include "Expressions/NumExpression.h"
 #include "Statements/Assert.h"
@@ -28,8 +30,9 @@
 #include "Statements/VarDeclaration.h"
 #include "Statements/While.h"
 #include "Statements/Scope.h"
-#include "Statements/Statements.h"
+#include "Statements/StatementList.h"
 #include "Statements/Program.h"
 #include "Statements/ClassDeclaration.h"
+#include "Statements/ClassDeclarationList.h"
 
 #endif //DEVANCOMPILER_ELEMENTS_H

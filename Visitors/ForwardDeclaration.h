@@ -17,9 +17,12 @@ class GreaterExpression;
 class LessExpression;
 class EqualExpression;
 class NotExpression;
+class TrueExpression;
+class FalseExpression;
 class Program;
 class MainClass;
 class ClassDeclaration;
+class ClassDeclarationList;
 class Assert;
 class VarDeclaration;
 class MethodDeclaration;
@@ -30,6 +33,6 @@ class VarAssignment;
 class IdentExpression;
 class NumExpression;
 class Scope;
-class Statements;
+class StatementList;
 
 #endif //DEVANCOMPILER_FORWARDDECLARATION_H

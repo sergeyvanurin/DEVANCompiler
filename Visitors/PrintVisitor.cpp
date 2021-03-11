@@ -57,7 +57,7 @@ void PrintVisitor::Visit(Scope *scope) {
 
 }
 
-void PrintVisitor::Visit(Statements *statements) {
+void PrintVisitor::Visit(StatementList *statements) {
     for (auto & statement : statements->statements){
         statement->Accept(this);
     }

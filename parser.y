@@ -27,7 +27,7 @@
     #include "Statements/VarDeclaration.h"
     #include "Statements/While.h"
     #include "Statements/Scope.h"
-    #include "Statements/Statements.h"
+    #include "Statements/StatementList.h"
     #include "Statements/Program.h"
     #include "Statements/ClassDeclaration.h"
     class Scanner;
@@ -104,7 +104,7 @@
 %nterm <Expression*> expr
 %nterm class_declaration
 %nterm <Statement*> statement
-%nterm <Statements*> statements
+%nterm <StatementList*> statements
 %nterm <Program*> program
 %nterm <MainClass*> main_class;
 %nterm <Statement*> variable_declaration;
@@ -226,7 +226,9 @@ expr:
   | "(" expr ")" {$$ = $2;}
   | "id" {$$ = new IdentExpression($1, driver.loc);}
   | "num" {$$ = new NumExpression($1, driver.loc);}
-  | "this" {} | "true" {} | "false" {}
+  | "this" {}
+  | "true" {$$ = new TrueExpression(driver.loc);}
+  | "false" {$$ = new FalseExpression(driver.loc);}
   | method_invocation {} | field_invocation {};
 
 

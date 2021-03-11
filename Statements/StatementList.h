@@ -8,11 +8,13 @@
 #define DEVANCOMPILER_STATEMENTS_H
 
 
-class Statements: public Statement {
+class StatementList: public Statement {
 public:
-    Statements(Scope* Scope, yy::location loc);
-    std::vector<Statement*> statements;
+    StatementList(Scope* Scope, yy::location loc);
+    void AddStatement(Statement* statement);
     void Accept(Visitor* visitor) override;
+
+    std::vector<Statement*> statements;
 };
 
 

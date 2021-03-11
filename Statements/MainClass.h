@@ -3,7 +3,7 @@
 //
 
 #include "Statement.h"
-#include "Statements.h"
+#include "StatementList.h"
 #include <queue>
 #ifndef DEVANCOMPILER_MAINCLASS_H
 #define DEVANCOMPILER_MAINCLASS_H
@@ -11,9 +11,9 @@
 
 class MainClass: public Statement {
 public:
-    MainClass(Statements* statements, Scope* scope, yy::location loc);
+    MainClass(StatementList* statements, Scope* scope, yy::location loc);
     void Accept(Visitor* visitor) override;
-    Statements* statements;
+    StatementList* statements;
 };
 
 
