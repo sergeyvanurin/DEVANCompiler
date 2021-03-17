@@ -6,10 +6,10 @@
 #define DEVANCOMPILER_LESSEXPRESSION_H
 
 
-class LessExpression : Expression {
+class LessExpression : public Expression {
 public:
     LessExpression(Expression* expr1, Expression* expr2, yy::location loc);
-    bool eval() const override;
+    int eval() const override;
     void Accept(Visitor* visitor) override;
 private:
     Expression* expr1;

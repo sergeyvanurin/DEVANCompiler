@@ -6,7 +6,7 @@
 
 NotExpression::NotExpression(Expression *expr, yy::location loc): expr(expr), Expression(loc) {}
 
-bool NotExpression::eval() const {
+int NotExpression::eval() const {
     return !expr->eval();
 }
 

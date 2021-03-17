@@ -6,10 +6,10 @@
 #define DEVANCOMPILER_NOTEXPRESSION_H
 
 
-class NotExpression : Expression {
+class NotExpression : public Expression {
 public:
     NotExpression(Expression* expr, yy::location loc);
-    bool eval() const override;
+    int eval() const override;
     void Accept(Visitor* visitor) override;
 private:
     Expression* expr;

@@ -6,10 +6,10 @@
 #define DEVANCOMPILER_FALSEEXPRESSION_H
 
 
-class FalseExpression {
+class FalseExpression : public Expression {
 public:
     FalseExpression(yy::location loc);
-    bool eval() const override;
+    int eval() const override;
     void Accept(Visitor* visitor) override;
 };
 

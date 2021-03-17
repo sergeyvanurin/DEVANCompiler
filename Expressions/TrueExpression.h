@@ -6,10 +6,10 @@
 #define DEVANCOMPILER_TRUEEXPRESSION_H
 
 
-class TrueExpression : Expression {
+class TrueExpression : public Expression {
 public:
     TrueExpression(yy::location loc);
-    bool eval() const override;
+    int eval() const override;
     void Accept(Visitor* visitor) override;
 };
 

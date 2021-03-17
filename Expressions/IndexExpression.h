@@ -6,7 +6,7 @@
 #define DEVANCOMPILER_INDEXEXPRESSION_H
 
 
-class IndexExpression : Expression {
+class IndexExpression : public Expression {
 public:
     IndexExpression(Expression *inner, Expression *outer, yy::location loc);
     int eval() const override;

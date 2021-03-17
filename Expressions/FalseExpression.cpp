@@ -6,7 +6,7 @@
 
 FalseExpression::FalseExpression(yy::location loc): Expression(loc) {}
 
-bool FalseExpression::eval() const {
+int FalseExpression::eval() const {
     return false;
 }
 

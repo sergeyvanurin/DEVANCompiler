@@ -6,7 +6,7 @@
 
 LogicalOrExpression::LogicalOrExpression(Expression *expr1, Expression *expr2, yy::location loc): expr1(expr1), expr2(expr2), Expression(loc) {}
 
-bool LogicalOrExpression::eval() const {
+int LogicalOrExpression::eval() const {
     return expr1->eval() || expr2->eval();
 }
 

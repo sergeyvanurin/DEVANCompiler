@@ -6,10 +6,11 @@
 #define DEVANCOMPILER_LOGICALANDEXPRESSION_H
 
 
-class LogicalAndExpression : Expression {
+
+class LogicalAndExpression : public Expression {
 public:
     LogicalAndExpression(Expression* expr1, Expression* expr2, yy::location loc);
-    bool eval() const override;
+    int eval() const override;
     void Accept(Visitor* visitor) override;
 private:
     Expression* expr1;

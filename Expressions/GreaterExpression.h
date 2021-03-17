@@ -6,10 +6,10 @@
 #define DEVANCOMPILER_GREATEREXPRESSION_H
 
 
-class GreaterExpression : Expression {
+class GreaterExpression : public Expression {
 public:
     GreaterExpression(Expression* expr1, Expression* expr2, yy::location loc);
-    bool eval() const override;
+    int eval() const override;
     void Accept(Visitor* visitor) override;
 private:
     Expression* expr1;

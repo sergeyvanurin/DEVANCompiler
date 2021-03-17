@@ -17,6 +17,15 @@
     #include "Expressions/MulExpression.h"
     #include "Expressions/DivExpression.h"
     #include "Expressions/ModExpression.h"
+    #include "Expressions/IndexExpression.h"
+    #include "Expressions/LogicalAndExpression.h"
+    #include "Expressions/LogicalOrExpression.h"
+    #include "Expressions/GreaterExpression.h"
+    #include "Expressions/LessExpression.h"
+    #include "Expressions/EqualExpression.h"
+    #include "Expressions/NotExpression.h"
+    #include "Expressions/TrueExpression.h"
+    #include "Expressions/FalseExpression.h"
     #include "Expressions/SubExpression.h"
     #include "Expressions/NumExpression.h"
     #include "Statements/Assert.h"
@@ -30,6 +39,7 @@
     #include "Statements/StatementList.h"
     #include "Statements/Program.h"
     #include "Statements/ClassDeclaration.h"
+    #include "Statements/ClassDeclarationList.h"
     class Scanner;
     class Driver;
 }
@@ -145,7 +155,7 @@ main_class:
     "class" "id" "{" "public static void main" "(" ")" "{" statements "}" "}" {$$ = new MainClass($8, nullptr, driver.loc);};
 
 statements:
-    %empty {driver.add_scope(); $$ = new Statements(driver.get_scope(), driver.loc);} | statements statement {$1->statements.push_back($2); $$ = $1;};
+    %empty {driver.add_scope(); $$ = new StatementList(driver.get_scope(), driver.loc);} | statements statement {$1->statements.push_back($2); $$ = $1;};
 
 class_declaration:
     "class" "id" "extends" "id" "{" declarations "}" {}

@@ -6,7 +6,7 @@
 
 TrueExpression::TrueExpression(yy::location loc): Expression(loc) {}
 
-bool TrueExpression::eval() const {
+int TrueExpression::eval() const {
     return true;
 }
 
