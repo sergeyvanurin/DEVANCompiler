@@ -2,6 +2,7 @@
 // Created by deliza on 11.03.2021.
 //
 
+#include "Expression.h"
 #ifndef DEVANCOMPILER_LESSEXPRESSION_H
 #define DEVANCOMPILER_LESSEXPRESSION_H
 

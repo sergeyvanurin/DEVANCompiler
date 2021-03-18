@@ -10,6 +10,6 @@ void ClassDeclarationList::Accept(Visitor *visitor) {
     visitor->Visit(this);
 }
 
-void ClassDeclarationList::AddClassDeclaration(ClassDeclaration *class_declaration) {} {
+void ClassDeclarationList::AddClassDeclaration(ClassDeclaration *class_declaration) {
     class_declarations.push_back(class_declaration);
 };

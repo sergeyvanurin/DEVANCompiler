@@ -26,6 +26,19 @@ class PrintVisitor: public Visitor {
     void Visit(VarAssignment *statement) override;
     void Visit(VarDeclaration *statement) override;
     void Visit(While *statement) override;
+    void Visit(IndexExpression* expression) override;
+    void Visit(LogicalAndExpression* expression) override;
+    void Visit(LogicalOrExpression* expression) override;
+    void Visit(GreaterExpression* expression) override;
+    void Visit(LessExpression* expression) override;
+    void Visit(EqualExpression* expression) override;
+    void Visit(NotExpression* expression) override;
+    void Visit(TrueExpression* expression) override;
+    void Visit(FalseExpression* expression) override;
+    void Visit(ClassDeclarationList* class_declaration_list) override;
+    void Visit(MethodDeclaration* statement) override;
+    void Visit(Declarations* statement) override;
+
 };
 
 

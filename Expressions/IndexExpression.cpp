@@ -7,7 +7,7 @@
 IndexExpression::IndexExpression(Expression *inner, Expression *outer, yy::location loc): inner(inner), outer(outer), Expression(loc) {}
 
 int IndexExpression::eval() const {
-    return inner->eval()[outer->eval()];
+    return inner->eval();
 }
 
 void IndexExpression::Accept(Visitor *visitor) {

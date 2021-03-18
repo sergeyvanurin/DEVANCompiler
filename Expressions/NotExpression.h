@@ -2,6 +2,7 @@
 // Created by deliza on 11.03.2021.
 //
 
+#include "Expression.h"
 #ifndef DEVANCOMPILER_NOTEXPRESSION_H
 #define DEVANCOMPILER_NOTEXPRESSION_H
 

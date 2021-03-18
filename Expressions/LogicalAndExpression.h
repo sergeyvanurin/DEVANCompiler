@@ -2,6 +2,7 @@
 // Created by deliza on 11.03.2021.
 //
 
+#include "Expression.h"
 #ifndef DEVANCOMPILER_LOGICALANDEXPRESSION_H
 #define DEVANCOMPILER_LOGICALANDEXPRESSION_H
 

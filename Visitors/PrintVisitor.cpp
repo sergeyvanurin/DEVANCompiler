@@ -83,3 +83,42 @@ void PrintVisitor::Visit(VarDeclaration *statement) {
 void PrintVisitor::Visit(While *statement) {
 
 }
+
+void PrintVisitor::Visit(IndexExpression* expression){
+
+}
+void PrintVisitor::Visit(LogicalAndExpression* expression){
+
+}
+
+void PrintVisitor::Visit(LogicalOrExpression* expression){
+
+}
+
+void PrintVisitor::Visit(GreaterExpression* expression){
+
+}
+void PrintVisitor::Visit(LessExpression* expression){
+
+}
+void PrintVisitor::Visit(EqualExpression* expression){
+
+}
+void PrintVisitor::Visit(NotExpression* expression){
+
+}
+void PrintVisitor::Visit(TrueExpression* expression){
+
+}
+void PrintVisitor::Visit(FalseExpression* expression){
+
+}
+void PrintVisitor::Visit(ClassDeclarationList* class_declaration_list){
+
+}
+void PrintVisitor::Visit(MethodDeclaration* statement){
+
+}
+void PrintVisitor::Visit(Declarations* statement){
+
+}

@@ -12,3 +12,4 @@ int FalseExpression::eval() const {
 
 void FalseExpression::Accept(Visitor *visitor) {
     visitor->Visit(this);
+}

@@ -2,6 +2,7 @@
 // Created by deliza on 11.03.2021.
 //
 
+#include "Expression.h"
 #ifndef DEVANCOMPILER_EQUALEXPRESSION_H
 #define DEVANCOMPILER_EQUALEXPRESSION_H
 

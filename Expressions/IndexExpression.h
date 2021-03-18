@@ -2,6 +2,7 @@
 // Created by deliza on 11.03.2021.
 //
 
+#include "Expression.h"
 #ifndef DEVANCOMPILER_INDEXEXPRESSION_H
 #define DEVANCOMPILER_INDEXEXPRESSION_H
 
