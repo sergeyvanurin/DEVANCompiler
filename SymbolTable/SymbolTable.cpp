@@ -9,33 +9,33 @@ SymbolTable::SymbolTable() {
 
 }
 
-void SymbolTable::Put(Symbol symbol, std::shared_ptr<Object> value) {
+void SymbolTable::Put(BaseSymbol symbol, std::shared_ptr<Object> value) {
     if (values_.find(symbol) == values_.end()) {
         //values_[symbol] = value;
     }
 }
 
-void SymbolTable::CreateVariable(Symbol symbol) {
+void SymbolTable::CreateVariable(BaseSymbol symbol) {
     if (values_.find(symbol) == values_.end()) {
         values_.insert({symbol, std::stack<std::shared_ptr<Object>>()});
     }
 }
 
-Symbol SymbolTable::GetSymbol(const std::string &name) {
-    //return Symbol(name);
+BaseSymbol SymbolTable::GetSymbol(const std::string &name) {
+    //return BaseSymbol(name);
 }
 
-std::shared_ptr<Object> SymbolTable::Get(Symbol key) {
+std::shared_ptr<Object> SymbolTable::Get(BaseSymbol key) {
     return nullptr;
 }
 
 void SymbolTable::BeginScope() {
-    symbols_.push(Symbol("{"));
+    symbols_.push(BaseSymbol("{"));
 }
 
 void SymbolTable::EndScope() {
-    while (symbols_.top() != Symbol("{")) {
-        Symbol symbol = symbols_.top();
+    while (symbols_.top() != BaseSymbol("{")) {
+        BaseSymbol symbol = symbols_.top();
 
         std::cerr << "Popping " << symbol.GetName() << std::endl;
 

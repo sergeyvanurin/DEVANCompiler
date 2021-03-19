@@ -34,5 +34,7 @@
 #include "Statements/Program.h"
 #include "Statements/ClassDeclaration.h"
 #include "Statements/ClassDeclarationList.h"
+#include "Statements/Formal.h"
+#include "Statements/FormalsList.h"
 
 #endif //DEVANCOMPILER_ELEMENTS_H

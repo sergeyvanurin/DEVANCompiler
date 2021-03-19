@@ -11,11 +11,11 @@
 
 class MethodDeclaration : public Statement {
 public:
-    MethodDeclaration(const std::string& method_name, std::vector<int>& formals, StatementList* statements, Scope* scope, yy::location loc);
+    MethodDeclaration(const std::string& method_name, FormalsList* formals, StatementList* statements, Scope* scope, yy::location loc);
     void Accept(Visitor* visitor) override;
-private:
+
     std::string method_name;
-    std::vector<int> formals;
+    FormalsList* formals;
     StatementList* statements;
 };
 

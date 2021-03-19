@@ -38,7 +38,8 @@ class PrintVisitor: public Visitor {
     void Visit(ClassDeclarationList* class_declaration_list) override;
     void Visit(MethodDeclaration* statement) override;
     void Visit(Declarations* statement) override;
-
+    void Visit(FormalsList *formals_list) override;
+    void Visit(Formal *formal) override;
 };
 
 

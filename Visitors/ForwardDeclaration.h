@@ -34,5 +34,7 @@ class IdentExpression;
 class NumExpression;
 class Scope;
 class StatementList;
+class Formal;
+class FormalsList;
 
 #endif //DEVANCOMPILER_FORWARDDECLARATION_H

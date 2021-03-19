@@ -122,3 +122,11 @@ void PrintVisitor::Visit(MethodDeclaration* statement){
 void PrintVisitor::Visit(Declarations* statement){
 
 }
+
+void PrintVisitor::Visit(FormalsList *formals_list) {
+
+}
+
+void PrintVisitor::Visit(Formal *formal) {
+
+}

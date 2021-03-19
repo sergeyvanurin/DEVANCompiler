@@ -5,7 +5,7 @@
 #ifndef DEVANCOMPILER_SYMBOLTABLE_H
 #define DEVANCOMPILER_SYMBOLTABLE_H
 
-#include "Symbol.h"
+#include "Symbols/BaseSymbol.h"
 #include "Objects/Object.h"
 
 #include <unordered_map>
@@ -14,23 +14,24 @@
 class SymbolTable {
 public:
     SymbolTable();
-    void Put(Symbol symbol, std::shared_ptr<Object> value);
+    void Put(BaseSymbol symbol, std::shared_ptr<Object> value);
 
-    void CreateVariable(Symbol symbol);
+    void CreateVariable(BaseSymbol symbol);
     void CreateMethod();
+    void CreateClass();
     
 
-    Symbol GetSymbol(const std::string& name);
+    BaseSymbol GetSymbol(const std::string& name);
 
-    std::shared_ptr<Object> Get(Symbol key);
+    std::shared_ptr<Object> Get(BaseSymbol key);
 
     void BeginScope();
     void EndScope();
 private:
-    std::unordered_map<Symbol, std::stack<std::shared_ptr<Object>>> values_;
-    std::unordered_map<std::string, Symbol> symbols_map_;
+    std::unordered_map<BaseSymbol, std::stack<std::shared_ptr<Object>>> values_;
+    std::unordered_map<std::string, BaseSymbol> symbols_map_;
 
-    std::stack<Symbol> symbols_;
+    std::stack<BaseSymbol> symbols_;
 
 };
 
