@@ -6,10 +6,13 @@
 #define DEVANCOMPILER_STVARIABLE_H
 
 
+#include <Statements/VarDeclaration.h>
 #include "BaseSymbol.h"
 
 class STVariable : public BaseSymbol {
 public:
+    explicit STVariable(const std::string& name);
+    explicit STVariable(VarDeclaration* var_decl);
     std::string type = "int";
 };
 

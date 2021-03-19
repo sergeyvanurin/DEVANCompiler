@@ -14,6 +14,11 @@ ClassDeclaration::ClassDeclaration(const std::string &class_name, const std::str
 
 }
 
-void ClassDeclaration::AddDeclaration(Statement *declaration) {
-
+void ClassDeclaration::AddVarDeclaration(VarDeclaration *var_decl) {
+    var_declarations.push_back(var_decl);
 }
+
+void ClassDeclaration::AddMethodDeclaration(MethodDeclaration *method_decl) {
+    method_declarations.push_back(method_decl);
+}
+
