@@ -1,8 +1,8 @@
-// A Bison parser, made by GNU Bison 3.7.5.
+// A Bison parser, made by GNU Bison 3.7.
 
 // Locations for Bison parsers in C++
 
-// Copyright (C) 2002-2015, 2018-2021 Free Software Foundation, Inc.
+// Copyright (C) 2002-2015, 2018-2020 Free Software Foundation, Inc.
 
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -31,12 +31,12 @@
 // version 2.2 of Bison.
 
 /**
- ** \file /Users/vanur/CLionProjects/DEVANCompiler/location.hh
+ ** \file /home/deliza/compiler/DEVANCompiler/location.hh
  ** Define the yy::location class.
  */
 
-#ifndef YY_YY_USERS_VANUR_CLIONPROJECTS_DEVANCOMPILER_LOCATION_HH_INCLUDED
-# define YY_YY_USERS_VANUR_CLIONPROJECTS_DEVANCOMPILER_LOCATION_HH_INCLUDED
+#ifndef YY_YY_HOME_DELIZA_COMPILER_DEVANCOMPILER_LOCATION_HH_INCLUDED
+# define YY_YY_HOME_DELIZA_COMPILER_DEVANCOMPILER_LOCATION_HH_INCLUDED
 
 # include <iostream>
 # include <string>
@@ -54,7 +54,7 @@
 # endif
 
 namespace yy {
-#line 58 "/Users/vanur/CLionProjects/DEVANCompiler/location.hh"
+#line 58 "/home/deliza/compiler/DEVANCompiler/location.hh"
 
   /// A point in a source file.
   class position
@@ -299,6 +299,6 @@ namespace yy {
   }
 
 } // yy
-#line 303 "/Users/vanur/CLionProjects/DEVANCompiler/location.hh"
+#line 303 "/home/deliza/compiler/DEVANCompiler/location.hh"
 
-#endif // !YY_YY_USERS_VANUR_CLIONPROJECTS_DEVANCOMPILER_LOCATION_HH_INCLUDED
+#endif // !YY_YY_HOME_DELIZA_COMPILER_DEVANCOMPILER_LOCATION_HH_INCLUDED

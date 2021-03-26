@@ -4,7 +4,9 @@
 int main(int argc, char** argv)
 {
     Driver d;
-    d.parse(argv[1]);
-    d.print_tree();
-
+    std::string filename(argv[1]);
+    int error = d.parse(filename);
+    if (!error) {
+        d.print_tree();
+    }
 } 
