@@ -3,12 +3,11 @@
 ## Build and run
 Build project:
 ```
-cd cmake-build-debug
-make
+mkdir build && cd build && cmake .. && make && cd ..
 ```
 
 Then run it passing a mini-java file as an argument:
-`./Compiler mini-java`
+`./build/Compiler mini-java`
 
 Simple mini-java program:
 ```
