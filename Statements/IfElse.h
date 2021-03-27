@@ -13,7 +13,6 @@ public:
     IfElse(Expression *expression, Statement *If, Statement *Else, Scope *scope, yy::location loc);
     void Accept(Visitor* visitor) override;
 
-private:
     Expression* expr;
     Statement* If;
     Statement* Else;

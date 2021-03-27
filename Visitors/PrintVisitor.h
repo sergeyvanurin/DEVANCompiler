@@ -4,11 +4,13 @@
 
 
 #include "Visitor.h"
+#include <fstream>
 #ifndef DEVANCOMPILER_PRINTVISITOR_H
 #define DEVANCOMPILER_PRINTVISITOR_H
 
 
 class PrintVisitor: public Visitor {
+
     void Visit(ClassDeclaration *class_declaration) override;
     void Visit(AddExpression *expression) override;
     void Visit(Assert *statement) override;
@@ -38,6 +40,15 @@ class PrintVisitor: public Visitor {
     void Visit(ClassDeclarationList* class_declaration_list) override;
     void Visit(MethodDeclaration* statement) override;
     void Visit(Declarations* statement) override;
+
+
+public:
+    PrintVisitor(const std::string& filename);
+
+private:
+    void PrintTabs();
+    std::ofstream stream;
+    int num_tabs_ = 0;
 
 };
 

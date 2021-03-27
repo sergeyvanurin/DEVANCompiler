@@ -12,7 +12,6 @@ public:
     NotExpression(Expression* expr, yy::location loc);
     int eval() const override;
     void Accept(Visitor* visitor) override;
-private:
     Expression* expr;
 };
 
