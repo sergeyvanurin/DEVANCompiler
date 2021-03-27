@@ -5,6 +5,7 @@
 #include "InterpreterVisitor.h"
 #include "Elements.h"
 
+
 void InterpreterVisitor::Visit(VarDeclaration *statement) {
     variables[statement->var_name] = 0;
 }
