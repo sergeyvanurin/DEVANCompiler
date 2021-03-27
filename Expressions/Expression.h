@@ -11,6 +11,7 @@ class Expression: public BaseElement {
 public:
     explicit Expression(yy::location loc): BaseElement(loc) {}
     virtual int eval() const = 0;
+
 };
 
 

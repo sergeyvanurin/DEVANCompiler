@@ -29,7 +29,8 @@ void Driver::remove_scope() {
     current_scope--;
 }
 
-void Driver::print_tree(const std::string& filename) {
+void Driver::print_tree(const std::string& filename) const {
     PrintVisitor visitor(filename);
     program->Accept(&visitor);
 }
+

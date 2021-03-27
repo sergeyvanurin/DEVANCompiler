@@ -33,6 +33,6 @@ public:
     yy::parser parser;
 
     Program* program;
-    void print_tree(const std::string& filename);
+    void print_tree(const std::string& filename) const;
 
 };
