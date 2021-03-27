@@ -2,18 +2,20 @@
 // Created by deliza on 11.03.2021.
 //
 
-#include "Expression.h"
+
 #ifndef DEVANCOMPILER_FIELDINVOCATIONEXPRESSION_H
 #define DEVANCOMPILER_FIELDINVOCATIONEXPRESSION_H
 
+#include "Expression.h"
+#include <string>
 
-class FieldInvocationExpression : Expression {
+class FieldInvocExpression : public Expression {
 public:
-    FieldInvocationExpression(Expression* expr, yy::location loc);
+    FieldInvocExpression(const std::string& field_name, yy::location loc);
     int eval() const override;
     void Accept(Visitor* visitor) override;
-private:
-    Expression* expr;
+
+    std::string field_name;
 };
 
 

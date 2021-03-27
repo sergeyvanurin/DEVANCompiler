@@ -119,6 +119,43 @@ void PrintVisitor::Visit(ClassDeclarationList* class_declaration_list){
 void PrintVisitor::Visit(MethodDeclaration* statement){
 
 }
-void PrintVisitor::Visit(Declarations* statement){
+void PrintVisitor::Visit(DeclarationList* statement){
 
 }
+
+void PrintVisitor::Visit(FormalsList *formals_list) {
+
+}
+
+void PrintVisitor::Visit(Formal *formal) {
+
+}
+
+void PrintVisitor::Visit(Print *statement) {
+
+}
+
+void PrintVisitor::Visit(Return *statement) {
+
+}
+
+void PrintVisitor::Visit(FieldInvocExpression *expression) {
+
+}
+
+void PrintVisitor::Visit(ExpressionList *statement) {
+
+}
+
+void PrintVisitor::Visit(MethodInvocation *statement) {
+
+}
+
+void PrintVisitor::Visit(LengthExpression *expression) {
+
+}
+
+void PrintVisitor::Visit(ThisExpression *expression) {
+
+}
+

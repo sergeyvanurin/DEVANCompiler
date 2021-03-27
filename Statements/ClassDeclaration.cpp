@@ -14,6 +14,8 @@ ClassDeclaration::ClassDeclaration(const std::string &class_name, const std::str
 
 }
 
-void ClassDeclaration::AddDeclaration(Statement *declaration) {
-
+void ClassDeclaration::AddDeclarations(DeclarationList *declaration_list) {
+    this->declaration_list = declaration_list;
 }
+
+

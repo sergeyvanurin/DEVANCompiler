@@ -13,11 +13,11 @@ class ClassDeclaration : public Statement {
 public:
     ClassDeclaration(const std::string& class_name, const std::string& base_class_name, Scope* scope, yy::location loc);
     void Accept(Visitor* visitor) override;
-    void AddDeclaration(Statement* declaration);
+    void AddDeclarations(DeclarationList* declaration_list);
 private:
     std::string class_name;
     std::string base_class_name = "";
-    Declarations* declarations;
+    DeclarationList* declaration_list;
 };
 
 

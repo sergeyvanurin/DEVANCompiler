@@ -23,6 +23,9 @@ public:
     virtual void Visit(NotExpression* expression) = 0;
     virtual void Visit(TrueExpression* expression) = 0;
     virtual void Visit(FalseExpression* expression) = 0;
+    virtual void Visit(ThisExpression* expression) = 0;
+    virtual void Visit(FieldInvocExpression* expression) = 0;
+    virtual void Visit(LengthExpression* expression) = 0;
     virtual void Visit(Program* program) = 0;
     virtual void Visit(MainClass* main_class) = 0;
     virtual void Visit(ClassDeclaration* class_declaration) = 0;
@@ -30,7 +33,7 @@ public:
     virtual void Visit(Assert* statement) = 0;
     virtual void Visit(VarDeclaration* statement) = 0;
     virtual void Visit(MethodDeclaration* statement) = 0;
-    virtual void Visit(Declarations* statement) = 0;
+    virtual void Visit(DeclarationList* statement) = 0;
     virtual void Visit(IfElse* statement) = 0;
     virtual void Visit(While* statement) = 0;
     virtual void Visit(VarAssignment* statement) = 0;
@@ -38,7 +41,12 @@ public:
     virtual void Visit(NumExpression* statement) = 0;
     virtual void Visit(Scope* scope) = 0;
     virtual void Visit(StatementList* statements) = 0;
-
+    virtual void Visit(Formal* formal) = 0;
+    virtual void Visit(FormalsList* formals_list) = 0;
+    virtual void Visit(Print* statement) = 0;
+    virtual void Visit(Return* statement) = 0;
+    virtual void Visit(ExpressionList* statement) = 0;
+    virtual void Visit(MethodInvocation* statement) = 0;
 };
 
 
