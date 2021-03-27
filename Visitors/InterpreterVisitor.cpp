@@ -25,7 +25,7 @@ void InterpreterVisitor::Visit(StatementList *statements) {
 }
 
 void InterpreterVisitor::Visit(VarAssignment *statement) {
-    variables[statement->var_name->var_name] =
+
 }
 
 void InterpreterVisitor::Visit(AddExpression *expression) {

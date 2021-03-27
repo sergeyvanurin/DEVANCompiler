@@ -5,6 +5,7 @@
 #ifndef DEVANCOMPILER_INTERPRETERVISITOR_H
 #define DEVANCOMPILER_INTERPRETERVISITOR_H
 #include <map>
+#include <stack>
 #include "Visitor.h"
 
 
@@ -38,11 +39,13 @@ class InterpreterVisitor: public Visitor {
     void Visit(FalseExpression* expression) override;
     void Visit(ClassDeclarationList* class_declaration_list) override;
     void Visit(MethodDeclaration* statement) override;
-    void Visit(Declarations* statement) override;
+    void Visit(DeclarationList* statement) override;
 
 
 private:
     std::map<std::string, int> variables;
+    std::stack<int> local_results;
+
 
 };
 

@@ -275,3 +275,5 @@ void PrintVisitor::Visit(LengthExpression *expression) {
 void PrintVisitor::Visit(ThisExpression *expression) {
 
 }
+
+PrintVisitor::PrintVisitor(const std::string &filename): stream(filename) {}
