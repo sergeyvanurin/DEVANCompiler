@@ -96,8 +96,15 @@ void InterpreterVisitor::Visit(SubExpression *expression) {
 }
 
 void InterpreterVisitor::Visit(While *statement) {
-
-
+    statement->expr->Accept(this);
+    int statement_value = local_results.top();
+    local_results.pop();
+    while (statement_value){
+        statement->statement->Accept(this);
+        statement->expr->Accept(this);
+        statement_value = local_results.top();
+        local_results.pop();
+    }
 }
 
 void InterpreterVisitor::Visit(DeclarationList *statement) {
@@ -113,35 +120,68 @@ void InterpreterVisitor::Visit(ClassDeclarationList *class_declaration_list) {
 }
 
 void InterpreterVisitor::Visit(FalseExpression *expression) {
-
+    local_results.push(0);
 }
 
 void InterpreterVisitor::Visit(TrueExpression *expression) {
-
+    local_results.push(1);
 }
 
 void InterpreterVisitor::Visit(NotExpression *expression) {
-
+    expression->expr->Accept(this);
+    int expr = local_results.top();
+    local_results.pop();
+    local_results.push(!expr);
 }
 
 void InterpreterVisitor::Visit(EqualExpression *expression) {
-
+    expression->expr1->Accept(this);
+    expression->expr2->Accept(this);
+    int second = local_results.top();
+    local_results.pop();
+    int first = local_results.top();
+    local_results.pop();
+    local_results.push(first == second);
 }
 
 void InterpreterVisitor::Visit(LessExpression *expression) {
-
+    expression->expr1->Accept(this);
+    expression->expr2->Accept(this);
+    int second = local_results.top();
+    local_results.pop();
+    int first = local_results.top();
+    local_results.pop();
+    local_results.push(first < second);
 }
 
 void InterpreterVisitor::Visit(GreaterExpression *expression) {
-
+    expression->expr1->Accept(this);
+    expression->expr2->Accept(this);
+    int second = local_results.top();
+    local_results.pop();
+    int first = local_results.top();
+    local_results.pop();
+    local_results.push(first > second);
 }
 
 void InterpreterVisitor::Visit(LogicalOrExpression *expression) {
-
+    expression->expr1->Accept(this);
+    expression->expr2->Accept(this);
+    int second = local_results.top();
+    local_results.pop();
+    int first = local_results.top();
+    local_results.pop();
+    local_results.push(first || second);
 }
 
 void InterpreterVisitor::Visit(LogicalAndExpression *expression) {
-
+    expression->expr1->Accept(this);
+    expression->expr2->Accept(this);
+    int second = local_results.top();
+    local_results.pop();
+    int first = local_results.top();
+    local_results.pop();
+    local_results.push(first && second);
 }
 
 void InterpreterVisitor::Visit(IndexExpression *expression) {
@@ -153,6 +193,17 @@ void InterpreterVisitor::Visit(Scope *scope) {
 }
 
 void InterpreterVisitor::Visit(IfElse *statement) {
+    statement->expr->Accept(this);
+    int expr = local_results.top();
+    local_results.pop();
+    if (expr){
+        statement->If->Accept(this);
+    }
+    else{
+        if (statement->Else != nullptr){
+            statement->Else->Accept(this);
+        }
+    }
 
 }
 

@@ -7,7 +7,7 @@
 FalseExpression::FalseExpression(yy::location loc): Expression(loc) {}
 
 std::variant<int, std::string> FalseExpression::eval() const {
-    return false;
+    return 0;
 }
 
 void FalseExpression::Accept(Visitor *visitor) {
