@@ -12,7 +12,7 @@ class ThisExpression : public Expression {
 public:
     explicit ThisExpression(yy::location loc);
     void Accept(Visitor* visitor) override;
-    int eval() const override;
+    std::variant<int, std::string> eval() const override;
 };
 
 

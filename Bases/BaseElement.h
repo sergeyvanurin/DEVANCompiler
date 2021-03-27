@@ -3,6 +3,7 @@
 //
 #include "location.hh"
 #include "Visitors/Visitor.h"
+#include <variant>
 #ifndef DEVANCOMPILER_BASEELEMENT_H
 #define DEVANCOMPILER_BASEELEMENT_H
 

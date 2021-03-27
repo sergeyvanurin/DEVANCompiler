@@ -13,7 +13,7 @@ class MethodInvocation : public Statement, public Expression {
 public:
     explicit MethodInvocation(Expression* expr, const std::string& name, ExpressionList* args, Scope* scope, yy::location loc);
     void Accept(Visitor* visitor) override;
-    int eval() const override;
+    std::variant<int, std::string> eval() const override;
     Expression* class_expr;
     std::string method_name;
     ExpressionList* arguments;

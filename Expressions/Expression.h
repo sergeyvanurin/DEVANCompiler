@@ -10,7 +10,7 @@
 class Expression: public BaseElement {
 public:
     explicit Expression(yy::location loc): BaseElement(loc) {}
-    virtual int eval() const = 0;
+    virtual std::variant<int, std::string> eval() const = 0;
 
 };
 

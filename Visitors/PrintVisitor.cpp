@@ -97,7 +97,7 @@ void PrintVisitor::Visit(MulExpression *expression) {
 
 void PrintVisitor::Visit(NumExpression *statement) {
     PrintTabs();
-    stream << statement->eval() << std::endl;
+    stream << std::get<int>(statement->eval()) << std::endl;
 
 }
 
@@ -128,7 +128,7 @@ void PrintVisitor::Visit(SubExpression *expression) {
 
 void PrintVisitor::Visit(VarAssignment *statement) {
     PrintTabs();
-    stream << "var assignment: " << statement->var_name->eval() << std::endl;
+    stream << "var assignment: " << std::get<std::string>(statement->var_name->eval()) << std::endl;
     PrintTabs();
     stream << "new Value: " << std::endl;
     num_tabs_++;
@@ -275,3 +275,5 @@ void PrintVisitor::Visit(LengthExpression *expression) {
 void PrintVisitor::Visit(ThisExpression *expression) {
 
 }
+
+PrintVisitor::PrintVisitor(const std::string &filename): stream(filename) {}

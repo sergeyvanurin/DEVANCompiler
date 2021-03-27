@@ -2,6 +2,7 @@
 // Created by deliza on 27.03.2021.
 //
 
+#include <variant>
 #include "LengthExpression.h"
 
 void LengthExpression::Accept(Visitor *visitor) {
@@ -12,6 +13,6 @@ LengthExpression::LengthExpression(Expression *array_expr, yy::location loc): ar
 
 }
 
-int LengthExpression::eval() const {
+std::variant<int, std::string> LengthExpression::eval() const {
     return 0;
 }

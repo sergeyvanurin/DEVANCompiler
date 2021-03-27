@@ -1,10 +1,11 @@
 #include "driver.hpp"
 #include "Visitors/PrintVisitor.h"
+#include "Visitors/InterpreterVisitor.h"
 
 int main(int argc, char** argv)
 {
     Driver d;
-    if (argc != 2) {
+    if (argc == 1) {
         std::cerr << "Usage: " << argv[0] << " <mini-java file>";
         return 0;
     }
@@ -15,5 +16,8 @@ int main(int argc, char** argv)
             d.print_tree(argv[2]);
         }
     }
+    d.run();
+
+
 
 } 

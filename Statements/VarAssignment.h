@@ -13,7 +13,7 @@ class VarAssignment: public Statement {
 public:
     VarAssignment(Expression* var_name, Expression *new_value, Scope *scope, yy::location loc);
     void Accept(Visitor* visitor) override;
-    IdentExpression* var_name;
+    Expression* var_name;
     Expression* new_value;
 };
 

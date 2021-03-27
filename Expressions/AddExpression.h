@@ -9,7 +9,7 @@
 class AddExpression: public Expression {
 public:
     AddExpression(Expression* expr1, Expression* expr2, yy::location loc);
-    int eval() const override;
+    std::variant<int, std::string> eval() const override;
     void Accept(Visitor* visitor) override;
 
     Expression* expr1;

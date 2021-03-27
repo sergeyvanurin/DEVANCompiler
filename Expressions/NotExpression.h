@@ -10,7 +10,7 @@
 class NotExpression : public Expression {
 public:
     NotExpression(Expression* expr, yy::location loc);
-    int eval() const override;
+    std::variant<int, std::string> eval() const override;
     void Accept(Visitor* visitor) override;
     Expression* expr;
 };
