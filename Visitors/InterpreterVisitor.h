@@ -6,6 +6,7 @@
 #define DEVANCOMPILER_INTERPRETERVISITOR_H
 #include <map>
 #include <stack>
+#include <string>
 #include "Visitor.h"
 
 
