@@ -6,7 +6,7 @@
 
 FalseExpression::FalseExpression(yy::location loc): Expression(loc) {}
 
-int FalseExpression::eval() const {
+std::variant<int, std::string> FalseExpression::eval() const {
     return false;
 }
 

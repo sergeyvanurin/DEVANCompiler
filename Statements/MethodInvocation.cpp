@@ -2,6 +2,7 @@
 // Created by deliza on 27.03.2021.
 //
 
+#include <variant>
 #include "MethodInvocation.h"
 
 void MethodInvocation::Accept(Visitor *visitor) {
@@ -15,6 +16,6 @@ MethodInvocation::MethodInvocation(Expression *expr, const std::string &name, Ex
 
 }
 
-int MethodInvocation::eval() const {
+std::variant<int, std::string> MethodInvocation::eval() const {
     return 0;
 }

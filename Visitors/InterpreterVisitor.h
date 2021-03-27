@@ -37,9 +37,18 @@ class InterpreterVisitor: public Visitor {
     void Visit(NotExpression* expression) override;
     void Visit(TrueExpression* expression) override;
     void Visit(FalseExpression* expression) override;
+    void Visit(ThisExpression* expression) override;
+    void Visit(FieldInvocExpression* expression) override;
+    void Visit(LengthExpression* expression) override;
     void Visit(ClassDeclarationList* class_declaration_list) override;
     void Visit(MethodDeclaration* statement) override;
     void Visit(DeclarationList* statement) override;
+    void Visit(Formal* formal) override;
+    void Visit(FormalsList* formals_list) override;
+    void Visit(Print* statement) override;
+    void Visit(Return* statement) override;
+    void Visit(ExpressionList* statement) override;
+    void Visit(MethodInvocation* statement) override;
 
 
 private:

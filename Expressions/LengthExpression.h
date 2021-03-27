@@ -13,7 +13,7 @@ class LengthExpression : public Expression {
 public:
     explicit LengthExpression(Expression* array_expr, yy::location loc);
     void Accept(Visitor* visitor) override;
-    int eval() const override;
+    std::variant<int, std::string> eval() const override;
 
     Expression* array_expr;
 };

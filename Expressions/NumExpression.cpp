@@ -11,6 +11,6 @@ void NumExpression::Accept(Visitor *visitor) {
 
 }
 
-int NumExpression::eval() const {
+std::variant<int, std::string> NumExpression::eval() const {
     return value;
 }

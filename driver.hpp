@@ -7,6 +7,7 @@
 #include "scanner.hpp"
 #include "parser.hpp"
 #include "Visitors/PrintVisitor.h"
+#include "Visitors/InterpreterVisitor.h"
 
 
 class Driver {
@@ -34,5 +35,6 @@ public:
 
     Program* program;
     void print_tree(const std::string& filename) const;
+    void run();
 
 };

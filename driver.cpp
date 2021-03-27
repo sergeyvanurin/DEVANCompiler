@@ -34,3 +34,9 @@ void Driver::print_tree(const std::string& filename) const {
     program->Accept(&visitor);
 }
 
+void Driver::run() {
+    InterpreterVisitor visitor;
+    program->Accept(&visitor);
+
+}
+
