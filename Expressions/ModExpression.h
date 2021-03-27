@@ -11,7 +11,6 @@ public:
     int eval() const override;
     void Accept(Visitor* visitor) override;
 
-private:
     Expression* expr1;
     Expression* expr2;
 };

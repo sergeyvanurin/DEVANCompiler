@@ -1,15 +1,15 @@
 //
-// Created by Sergey Vanurin on 04.03.2021.
+// Created by Sergey Vanurin on 27.03.2021.
 //
 
-
+#ifndef DEVANCOMPILER_INTERPRETERVISITOR_H
+#define DEVANCOMPILER_INTERPRETERVISITOR_H
+#include <map>
 #include "Visitor.h"
-#include <fstream>
-#ifndef DEVANCOMPILER_PRINTVISITOR_H
-#define DEVANCOMPILER_PRINTVISITOR_H
 
 
-class PrintVisitor: public Visitor {
+class InterpreterVisitor: public Visitor {
+
     void Visit(ClassDeclaration *class_declaration) override;
     void Visit(AddExpression *expression) override;
     void Visit(Assert *statement) override;
@@ -36,26 +36,15 @@ class PrintVisitor: public Visitor {
     void Visit(NotExpression* expression) override;
     void Visit(TrueExpression* expression) override;
     void Visit(FalseExpression* expression) override;
-    void Visit(ThisExpression* expression) override;
-    void Visit(FieldInvocExpression* expression) override;
-    void Visit(LengthExpression* expression) override;
     void Visit(ClassDeclarationList* class_declaration_list) override;
     void Visit(MethodDeclaration* statement) override;
-    void Visit(DeclarationList* statement) override;
-    void Visit(Formal* formal) override;
-    void Visit(FormalsList* formals_list) override;
-    void Visit(Print* statement) override;
-    void Visit(Return* statement) override;
-    void Visit(ExpressionList* statement) override;
-    void Visit(MethodInvocation* statement) override;
-public:
-    PrintVisitor(const std::string& filename);
+    void Visit(Declarations* statement) override;
+
 
 private:
-    void PrintTabs();
-    std::ofstream stream;
-    int num_tabs_ = 0;
+    std::map<std::string, int> variables;
+
 };
 
 
-#endif //DEVANCOMPILER_PRINTVISITOR_H
+#endif //DEVANCOMPILER_INTERPRETERVISITOR_H

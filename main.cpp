@@ -11,7 +11,9 @@ int main(int argc, char** argv)
     std::string filename(argv[1]);
     int error = d.parse(filename);
     if (!error) {
-        d.print_tree();
+        if (argc == 3){
+            d.print_tree(argv[2]);
+        }
     }
 
 } 

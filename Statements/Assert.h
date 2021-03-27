@@ -13,7 +13,6 @@ public:
     Assert(Expression* expr, Scope* scope, yy::location loc);
     void Accept(Visitor* visitor) override;
 
-private:
     Expression* expr;
 };
 
