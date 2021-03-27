@@ -119,7 +119,7 @@ void PrintVisitor::Visit(StatementList *statements) {
 void PrintVisitor::Visit(SubExpression *expression) {
     PrintTabs();
     num_tabs_++;
-    stream << "Sub expression: << std::endl";
+    stream << "Sub expression:" << std::endl;
     expression->expr1->Accept(this);
     expression->expr2->Accept(this);
     stream << std::endl;
