@@ -13,8 +13,11 @@ Simple mini-java program:
 ```
 class Program {
   public static void main () {
-  int num;
-  num = 5;
+      int a; int b;
+      a = 5; b = 3;
+      while (a > 0) a = a - 1;
+      if (a > b) System.out.println(a);
+      else System.out.println(b);
   }
 }
 ```
