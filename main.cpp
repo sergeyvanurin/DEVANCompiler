@@ -6,7 +6,7 @@ int main(int argc, char** argv)
 {
     Driver d;
     if (argc == 1) {
-        std::cerr << "Usage: " << argv[0] << " <mini-java file>";
+        std::cerr << "Usage: " << argv[0] << " <mini-java file> <output file>" ;
         return 0;
     }
     std::string filename(argv[1]);
@@ -15,9 +15,6 @@ int main(int argc, char** argv)
         if (argc == 3){
             d.print_tree(argv[2]);
         }
+        d.run();
     }
-    d.run();
-
-
-
 } 
