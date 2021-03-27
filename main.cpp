@@ -15,9 +15,6 @@ int main(int argc, char** argv)
         if (argc == 3){
             d.print_tree(argv[2]);
         }
+        d.run();
     }
-    d.run();
-
-
-
 } 

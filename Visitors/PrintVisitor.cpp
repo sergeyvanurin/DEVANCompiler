@@ -63,10 +63,11 @@ void PrintVisitor::Visit(IfElse *statement) {
     PrintTabs();
     stream << "Else statements:" << std::endl;
 
-    num_tabs_++;
-    statement->Else->Accept(this);
-    stream << std::endl;
-
+    if (statement->Else != nullptr){
+        num_tabs_++;
+        statement->Else->Accept(this);
+        stream << std::endl;
+    }
     num_tabs_--;
 }
 
@@ -168,7 +169,7 @@ void PrintVisitor::Visit(IndexExpression* expression){
 }
 void PrintVisitor::Visit(LogicalAndExpression* expression){
     PrintTabs();
-    stream << "AND expressionn: " << std::endl;
+    stream << "AND expression: " << std::endl;
     num_tabs_++;
     expression->expr1->Accept(this);
     expression->expr2->Accept(this);
@@ -177,7 +178,7 @@ void PrintVisitor::Visit(LogicalAndExpression* expression){
 
 void PrintVisitor::Visit(LogicalOrExpression* expression){
     PrintTabs();
-    stream << "OR expressionn: " << std::endl;
+    stream << "OR expression: " << std::endl;
     num_tabs_++;
     expression->expr1->Accept(this);
     expression->expr2->Accept(this);
@@ -186,7 +187,7 @@ void PrintVisitor::Visit(LogicalOrExpression* expression){
 
 void PrintVisitor::Visit(GreaterExpression* expression){
     PrintTabs();
-    stream << "GREATER expressionn: " << std::endl;
+    stream << "GREATER expression: " << std::endl;
     num_tabs_++;
     expression->expr1->Accept(this);
     expression->expr2->Accept(this);
@@ -194,7 +195,7 @@ void PrintVisitor::Visit(GreaterExpression* expression){
 }
 void PrintVisitor::Visit(LessExpression* expression){
     PrintTabs();
-    stream << "LESS expressionn: " << std::endl;
+    stream << "LESS expression: " << std::endl;
     num_tabs_++;
     expression->expr1->Accept(this);
     expression->expr2->Accept(this);
@@ -202,7 +203,7 @@ void PrintVisitor::Visit(LessExpression* expression){
 }
 void PrintVisitor::Visit(EqualExpression* expression){
     PrintTabs();
-    stream << "EQUAL expressionn: " << std::endl;
+    stream << "EQUAL expression: " << std::endl;
     num_tabs_++;
     expression->expr1->Accept(this);
     expression->expr2->Accept(this);
@@ -210,7 +211,7 @@ void PrintVisitor::Visit(EqualExpression* expression){
 }
 void PrintVisitor::Visit(NotExpression* expression){
     PrintTabs();
-    stream << "NOT expressionn: " << std::endl;
+    stream << "NOT expression: " << std::endl;
     num_tabs_++;
     expression->expr->Accept(this);
     num_tabs_--;
