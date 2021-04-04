@@ -175,8 +175,8 @@ statements:
    | statements statement {$1->AddStatement($2); $$ = $1;};
 
 class_declaration:
-    "class" "id" "extends" "id" "{" declarations "}" {$$ = new ClassDeclaration($2, $4, nullptr, driver.loc); $$->AddDeclarations($6);}
-  | "class" "id" "{" declarations "}" {$$ = new ClassDeclaration($2, "", nullptr, driver.loc); $$->AddDeclarations($4);};
+    "class" "id" "extends" "id" "{" declarations "}" {$$ = new ClassDeclaration($2, $4, $6, nullptr, driver.loc);}
+  | "class" "id" "{" declarations "}" {$$ = new ClassDeclaration($2, "", $4, nullptr, driver.loc);};
 
 declarations:
     %empty {$$ = new DeclarationList(nullptr, driver.loc);}
