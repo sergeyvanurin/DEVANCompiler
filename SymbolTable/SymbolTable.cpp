@@ -22,7 +22,7 @@ void SymbolTable::CreateVariable(BaseSymbol symbol) {
 }
 
 BaseSymbol SymbolTable::GetSymbol(const std::string &name) {
-    //return BaseSymbol(name);
+    return BaseSymbol(name);
 }
 
 std::shared_ptr<Object> SymbolTable::Get(BaseSymbol key) {

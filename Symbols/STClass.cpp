@@ -5,11 +5,15 @@
 #include "STClass.h"
 
 STClass::STClass(ClassDeclaration *class_) : base_class_name(class_->base_class_name), BaseSymbol(class_->class_name) {
-    for (auto var_decl : class_->var_declarations) {
-        fields.emplace_back(var_decl);
+    for (auto decl : class_->declaration_list->declarations) {
+        if (decl.index() == 0) {
+            VarDeclaration* var = std::get<VarDeclaration*>(decl);
+            fields.emplace_back(var);
+        } else {
+            MethodDeclaration* method = std::get<MethodDeclaration*>(decl);
+            methods.emplace_back(method);
+        }
     }
-    for (auto method_decl : class_->method_declarations) {
-        methods.emplace_back(method_decl);
-    }
+
 
 }
