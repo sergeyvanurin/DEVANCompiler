@@ -14,11 +14,8 @@ ClassDeclaration::ClassDeclaration(const std::string &class_name, const std::str
 
 }
 
-void ClassDeclaration::AddVarDeclaration(VarDeclaration *var_decl) {
-    var_declarations.push_back(var_decl);
+void ClassDeclaration::AddDeclarations(DeclarationList *declaration_list) {
+    this->declaration_list = declaration_list;
 }
 
-void ClassDeclaration::AddMethodDeclaration(MethodDeclaration *method_decl) {
-    method_declarations.push_back(method_decl);
-}
 

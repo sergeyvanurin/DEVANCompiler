@@ -13,7 +13,7 @@ public:
     While(Expression *expr, Statement *statement, Scope *scope, yy::location loc);
     void Accept(Visitor* visitor) override;
 
-private:
+public:
     Expression* expr;
     Statement* statement;
 };

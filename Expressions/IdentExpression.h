@@ -12,7 +12,7 @@ class IdentExpression: public Expression {
 public:
     explicit IdentExpression(std::string& var_name, yy::location loc);
     void Accept(Visitor* visitor) override;
-    int eval() const override;
+    std::variant<int, std::string> eval() const override;
     std::string var_name;
 };
 

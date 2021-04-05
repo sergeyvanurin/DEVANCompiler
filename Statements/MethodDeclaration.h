@@ -13,6 +13,7 @@ class MethodDeclaration : public Statement {
 public:
     MethodDeclaration(const std::string& method_name, FormalsList* formals, StatementList* statements, Scope* scope, yy::location loc);
     void Accept(Visitor* visitor) override;
+    // returns void
 
     std::string method_name;
     FormalsList* formals;

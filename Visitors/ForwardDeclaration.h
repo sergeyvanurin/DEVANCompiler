@@ -19,6 +19,9 @@ class EqualExpression;
 class NotExpression;
 class TrueExpression;
 class FalseExpression;
+class ThisExpression;
+class FieldInvocExpression;
+class LengthExpression;
 class Program;
 class MainClass;
 class ClassDeclaration;
@@ -26,7 +29,7 @@ class ClassDeclarationList;
 class Assert;
 class VarDeclaration;
 class MethodDeclaration;
-class Declarations;
+class DeclarationList;
 class IfElse;
 class While;
 class VarAssignment;
@@ -36,5 +39,9 @@ class Scope;
 class StatementList;
 class Formal;
 class FormalsList;
+class Print;
+class Return;
+class ExpressionList;
+class MethodInvocation;
 
 #endif //DEVANCOMPILER_FORWARDDECLARATION_H

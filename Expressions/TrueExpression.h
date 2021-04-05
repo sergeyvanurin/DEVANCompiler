@@ -10,7 +10,7 @@
 class TrueExpression : public Expression {
 public:
     TrueExpression(yy::location loc);
-    int eval() const override;
+    std::variant<int, std::string> eval() const override;
     void Accept(Visitor* visitor) override;
 };
 
