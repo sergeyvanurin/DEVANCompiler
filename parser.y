@@ -196,23 +196,26 @@ method_declaration:
   | "public" type "id" "(" ")" "{" statements "}" {$$ = new MethodDeclaration($3, $2, nullptr, $7, nullptr, driver.loc);};
 
 variable_declaration:
-    type "id" ";" {$$ = new VarDeclaration($2, driver.get_scope(), driver.loc);};
+    type "id" ";" {$$ = new VarDeclaration($1, $2, driver.get_scope(), driver.loc);};
 
 formals:
-    type "id" {$$ = new FormalsList(nullptr, driver.loc); $$->AddFormal(new Formal($2, nullptr, driver.loc));}
-   | formals "," type "id" {$1->AddFormal(new Formal($4, nullptr, driver.loc)); $$ = $1;};
+    type "id" {$$ = new FormalsList(nullptr, driver.loc); $$->AddFormal(new Formal($1, $2, nullptr, driver.loc));}
+   | formals "," type "id" {$1->AddFormal(new Formal($3, $4, nullptr, driver.loc)); $$ = $1;};
 
 type:
-    simple_type { $$ = $1; } | array_type { $$ = $1; };
+    simple_type {$$ = $1;} | array_type {$$ = $1;};
 
 simple_type:
-    "int" { $$ = new Type("int"); } | "boolean" {$$ = new Type("bool");} | "void" {$$ = new Type("void");} | type_identifier {$$ = new Type($1);};
+    "int" {$$ = new Type("int");}
+  | "boolean" {$$ = new Type("bool");}
+  | "void" {$$ = new Type("void");}
+  | type_identifier {$$ = new Type($1);};
 
 array_type:
-    simple_type "[]" { $$ = $1; $$->is_array = true; };
+    simple_type "[]" {$$ = $1; $$->is_array = true;};
 
 type_identifier:
-    "id" { $$ = $1; };
+    "id" {$$ = $1;};
 
 statement:
     "assert" "(" expr ")" {$$ = new Assert($3, driver.get_scope(), driver.loc);}
