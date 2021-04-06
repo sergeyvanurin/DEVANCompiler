@@ -5,7 +5,8 @@
 #ifndef DEVANCOMPILER_SYMBOLTREEVISITOR_H
 #define DEVANCOMPILER_SYMBOLTREEVISITOR_H
 
-
+#include "SymbolTable/ScopeLayerTree.h"
+#include "SymbolTable/ScopeLayer.h"
 #include "Visitor.h"
 
 class SymbolTreeVisitor: public Visitor {
@@ -51,10 +52,10 @@ public:
     void Visit(ExpressionList* statement) override;
     void Visit(MethodInvocation* statement) override;
 
-    //ScopeLayer* GetRoot();
+    ScopeLayer* GetRoot();
 private:
-    //ScopeLayerTree tree_;
-    //ScopeLayer* current_layer_;
+    ScopeLayerTree tree_;
+    ScopeLayer* current_layer_;
 };
 
 #endif //DEVANCOMPILER_SYMBOLTREEVISITOR_H

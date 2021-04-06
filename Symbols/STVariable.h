@@ -16,5 +16,13 @@ public:
     std::string type = "int";
 };
 
+namespace std {
+    template<>
+    struct hash<STVariable> {
+        std::size_t operator()(const STVariable &other) const {
+            return hash<string>()(other.GetName());
+        }
+    };
+}
 
 #endif //DEVANCOMPILER_STVARIABLE_H

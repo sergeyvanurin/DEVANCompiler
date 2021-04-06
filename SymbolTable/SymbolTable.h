@@ -10,6 +10,7 @@
 
 #include <unordered_map>
 #include <stack>
+#include <Symbols/STVariable.h>
 
 class SymbolTable {
 public:
@@ -17,13 +18,10 @@ public:
     void Put(BaseSymbol symbol, std::shared_ptr<Object> value);
 
     void CreateVariable(BaseSymbol symbol);
-    void CreateMethod();
-    void CreateClass();
-    
 
     BaseSymbol GetSymbol(const std::string& name);
 
-    std::shared_ptr<Object> Get(BaseSymbol key);
+    std::shared_ptr<Object> GetValue(BaseSymbol key);
 
     void BeginScope();
     void EndScope();

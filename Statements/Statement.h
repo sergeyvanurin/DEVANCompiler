@@ -11,6 +11,7 @@ class Statement: public BaseElement
 {
 public:
     explicit Statement(Scope* scope, yy::location loc);
+
     Scope* scope;
 };
 #endif //DEVANCOMPILER_KETWORD_H
