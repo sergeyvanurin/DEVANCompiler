@@ -10,9 +10,11 @@
 
 class Type {
 public:
-    Type(std::string type_name = "int", bool is_array = false);
+    Type(std::string type_name = "", bool is_array = false);
 
     bool operator ==(const Type& other) const;
+
+    bool operator !=(const Type& other) const;
 
     std::string type_name;
     bool is_array;

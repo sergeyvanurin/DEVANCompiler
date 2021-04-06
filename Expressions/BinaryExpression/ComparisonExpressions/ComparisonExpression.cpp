@@ -4,11 +4,11 @@
 
 #include "ComparisonExpression.h"
 
-std::string ComparisonExpression::EvalType(ScopeLayer *scope) {
-    if (expr1->GetType(scope) != "int" || expr2->GetType(scope) != "int") {
+Type ComparisonExpression::EvalType(ScopeLayer *scope) {
+    if (expr1->GetType(scope) != Type("int") || expr2->GetType(scope) != Type("int")) {
         throw std::runtime_error("TypeError: Cant compare non-int types");
     }
-    return "bool";
+    return Type("bool");
 }
 
 ComparisonExpression::ComparisonExpression(Expression *expr1, Expression *expr2, yy::location loc) : BinaryExpression(

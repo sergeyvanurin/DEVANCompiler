@@ -15,6 +15,6 @@ std::variant<int, std::string> NumExpression::eval() const {
     return value;
 }
 
-std::string NumExpression::EvalType(ScopeLayer *scope) {
-    return "int";
+Type NumExpression::EvalType(ScopeLayer *scope) {
+    return Type("int");
 }

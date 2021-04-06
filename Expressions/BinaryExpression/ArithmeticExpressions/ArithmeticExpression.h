@@ -11,7 +11,7 @@ class ArithmeticExpression : public BinaryExpression {
 public:
     ArithmeticExpression(Expression *expr1, Expression *expr2, yy::location loc);
 
-    std::string EvalType(ScopeLayer *scope) override;
+    Type EvalType(ScopeLayer *scope) override;
 };
 
 

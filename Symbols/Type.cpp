@@ -13,3 +13,7 @@ Type::Type(std::string type_name, bool is_array) : type_name(std::move(type_name
 bool Type::operator==(const Type& other) const {
     return other.is_array == is_array && other.type_name == type_name;
 }
+
+bool Type::operator!=(const Type &other) const {
+    return !operator==(other);
+}

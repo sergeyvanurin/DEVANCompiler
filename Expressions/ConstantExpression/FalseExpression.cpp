@@ -14,6 +14,6 @@ void FalseExpression::Accept(Visitor *visitor) {
     visitor->Visit(this);
 }
 
-std::string FalseExpression::EvalType(ScopeLayer *scope) {
-    return "bool";
+Type FalseExpression::EvalType(ScopeLayer *scope) {
+    return Type("bool");
 }

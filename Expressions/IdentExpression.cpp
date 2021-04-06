@@ -16,12 +16,12 @@ std::variant<int, std::string> IdentExpression::eval() const {
     return var_name;
 }
 
-std::string IdentExpression::EvalType(ScopeLayer *scope) {
+Type IdentExpression::EvalType(ScopeLayer *scope) {
     auto var = scope->GetVariableByName(var_name);
     if (var == nullptr){
         throw std::runtime_error("No variable " + var_name + " at this scope");
     }
-    return var->type.type_name;
+    return var->type;
 }
 
 

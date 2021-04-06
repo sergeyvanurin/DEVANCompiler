@@ -15,6 +15,6 @@ void TrueExpression::Accept(Visitor *visitor) {
     visitor->Visit(this);
 }
 
-std::string TrueExpression::EvalType(ScopeLayer *scope) {
-    return "bool";
+Type TrueExpression::EvalType(ScopeLayer *scope) {
+    return Type("bool");
 }

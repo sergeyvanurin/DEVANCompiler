@@ -18,7 +18,7 @@ public:
     std::string method_name;
     ExpressionList* arguments;
 private:
-    std::string EvalType(ScopeLayer *scope) override;
+    Type EvalType(ScopeLayer *scope) override;
 
 };
 

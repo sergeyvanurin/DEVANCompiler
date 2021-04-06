@@ -11,7 +11,7 @@ class ComparisonExpression: public BinaryExpression {
 public:
     ComparisonExpression(Expression *expr1, Expression *expr2, yy::location loc);
 private:
-    std::string EvalType(ScopeLayer *scope) override;
+    Type EvalType(ScopeLayer *scope) override;
 };
 
 
