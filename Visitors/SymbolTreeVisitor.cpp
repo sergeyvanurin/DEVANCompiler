@@ -226,7 +226,8 @@ void SymbolTreeVisitor::Visit(ExpressionList *statement) {
 }
 
 void SymbolTreeVisitor::Visit(MethodInvocation *statement) {
-    // TODO type deduction
+    statement->GetType(current_layer_);
+
 }
 
 ScopeLayer *SymbolTreeVisitor::GetRoot() {

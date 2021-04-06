@@ -6,7 +6,7 @@
 #include "STMethod.h"
 #include "Statements/FormalsList.h"
 
-STMethod::STMethod(MethodDeclaration *method): BaseSymbol(method->method_name) {
+STMethod::STMethod(MethodDeclaration *method): BaseSymbol(method->method_name), return_type(method->return_type) {
     for (auto* argument : method->formals->formals) {
         arguments.emplace_back(argument);
     }

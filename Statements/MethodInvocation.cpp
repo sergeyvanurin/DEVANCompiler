@@ -27,8 +27,11 @@ Type MethodInvocation::EvalType(ScopeLayer *scope) {
     }
     auto class_ref = scope->GetClassByName(class_name.type_name);
     if (class_ref == nullptr){
-        throw std::runtime_error("No " + class_name.type_name + " in scope");
+        throw std::runtime_error("No class '" + class_name.type_name + "' in scope");
     }
-    // TODO
-    return std::string();
+    auto method_ref = class_ref->FindMethodByName(method_name);
+    if (method_ref == nullptr){
+        throw std::runtime_error("Class '" + class_name.type_name + "' doesn't have field '" + method_name + "'");
+    }
+    return *method_ref->return_type;
 }

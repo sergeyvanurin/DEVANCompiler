@@ -8,12 +8,13 @@
 #include "BaseSymbol.h"
 #include "STArgument.h"
 #include <string>
+#include "Type.h"
 
 class STMethod : public BaseSymbol {
 public:
     explicit STMethod(MethodDeclaration* method);
     std::vector<STArgument> arguments;
-    std::string return_type = "void";
+    Type* return_type;
 };
 
 

@@ -21,6 +21,13 @@ public:
         return expr_type_;
     }
 
+    Type GetType() const {
+        if (expr_type_.type_name.empty()){
+            throw std::runtime_error("Type not evaluated");
+        }
+        return expr_type_;
+    }
+
 private:
     virtual Type EvalType(ScopeLayer *scope) = 0;
     Type expr_type_;
