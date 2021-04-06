@@ -5,7 +5,6 @@
 #ifndef DEVANCOMPILER_STMETHOD_H
 #define DEVANCOMPILER_STMETHOD_H
 
-#include "Visitors/Elements.h"
 #include "BaseSymbol.h"
 #include "STArgument.h"
 #include <string>

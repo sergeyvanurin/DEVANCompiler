@@ -26,7 +26,7 @@ public:
     void Put(STVariable symbol, std::shared_ptr<Object> value);
     std::shared_ptr<Object> Get(STVariable symbol);
 
-    bool Has(BaseSymbol symbol);
+    bool Has(const BaseSymbol& symbol) const;
 
     ScopeLayer* AddChild(ScopeLayer* child);
     void AttachParent();
@@ -37,6 +37,16 @@ public:
     void DeclareClass(const STClass& class_decl);
     void DeclareMethod(const STMethod& method);
 
+    bool HasVariableAtLayer(const std::string& var_name) const;
+
+    void EnterClass(STClass* cur_class);
+
+    STClass* GetCurrentClass() const;
+
+    STClass* GetClassByName(const std::string& class_name);
+
+    STVariable* GetVariableByName(const std::string& var_name);
+
 private:
     std::unordered_map<STVariable, std::shared_ptr<Object>> values_;
 
@@ -44,6 +54,8 @@ private:
     std::unordered_map<std::string, STMethod> methods_;
     std::unordered_map<std::string, STVariable> variables_;
     std::unordered_map<std::string, STClass> classes_;
+
+    STClass* current_class_ = nullptr;
 
     std::vector<BaseSymbol> symbols_;
     //std::string name_;

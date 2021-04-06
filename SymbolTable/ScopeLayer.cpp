@@ -45,7 +45,7 @@ void ScopeLayer::Put(STVariable symbol, std::shared_ptr<Object> value) {
     }
 }
 
-bool ScopeLayer::Has(BaseSymbol symbol) {
+bool ScopeLayer::Has(const BaseSymbol& symbol) const {
     return std::find(symbols_.begin(), symbols_.end(), symbol) != symbols_.end();
 }
 
@@ -91,4 +91,30 @@ void ScopeLayer::DeclareMethod(const STMethod& method) {
     }
 
     methods_.emplace(method.GetName(), method);
+}
+
+bool ScopeLayer::HasVariableAtLayer(const std::string& var_name) const {
+    return variables_.count(var_name);
+}
+
+void ScopeLayer::EnterClass(STClass *cur_class) {
+    current_class_ = cur_class;
+}
+
+STClass *ScopeLayer::GetCurrentClass() const {
+    return current_class_;
+}
+
+STClass *ScopeLayer::GetClassByName(const std::string& class_name) {
+    if (!classes_.count(class_name))
+        return nullptr;
+    return &classes_.at(class_name);
+}
+
+STVariable *ScopeLayer::GetVariableByName(const std::string &var_name) {
+    if (HasVariableAtLayer(var_name))
+        return &variables_.at(var_name);
+    if (parent_ == nullptr)
+        return nullptr;
+    return parent_->GetVariableByName(var_name);
 }

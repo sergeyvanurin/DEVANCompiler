@@ -3,6 +3,7 @@
 //
 
 #include "STClass.h"
+#include "Statements/DeclarationList.h"
 
 STClass::STClass(ClassDeclaration *class_) : base_class_name(class_->base_class_name), BaseSymbol(class_->class_name) {
     for (auto decl : class_->declaration_list->declarations) {
@@ -16,4 +17,13 @@ STClass::STClass(ClassDeclaration *class_) : base_class_name(class_->base_class_
     }
 
 
+}
+
+STVariable *STClass::FindFieldByName(std::string name) {
+    for (auto &field: fields){
+        if (field.GetName() == name){
+            return &field;
+        }
+    }
+    return nullptr;
 }

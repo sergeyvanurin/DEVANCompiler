@@ -15,6 +15,8 @@
 class STClass : public BaseSymbol {
 public:
 
+    STVariable* FindFieldByName(std::string name);
+
     explicit STClass(ClassDeclaration* class_);
     std::string base_class_name = "";
     std::vector<STMethod> methods;

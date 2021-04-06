@@ -2,9 +2,10 @@
 // Created by Sergey Vanurin on 01.03.2021.
 //
 
-#include "ForwardDeclaration.h"
 #ifndef DEVANCOMPILER_VISITOR_H
 #define DEVANCOMPILER_VISITOR_H
+
+#include "ForwardDeclaration.h"
 
 
 class Visitor {

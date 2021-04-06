@@ -8,12 +8,14 @@
 
 #include <Statements/VarDeclaration.h>
 #include "BaseSymbol.h"
+#include "Type.h"
 
 class STVariable : public BaseSymbol {
 public:
-    explicit STVariable(const std::string& name, std::string type = "int");
+    explicit STVariable(const std::string& name, Type type = std::string("int"));
     explicit STVariable(VarDeclaration* var_decl);
-    std::string type;
+
+    Type type;
 };
 
 namespace std {

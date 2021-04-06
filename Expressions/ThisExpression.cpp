@@ -16,3 +16,7 @@ void ThisExpression::Accept(Visitor *visitor) {
 std::variant<int, std::string> ThisExpression::eval() const {
     return 0;
 }
+
+std::string ThisExpression::EvalType(ScopeLayer *scope) {
+    return scope->GetCurrentClass()->GetName();
+}

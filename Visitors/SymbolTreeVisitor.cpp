@@ -15,43 +15,50 @@ void SymbolTreeVisitor::Visit(ClassDeclaration *class_decl) {
     NewLevelDown();
     class_decl->declaration_list->Accept(this);
     LevelUp();
+    // done
+}
+
+template <typename T>
+void BinaryExpressionVisit(T *expression, SymbolTreeVisitor *visitor){
+    visitor->NewLevelDown();
+    expression->expr1->Accept(visitor);
+    visitor->LevelUp();
+    visitor->NewLevelDown();
+    expression->expr2->Accept(visitor);
+    visitor->LevelUp();
 }
 
 void SymbolTreeVisitor::Visit(AddExpression *expression) {
-    NewLevelDown();
-    expression->expr1->Accept(this);
-    LevelUp();
-    NewLevelDown();
-    expression->expr2->Accept(this);
-    LevelUp();
+    BinaryExpressionVisit(expression, this);
 }
 
 void SymbolTreeVisitor::Visit(Assert *statement) {
     NewLevelDown();
     statement->expr->Accept(this);
     LevelUp();
+    // done
 }
 
 void SymbolTreeVisitor::Visit(DivExpression *expression) {
-    NewLevelDown();
-    expression->expr1->Accept(this);
-    LevelUp();
-    NewLevelDown();
-    expression->expr2->Accept(this);
-    LevelUp();
+    BinaryExpressionVisit(expression, this);
 }
 
 void SymbolTreeVisitor::Visit(IdentExpression *statement) {
-    // NEED type deduction
+    current_layer_->HasVariableAtLayer(statement->var_name);
+    // done
 }
 
 void SymbolTreeVisitor::Visit(IfElse *statement) {
+    NewLevelDown();
+    statement->expr->Accept(this);
+    LevelUp();
     NewLevelDown();
     statement->If->Accept(this);
     LevelUp();
     NewLevelDown();
     statement->Else->Accept(this);
     LevelUp();
+    // done
 }
 
 void SymbolTreeVisitor::Visit(MainClass *main_class) {
@@ -59,21 +66,11 @@ void SymbolTreeVisitor::Visit(MainClass *main_class) {
 }
 
 void SymbolTreeVisitor::Visit(ModExpression *expression) {
-    NewLevelDown();
-    expression->expr1->Accept(this);
-    LevelUp();
-    NewLevelDown();
-    expression->expr2->Accept(this);
-    LevelUp();
+    BinaryExpressionVisit(expression, this);
 }
 
 void SymbolTreeVisitor::Visit(MulExpression *expression) {
-    NewLevelDown();
-    expression->expr1->Accept(this);
-    LevelUp();
-    NewLevelDown();
-    expression->expr2->Accept(this);
-    LevelUp();
+    BinaryExpressionVisit(expression, this);
 }
 
 void SymbolTreeVisitor::Visit(NumExpression *statement) {
@@ -92,15 +89,11 @@ void SymbolTreeVisitor::Visit(StatementList *statements) {
     for (auto & statement : statements->statements ){
         statement->Accept(this);
     }
+    // done
 }
 
 void SymbolTreeVisitor::Visit(SubExpression *expression) {
-    NewLevelDown();
-    expression->expr1->Accept(this);
-    LevelUp();
-    NewLevelDown();
-    expression->expr2->Accept(this);
-    LevelUp();
+    BinaryExpressionVisit(expression, this);
 }
 
 void SymbolTreeVisitor::Visit(VarAssignment *statement) {
@@ -126,6 +119,7 @@ void SymbolTreeVisitor::Visit(While *statement) {
 }
 
 void SymbolTreeVisitor::Visit(IndexExpression *expression) {
+
     NewLevelDown();
     expression->inner->Accept(this);
     LevelUp();
@@ -135,48 +129,23 @@ void SymbolTreeVisitor::Visit(IndexExpression *expression) {
 }
 
 void SymbolTreeVisitor::Visit(LogicalAndExpression *expression) {
-    NewLevelDown();
-    expression->expr1->Accept(this);
-    LevelUp();
-    NewLevelDown();
-    expression->expr2->Accept(this);
-    LevelUp();
+    BinaryExpressionVisit(expression, this);
 }
 
 void SymbolTreeVisitor::Visit(LogicalOrExpression *expression) {
-    NewLevelDown();
-    expression->expr1->Accept(this);
-    LevelUp();
-    NewLevelDown();
-    expression->expr2->Accept(this);
-    LevelUp();
+    BinaryExpressionVisit(expression, this);
 }
 
 void SymbolTreeVisitor::Visit(GreaterExpression *expression) {
-    NewLevelDown();
-    expression->expr1->Accept(this);
-    LevelUp();
-    NewLevelDown();
-    expression->expr2->Accept(this);
-    LevelUp();
+    BinaryExpressionVisit(expression, this);
 }
 
 void SymbolTreeVisitor::Visit(LessExpression *expression) {
-    NewLevelDown();
-    expression->expr1->Accept(this);
-    LevelUp();
-    NewLevelDown();
-    expression->expr2->Accept(this);
-    LevelUp();
+    BinaryExpressionVisit(expression, this);
 }
 
 void SymbolTreeVisitor::Visit(EqualExpression *expression) {
-    NewLevelDown();
-    expression->expr1->Accept(this);
-    LevelUp();
-    NewLevelDown();
-    expression->expr2->Accept(this);
-    LevelUp();
+    BinaryExpressionVisit(expression, this);
 }
 
 void SymbolTreeVisitor::Visit(NotExpression *expression) {

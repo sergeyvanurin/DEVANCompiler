@@ -5,7 +5,6 @@
 #ifndef DEVANCOMPILER_LENGTHEXPRESSION_H
 #define DEVANCOMPILER_LENGTHEXPRESSION_H
 
-
 #include "Expression.h"
 #include "FieldInvokeExpression.h"
 
@@ -15,6 +14,10 @@ public:
     void Accept(Visitor* visitor) override;
     std::variant<int, std::string> eval() const override;
 
+private:
+    std::string EvalType(ScopeLayer *scope) override;
+
+public:
     Expression* array_expr;
 };
 

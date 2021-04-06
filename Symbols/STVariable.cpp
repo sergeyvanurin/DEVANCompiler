@@ -6,7 +6,7 @@
 
 #include <utility>
 
-STVariable::STVariable(const std::string &name, std::string  type) : BaseSymbol(name), type(std::move(type)) {
+STVariable::STVariable(const std::string &name, Type type) : BaseSymbol(name), type(std::move(type)) {
 
 }
 

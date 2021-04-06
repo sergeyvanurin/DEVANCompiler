@@ -19,3 +19,13 @@ MethodInvocation::MethodInvocation(Expression *expr, const std::string &name, Ex
 std::variant<int, std::string> MethodInvocation::eval() const {
     return 0;
 }
+
+std::string MethodInvocation::EvalType(ScopeLayer *scope) {
+    auto class_name = class_expr->GetType(scope);
+    auto class_ref = scope->GetClassByName(class_name);
+    if (class_ref == nullptr){
+        throw std::runtime_error("No " + class_name + " in scope");
+    }
+    // TODO
+    return std::string();
+}

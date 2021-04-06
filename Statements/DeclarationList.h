@@ -2,13 +2,13 @@
 // Created by deliza on 04.03.2021.
 //
 
-#include <vector>
-#include <variant>
-#include "Statement.h"
 
 #ifndef DEVANCOMPILER_DECLARATIONS_H
 #define DEVANCOMPILER_DECLARATIONS_H
 
+#include <vector>
+#include <variant>
+#include "Statement.h"
 
 class DeclarationList : public Statement {
 public:

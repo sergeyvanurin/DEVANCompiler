@@ -2,12 +2,12 @@
 // Created by deliza on 03.03.2021.
 //
 
-#include <Visitors/Visitor.h>
-#include "Statement.h"
 
 #ifndef DEVANCOMPILER_CLASSDECLARATION_H
 #define DEVANCOMPILER_CLASSDECLARATION_H
 
+#include <Visitors/Visitor.h>
+#include "Statement.h"
 
 class ClassDeclaration : public Statement {
 public:
