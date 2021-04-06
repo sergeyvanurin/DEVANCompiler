@@ -6,13 +6,15 @@
 #define DEVANCOMPILER_FORMAL_H
 
 
+#include <Symbols/Type.h>
 #include "Statement.h"
 
 class Formal : public Statement {
 public:
-    explicit Formal(const std::string& name, Scope* scope, yy::location loc);
+    explicit Formal(Type* type, const std::string& name, Scope* scope, yy::location loc);
     void Accept(Visitor* visitor) override;
     std::string name;
+    Type* type;
 };
 
 

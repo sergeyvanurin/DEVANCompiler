@@ -3,9 +3,15 @@
 //
 
 #include <variant>
+#include <algorithm>
 #include "IdentExpression.h"
 
-IdentExpression::IdentExpression(std::string& var_name, yy::location loc): var_name(var_name), Expression(loc) {}
+IdentExpression::IdentExpression(std::string& var_name, yy::location loc): var_name(var_name), Expression(loc) {
+    std::vector<std::string> reserved = {"System", "out", "println", "main", "length"};
+    if (std::find(reserved.begin(), reserved.end(), var_name) != reserved.end()) {
+        throw std::runtime_error("Name " + var_name + " is reserved");
+    }
+}
 
 void IdentExpression::Accept(Visitor *visitor) {
     visitor->Visit(this);
