@@ -14,7 +14,6 @@ class MethodDeclaration : public Statement {
 public:
     MethodDeclaration(std::string  method_name, Type*  return_type, FormalsList* formals, StatementList* statements, Scope* scope, yy::location loc);
     void Accept(Visitor* visitor) override;
-    // returns void
 
     std::string method_name;
     Type* return_type;
