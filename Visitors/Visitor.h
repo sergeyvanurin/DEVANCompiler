@@ -2,9 +2,10 @@
 // Created by Sergey Vanurin on 01.03.2021.
 //
 
-#include "ForwardDeclaration.h"
 #ifndef DEVANCOMPILER_VISITOR_H
 #define DEVANCOMPILER_VISITOR_H
+
+#include "ForwardDeclaration.h"
 
 
 class Visitor {
@@ -24,7 +25,7 @@ public:
     virtual void Visit(TrueExpression* expression) = 0;
     virtual void Visit(FalseExpression* expression) = 0;
     virtual void Visit(ThisExpression* expression) = 0;
-    virtual void Visit(FieldInvocExpression* expression) = 0;
+    virtual void Visit(FieldInvokeExpression* expression) = 0;
     virtual void Visit(LengthExpression* expression) = 0;
     virtual void Visit(Program* program) = 0;
     virtual void Visit(MainClass* main_class) = 0;
