@@ -12,7 +12,7 @@
 class STArgument : public BaseSymbol {
 public:
     explicit STArgument(Formal* argument);
-    std::string type = "int";
+    Type *type;
 };
 
 

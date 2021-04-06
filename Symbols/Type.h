@@ -16,6 +16,8 @@ public:
 
     bool operator !=(const Type& other) const;
 
+    std::string ToString() const;
+
     std::string type_name;
     bool is_array;
 };

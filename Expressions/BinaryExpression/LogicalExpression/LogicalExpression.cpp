@@ -5,7 +5,7 @@
 #include "LogicalExpression.h"
 
 Type LogicalExpression::EvalType(ScopeLayer *scope) {
-    if (expr1->GetType(nullptr) != Type("bool") || expr2->GetType(nullptr) != Type("bool")) {
+    if (expr1->GetType(scope) != Type("bool") || expr2->GetType(scope) != Type("bool")) {
         throw std::runtime_error("TypeError: Logical operation only for bool");
     }
     return Type("bool");

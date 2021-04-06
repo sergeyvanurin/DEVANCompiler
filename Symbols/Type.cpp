@@ -17,3 +17,7 @@ bool Type::operator==(const Type& other) const {
 bool Type::operator!=(const Type &other) const {
     return !operator==(other);
 }
+
+std::string Type::ToString() const {
+    return type_name + (is_array ? "[]" : "");
+}

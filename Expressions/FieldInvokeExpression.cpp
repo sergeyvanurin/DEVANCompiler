@@ -22,5 +22,5 @@ Type FieldInvokeExpression::EvalType(ScopeLayer *scope) {
     if (var == nullptr){
         throw std::runtime_error("Class " + scope->GetCurrentClass()->GetName() +  " doesn't contain field " + field_name);
     }
-    return var->type.type_name;
+    return var->type;
 }
