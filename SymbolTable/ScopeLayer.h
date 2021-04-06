@@ -10,6 +10,7 @@
 
 #include <unordered_map>
 #include <string>
+#include <stack>
 #include <memory>
 #include <vector>
 #include <Symbols/STVariable.h>

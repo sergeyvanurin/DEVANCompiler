@@ -4,7 +4,9 @@
 
 #include "STVariable.h"
 
-STVariable::STVariable(const std::string &name) : BaseSymbol(name) {
+#include <utility>
+
+STVariable::STVariable(const std::string &name, std::string  type) : BaseSymbol(name), type(std::move(type)) {
 
 }
 

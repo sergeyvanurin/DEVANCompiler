@@ -11,10 +11,9 @@
 
 class STVariable : public BaseSymbol {
 public:
-    explicit STVariable(const std::string& name);
+    explicit STVariable(const std::string& name, std::string type = "int");
     explicit STVariable(VarDeclaration* var_decl);
-    std::string type = "int";
-    // TODO STClass myClass;
+    std::string type;
 };
 
 namespace std {
