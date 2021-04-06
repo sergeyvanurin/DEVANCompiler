@@ -11,28 +11,47 @@ SymbolTreeVisitor::SymbolTreeVisitor(): tree_(new ScopeLayer) {
 }
 
 void SymbolTreeVisitor::Visit(ClassDeclaration *class_decl) {
-    //current_layer_->DeclareClass(STClass(class_decl));
+    current_layer_->DeclareClass(STClass(class_decl));
+    NewLevelDown();
+    class_decl->declaration_list->Accept(this);
+    LevelUp();
 }
 
 void SymbolTreeVisitor::Visit(AddExpression *expression) {
+    NewLevelDown();
     expression->expr1->Accept(this);
+    LevelUp();
+    NewLevelDown();
     expression->expr2->Accept(this);
+    LevelUp();
 }
 
 void SymbolTreeVisitor::Visit(Assert *statement) {
-    return;
+    NewLevelDown();
+    statement->expr->Accept(this);
+    LevelUp();
 }
 
 void SymbolTreeVisitor::Visit(DivExpression *expression) {
-    return;
+    NewLevelDown();
+    expression->expr1->Accept(this);
+    LevelUp();
+    NewLevelDown();
+    expression->expr2->Accept(this);
+    LevelUp();
 }
 
 void SymbolTreeVisitor::Visit(IdentExpression *statement) {
-    return;
+    // NEED type deduction
 }
 
 void SymbolTreeVisitor::Visit(IfElse *statement) {
-
+    NewLevelDown();
+    statement->If->Accept(this);
+    LevelUp();
+    NewLevelDown();
+    statement->Else->Accept(this);
+    LevelUp();
 }
 
 void SymbolTreeVisitor::Visit(MainClass *main_class) {
@@ -40,15 +59,25 @@ void SymbolTreeVisitor::Visit(MainClass *main_class) {
 }
 
 void SymbolTreeVisitor::Visit(ModExpression *expression) {
-    return;
+    NewLevelDown();
+    expression->expr1->Accept(this);
+    LevelUp();
+    NewLevelDown();
+    expression->expr2->Accept(this);
+    LevelUp();
 }
 
 void SymbolTreeVisitor::Visit(MulExpression *expression) {
-    return;
+    NewLevelDown();
+    expression->expr1->Accept(this);
+    LevelUp();
+    NewLevelDown();
+    expression->expr2->Accept(this);
+    LevelUp();
 }
 
 void SymbolTreeVisitor::Visit(NumExpression *statement) {
-    return;
+    // nothing
 }
 
 void SymbolTreeVisitor::Visit(Program *program) {
@@ -56,7 +85,7 @@ void SymbolTreeVisitor::Visit(Program *program) {
 }
 
 void SymbolTreeVisitor::Visit(Scope *scope) {
-
+    // deprecated
 }
 
 void SymbolTreeVisitor::Visit(StatementList *statements) {
@@ -66,11 +95,21 @@ void SymbolTreeVisitor::Visit(StatementList *statements) {
 }
 
 void SymbolTreeVisitor::Visit(SubExpression *expression) {
-    return;
+    NewLevelDown();
+    expression->expr1->Accept(this);
+    LevelUp();
+    NewLevelDown();
+    expression->expr2->Accept(this);
+    LevelUp();
 }
 
 void SymbolTreeVisitor::Visit(VarAssignment *statement) {
-    return;
+    NewLevelDown();
+    statement->var_name->Accept(this);
+    LevelUp();
+    NewLevelDown();
+    statement->new_value->Accept(this);
+    LevelUp();
 }
 
 void SymbolTreeVisitor::Visit(VarDeclaration *var_decl) {
@@ -78,93 +117,157 @@ void SymbolTreeVisitor::Visit(VarDeclaration *var_decl) {
 }
 
 void SymbolTreeVisitor::Visit(While *statement) {
-    return;
+    NewLevelDown();
+    statement->expr->Accept(this);
+    LevelUp();
+    NewLevelDown();
+    statement->statement->Accept(this);
+    LevelUp();
 }
 
 void SymbolTreeVisitor::Visit(IndexExpression *expression) {
-
+    NewLevelDown();
+    expression->inner->Accept(this);
+    LevelUp();
+    NewLevelDown();
+    expression->outer->Accept(this);
+    LevelUp();
 }
 
 void SymbolTreeVisitor::Visit(LogicalAndExpression *expression) {
-
+    NewLevelDown();
+    expression->expr1->Accept(this);
+    LevelUp();
+    NewLevelDown();
+    expression->expr2->Accept(this);
+    LevelUp();
 }
 
 void SymbolTreeVisitor::Visit(LogicalOrExpression *expression) {
-
+    NewLevelDown();
+    expression->expr1->Accept(this);
+    LevelUp();
+    NewLevelDown();
+    expression->expr2->Accept(this);
+    LevelUp();
 }
 
 void SymbolTreeVisitor::Visit(GreaterExpression *expression) {
-
+    NewLevelDown();
+    expression->expr1->Accept(this);
+    LevelUp();
+    NewLevelDown();
+    expression->expr2->Accept(this);
+    LevelUp();
 }
 
 void SymbolTreeVisitor::Visit(LessExpression *expression) {
-
+    NewLevelDown();
+    expression->expr1->Accept(this);
+    LevelUp();
+    NewLevelDown();
+    expression->expr2->Accept(this);
+    LevelUp();
 }
 
 void SymbolTreeVisitor::Visit(EqualExpression *expression) {
-
+    NewLevelDown();
+    expression->expr1->Accept(this);
+    LevelUp();
+    NewLevelDown();
+    expression->expr2->Accept(this);
+    LevelUp();
 }
 
 void SymbolTreeVisitor::Visit(NotExpression *expression) {
-
+    NewLevelDown();
+    expression->expr->Accept(this);
+    LevelUp();
 }
 
 void SymbolTreeVisitor::Visit(TrueExpression *expression) {
-
+    // nothing
 }
 
 void SymbolTreeVisitor::Visit(FalseExpression *expression) {
-
+    // nothing
 }
 
 void SymbolTreeVisitor::Visit(ThisExpression *expression) {
-
+    // nothing
 }
 
-void SymbolTreeVisitor::Visit(FieldInvocExpression *expression) {
-
+void SymbolTreeVisitor::Visit(FieldInvokeExpression *expression) {
+    // TODO type deduction
 }
 
 void SymbolTreeVisitor::Visit(LengthExpression *expression) {
-
+    NewLevelDown();
+    expression->array_expr->Accept(this);
+    LevelUp();
 }
 
 void SymbolTreeVisitor::Visit(ClassDeclarationList *class_declaration_list) {
-
+    for (auto &declaration: class_declaration_list->class_declarations){
+        declaration->Accept(this);
+    }
 }
 
 void SymbolTreeVisitor::Visit(MethodDeclaration *statement) {
-
+    current_layer_->DeclareMethod(STMethod(statement));
 }
 
 void SymbolTreeVisitor::Visit(DeclarationList *statement) {
-
+    for (auto &declare: statement->declarations){
+        try {
+            std::get<VarDeclaration*>(declare)->Accept(this);
+        }
+        catch (const std::bad_variant_access&) {
+            std::get<MethodDeclaration*>(declare)->Accept(this);
+        }
+    }
 }
 
 void SymbolTreeVisitor::Visit(Formal *formal) {
-
+    // TODO type deduction
 }
 
 void SymbolTreeVisitor::Visit(FormalsList *formals_list) {
-
+    for (auto &form: formals_list->formals){
+        form->Accept(this);
+    }
 }
 
 void SymbolTreeVisitor::Visit(Print *statement) {
-
+    NewLevelDown();
+    statement->expr->Accept(this);
+    LevelUp();
 }
 
 void SymbolTreeVisitor::Visit(Return *statement) {
-
+    NewLevelDown();
+    statement->expr->Accept(this);
+    LevelUp();
 }
 
 void SymbolTreeVisitor::Visit(ExpressionList *statement) {
-
+    for (auto &expr: statement->expressions){
+        expr->Accept(this);
+    }
 }
 
 void SymbolTreeVisitor::Visit(MethodInvocation *statement) {
-
+    // TODO type deduction
 }
 
 ScopeLayer *SymbolTreeVisitor::GetRoot() {
     return current_layer_;
+}
+
+void SymbolTreeVisitor::NewLevelDown() {
+    current_layer_ = current_layer_->AddChild(new ScopeLayer(current_layer_));
+}
+
+void SymbolTreeVisitor::LevelUp() {
+    current_layer_ = current_layer_->GetParent();
 }

@@ -13,5 +13,4 @@ std::variant<int, std::string> AddExpression::eval() const {
 
 void AddExpression::Accept(Visitor *visitor) {
     visitor->Visit(this);
-
 }

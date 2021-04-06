@@ -21,16 +21,20 @@ public:
     explicit ScopeLayer(ScopeLayer* parent);
     ScopeLayer();
 
-    void DeclareVariable(STVariable symbol);
+    void DeclareVariable(const STVariable& symbol);
     void Put(STVariable symbol, std::shared_ptr<Object> value);
     std::shared_ptr<Object> Get(STVariable symbol);
+
     bool Has(BaseSymbol symbol);
 
-    void AddChild(ScopeLayer* child);
+    ScopeLayer* AddChild(ScopeLayer* child);
     void AttachParent();
 
     ScopeLayer* GetChild(size_t index);
     ScopeLayer* GetParent() const;
+
+    void DeclareClass(const STClass& class_decl);
+    void DeclareMethod(const STMethod& method);
 
 private:
     std::unordered_map<STVariable, std::shared_ptr<Object>> values_;

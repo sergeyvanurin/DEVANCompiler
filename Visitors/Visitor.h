@@ -24,7 +24,7 @@ public:
     virtual void Visit(TrueExpression* expression) = 0;
     virtual void Visit(FalseExpression* expression) = 0;
     virtual void Visit(ThisExpression* expression) = 0;
-    virtual void Visit(FieldInvocExpression* expression) = 0;
+    virtual void Visit(FieldInvokeExpression* expression) = 0;
     virtual void Visit(LengthExpression* expression) = 0;
     virtual void Visit(Program* program) = 0;
     virtual void Visit(MainClass* main_class) = 0;

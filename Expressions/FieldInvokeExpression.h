@@ -9,9 +9,9 @@
 #include "Expression.h"
 #include <string>
 
-class FieldInvocExpression : public Expression {
+class FieldInvokeExpression : public Expression {
 public:
-    FieldInvocExpression(const std::string& field_name, yy::location loc);
+    FieldInvokeExpression(const std::string& field_name, yy::location loc);
     std::variant<int, std::string> eval() const override;
     void Accept(Visitor* visitor) override;
 

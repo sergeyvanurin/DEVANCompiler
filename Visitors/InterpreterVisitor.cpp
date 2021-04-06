@@ -247,7 +247,7 @@ void InterpreterVisitor::Visit(LengthExpression *expression) {
 
 }
 
-void InterpreterVisitor::Visit(FieldInvocExpression *expression) {
+void InterpreterVisitor::Visit(FieldInvokeExpression *expression) {
 
 }
 

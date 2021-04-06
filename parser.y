@@ -29,7 +29,7 @@
     #include "Expressions/ThisExpression.h"
     #include "Expressions/SubExpression.h"
     #include "Expressions/NumExpression.h"
-    #include "Expressions/FieldInvocExpression.h"
+    #include "Expressions/FieldInvokeExpression.h"
     #include "Expressions/LengthExpression.h"
     #include "Statements/Assert.h"
     #include "Statements/IfElse.h"
@@ -133,7 +133,7 @@
 %nterm <DeclarationList*> declarations;
 %nterm <std::variant<VarDeclaration*, MethodDeclaration*>> declaration;
 %nterm <FormalsList*> formals;
-%nterm <FieldInvocExpression*> field_invocation;
+%nterm <FieldInvokeExpression*> field_invocation;
 %nterm <MethodInvocation*> method_invocation;
 %nterm <ExpressionList*> exprs;
 
@@ -235,7 +235,7 @@ exprs:
   | exprs "," expr {$1->AddExpression($3); $$ = $1;};
 
 field_invocation:
-    "this." "id" {$$ = new FieldInvocExpression($2, driver.loc);};
+    "this." "id" {$$ = new FieldInvokeExpression($2, driver.loc);};
 
 expr:
     expr "&&" expr {$$ = new LogicalAndExpression($1, $3, driver.loc);}

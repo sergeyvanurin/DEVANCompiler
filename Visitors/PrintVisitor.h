@@ -37,7 +37,7 @@ class PrintVisitor: public Visitor {
     void Visit(TrueExpression* expression) override;
     void Visit(FalseExpression* expression) override;
     void Visit(ThisExpression* expression) override;
-    void Visit(FieldInvocExpression* expression) override;
+    void Visit(FieldInvokeExpression* expression) override;
     void Visit(LengthExpression* expression) override;
     void Visit(ClassDeclarationList* class_declaration_list) override;
     void Visit(MethodDeclaration* statement) override;

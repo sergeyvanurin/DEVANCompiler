@@ -21,14 +21,15 @@ void ScopeLayer::AttachParent() {
 
 ScopeLayer::ScopeLayer(): parent_(nullptr) {}
 
-void ScopeLayer::DeclareVariable(STVariable symbol) {
-    if (variables_.find(symbol.GetName()) != variables_.end()) {
-        throw std::runtime_error("Variable has declared");
+void ScopeLayer::DeclareVariable(const STVariable& var) {
+    if (variables_.find(var.GetName()) != variables_.end()) {
+        throw std::runtime_error("Variable has been declared");
     }
 
-    values_[symbol] = std::make_shared<Int>(0);
-    offsets_[symbol] = symbols_.size();
-    symbols_.push_back(symbol);
+    variables_.emplace(var.GetName(), var);
+    values_[var] = std::make_shared<Int>(0);
+    offsets_[var] = symbols_.size();
+    symbols_.push_back(var); // symbols_[offsets_[symbol]] === symbol
 }
 
 void ScopeLayer::Put(STVariable symbol, std::shared_ptr<Object> value) {
@@ -67,10 +68,27 @@ ScopeLayer* ScopeLayer::GetChild(size_t index) {
     return children_[index];
 }
 
-void ScopeLayer::AddChild(ScopeLayer* child) {
+ScopeLayer* ScopeLayer::AddChild(ScopeLayer* child) {
     children_.push_back(child);
+    return child;
 }
 
 ScopeLayer* ScopeLayer::GetParent() const {
     return parent_;
+}
+
+void ScopeLayer::DeclareClass(const STClass& class_decl) {
+    if (classes_.find(class_decl.GetName()) != classes_.end()) {
+        throw std::runtime_error("Class has been declared");
+    }
+
+    classes_.emplace(class_decl.GetName(), class_decl);
+}
+
+void ScopeLayer::DeclareMethod(const STMethod& method) {
+    if (classes_.find(method.GetName()) != classes_.end()) {
+        throw std::runtime_error("Method has been declared");
+    }
+
+    methods_.emplace(method.GetName(), method);
 }

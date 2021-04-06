@@ -40,7 +40,7 @@ public:
     void Visit(TrueExpression* expression) override;
     void Visit(FalseExpression* expression) override;
     void Visit(ThisExpression* expression) override;
-    void Visit(FieldInvocExpression* expression) override;
+    void Visit(FieldInvokeExpression* expression) override;
     void Visit(LengthExpression* expression) override;
     void Visit(ClassDeclarationList* class_declaration_list) override;
     void Visit(MethodDeclaration* statement) override;
@@ -51,6 +51,10 @@ public:
     void Visit(Return* statement) override;
     void Visit(ExpressionList* statement) override;
     void Visit(MethodInvocation* statement) override;
+
+    void NewLevelDown();
+
+    void LevelUp();
 
     ScopeLayer* GetRoot();
 private:
