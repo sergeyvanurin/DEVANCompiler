@@ -168,6 +168,7 @@ void SymbolTreeVisitor::Visit(ThisExpression *expression) {
 
 void SymbolTreeVisitor::Visit(FieldInvokeExpression *expression) {
     // TODO type deduction
+    // TODO check length only for arrays
 }
 
 void SymbolTreeVisitor::Visit(LengthExpression *expression) {
