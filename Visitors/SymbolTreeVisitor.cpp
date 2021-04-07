@@ -15,7 +15,6 @@ void SymbolTreeVisitor::Visit(ClassDeclaration *class_decl) {
     NewLevelDown();
     class_decl->declaration_list->Accept(this);
     LevelUp();
-    // done
 }
 
 void SymbolTreeVisitor::Visit(AddExpression *expression) {
@@ -62,7 +61,6 @@ void SymbolTreeVisitor::Visit(NumExpression *expression) {
 }
 
 void SymbolTreeVisitor::Visit(Program *program) {
-    // TODO ClassDeclarationList in parser.y
     program->main_class->Accept(this);
 }
 
@@ -193,6 +191,12 @@ void SymbolTreeVisitor::Visit(ExpressionList *statement) {
 
 void SymbolTreeVisitor::Visit(MethodInvocation *statement) {
     statement->GetType(current_layer_);
+}
+
+void SymbolTreeVisitor::Visit(ScopeBlock *statement) {
+    NewLevelDown();
+    statement->statements->Accept(this);
+    LevelUp();
 }
 
 ScopeLayer *SymbolTreeVisitor::GetRoot() {

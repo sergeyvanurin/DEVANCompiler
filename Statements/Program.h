@@ -11,10 +11,10 @@
 
 class Program : public Statement {
 public:
-    explicit Program(MainClass* main_class, yy::location loc);
+    explicit Program(MainClass* main_class, ClassDeclarationList* class_decls, yy::location loc);
     void Accept(Visitor* visitor) override;
     MainClass* main_class;
-
+    ClassDeclarationList* class_declarations;
 };
 
 

@@ -167,7 +167,7 @@
 %start program;
 
 program:
-    main_class class_declarations {$$ = new Program($1, driver.loc); driver.program = $$;};
+    main_class class_declarations {$$ = new Program($1, $2, driver.loc); driver.program = $$;};
 
 class_declarations:
     %empty {$$ = new ClassDeclarationList(driver.loc);}
