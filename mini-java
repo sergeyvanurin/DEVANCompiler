@@ -2,8 +2,7 @@ class Program {
   public static void main () {
       int a; int b;
       a = 5; b = 3;
-      while (a > 0) a = a - 1;
-      if (a > b) System.out.println(a);
-      else System.out.println(b);
+      if  (a > 0) a = a - 1;
+      else a = a + 1;
   }
 }

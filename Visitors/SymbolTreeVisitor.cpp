@@ -62,6 +62,7 @@ void SymbolTreeVisitor::Visit(NumExpression *expression) {
 
 void SymbolTreeVisitor::Visit(Program *program) {
     program->main_class->Accept(this);
+    program->class_declarations->Accept(this);
 }
 
 void SymbolTreeVisitor::Visit(StatementList *statements) {
