@@ -4,43 +4,34 @@
 
 #include "STClass.h"
 #include "Statements/DeclarationList.h"
+#include "Statements/MethodDeclaration.h"
 
 STClass::STClass(ClassDeclaration *class_) : base_class_name(class_->base_class_name), BaseSymbol(class_->class_name) {
     for (auto decl : class_->declaration_list->declarations) {
         if (decl.index() == 0) {
             VarDeclaration *var = std::get<VarDeclaration *>(decl);
             fields.emplace_back(var);
+            fields_.emplace(var->var_name, &fields.back());
         } else {
             MethodDeclaration *method = std::get<MethodDeclaration *>(decl);
             methods.emplace_back(method);
+            methods_.emplace(method->method_name, &methods.back());
         }
     }
 
 
 }
 
-STVariable *STClass::FindFieldByName(const std::string &name) {
+STVariable *STClass::FindFieldByName(const std::string &name) const {
     if (fields_.count(name)) {
         return fields_.at(name);
-    }
-    for (auto &field: fields) {
-        if (field.GetName() == name) {
-            fields_.at(name) = &field;
-            return fields_.at(name);
-        }
     }
     return nullptr;
 }
 
-STMethod *STClass::FindMethodByName(std::string name) {
+STMethod *STClass::FindMethodByName(const std::string& name) const {
     if (methods_.count(name)) {
         return methods_.at(name);
-    }
-    for (auto &method: methods) {
-        if (method.GetName() == name) {
-            methods_.at(name) = &method;
-            return methods_.at(name);
-        }
     }
     return nullptr;
 }

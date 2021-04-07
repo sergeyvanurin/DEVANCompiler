@@ -167,40 +167,40 @@
 %start program;
 
 program:
-    main_class class_declarations {$$ = new Program($1, nullptr, driver.loc); driver.program = $$;};
+    main_class class_declarations {$$ = new Program($1, driver.loc); driver.program = $$;};
 
 class_declarations:
-    %empty {$$ = new ClassDeclarationList(nullptr, driver.loc);}
+    %empty {$$ = new ClassDeclarationList(driver.loc);}
     | class_declarations class_declaration {$1->AddClassDeclaration($2); $$ = $1;};
 
 main_class:
-    "class" "id" "{" "public static void main" "(" ")" "{" statements "}" "}" {$$ = new MainClass($8, nullptr, driver.loc);};
+    "class" "id" "{" "public static void main" "(" ")" "{" statements "}" "}" {$$ = new MainClass($8, driver.loc);};
 
 statements:
-    %empty {driver.add_scope(); $$ = new StatementList(driver.get_scope(), driver.loc);}
+    %empty {$$ = new StatementList(driver.loc);}
    | statements statement {$1->AddStatement($2); $$ = $1;};
 
 class_declaration:
-    "class" "id" "extends" "id" "{" declarations "}" {$$ = new ClassDeclaration($2, $4, $6, nullptr, driver.loc);}
-  | "class" "id" "{" declarations "}" {$$ = new ClassDeclaration($2, "", $4, nullptr, driver.loc);};
+    "class" "id" "extends" "id" "{" declarations "}" {$$ = new ClassDeclaration($2, $4, $6, driver.loc);}
+  | "class" "id" "{" declarations "}" {$$ = new ClassDeclaration($2, "", $4, driver.loc);};
 
 declarations:
-    %empty {$$ = new DeclarationList(nullptr, driver.loc);}
+    %empty {$$ = new DeclarationList(driver.loc);}
    | declarations declaration {$1->AddDeclaration($2); $$ = $1;};
 
 declaration:
     variable_declaration {$$ = $1;} | method_declaration {$$ = $1;};
 
 method_declaration:
-    "public" type "id" "(" formals ")" "{" statements "}" {$$ = new MethodDeclaration($3, $2, $5, $8, nullptr, driver.loc);}
-  | "public" type "id" "(" ")" "{" statements "}" {$$ = new MethodDeclaration($3, $2, nullptr, $7, nullptr, driver.loc);};
+    "public" type "id" "(" formals ")" "{" statements "}" {$$ = new MethodDeclaration($3, $2, $5, $8, driver.loc);}
+  | "public" type "id" "(" ")" "{" statements "}" {$$ = new MethodDeclaration($3, $2, nullptr, $7, driver.loc);};
 
 variable_declaration:
-    type "id" ";" {$$ = new VarDeclaration($1, $2, driver.get_scope(), driver.loc);};
+    type "id" ";" {$$ = new VarDeclaration($1, $2, driver.loc);};
 
 formals:
-    type "id" {$$ = new FormalsList(nullptr, driver.loc); $$->AddFormal(new Formal($1, $2, nullptr, driver.loc));}
-   | formals "," type "id" {$1->AddFormal(new Formal($3, $4, nullptr, driver.loc)); $$ = $1;};
+    type "id" {$$ = new FormalsList(driver.loc); $$->AddFormal(new Formal($1, $2, driver.loc));}
+   | formals "," type "id" {$1->AddFormal(new Formal($3, $4, driver.loc)); $$ = $1;};
 
 type:
     simple_type {$$ = $1;} | array_type {$$ = $1;};
@@ -218,29 +218,29 @@ type_identifier:
     "id" {$$ = $1;};
 
 statement:
-    "assert" "(" expr ")" {$$ = new Assert($3, driver.get_scope(), driver.loc);}
+    "assert" "(" expr ")" {$$ = new Assert($3, driver.loc);}
   | local_variable_declaration {$$ = $1;}
-  | "{" statements "}" {$$ = $2; driver.remove_scope();}
-  | "if" "(" expr ")" statement {$$ = new IfElse($3, $5, nullptr, driver.get_scope(), driver.loc);}     %prec "then"
-  | "if" "(" expr ")" statement "else" statement {$$ = new IfElse($3, $5, $7, driver.get_scope(), driver.loc);}
-  | "while" "(" expr ")" statement {$$ = new While($3, $5, driver.get_scope(), driver.loc);}
-  | "System.out.println" "(" expr ")" ";" {$$ = new Print($3, nullptr, driver.loc);}
-  | expr "=" expr ";" {$$ = new VarAssignment($1, $3, driver.get_scope(), driver.loc);}
-  | "return" expr ";" {$$ = new Return($2, nullptr, driver.loc);}
+  | "{" statements "}" {$$ = $2; }
+  | "if" "(" expr ")" statement {$$ = new IfElse($3, $5, nullptr, driver.loc);}     %prec "then"
+  | "if" "(" expr ")" statement "else" statement {$$ = new IfElse($3, $5, $7, driver.loc);}
+  | "while" "(" expr ")" statement {$$ = new While($3, $5, driver.loc);}
+  | "System.out.println" "(" expr ")" ";" {$$ = new Print($3, driver.loc);}
+  | expr "=" expr ";" {$$ = new VarAssignment($1, $3, driver.loc);}
+  | "return" expr ";" {$$ = new Return($2, driver.loc);}
   | method_invocation ";" {$$ = $1;};
 
 local_variable_declaration:
     variable_declaration {$$ = $1;};
 
 method_invocation:
-    "this." "id" "(" ")" {$$ = new MethodInvocation(nullptr, $2, nullptr, nullptr, driver.loc);}
-  | "this." "id" "(" exprs ")" {$$ = new MethodInvocation(nullptr, $2, $4, nullptr, driver.loc);};
-  | expr "." "id" "(" ")" {$$ = new MethodInvocation($1, $3, nullptr, nullptr, driver.loc);}
-  | expr "." "id" "(" exprs ")" {$$ = new MethodInvocation($1, $3, $5, nullptr, driver.loc);};
+    "this." "id" "(" ")" {$$ = new MethodInvocation(nullptr, $2, nullptr, driver.loc);}
+  | "this." "id" "(" exprs ")" {$$ = new MethodInvocation(nullptr, $2, $4, driver.loc);};
+  | expr "." "id" "(" ")" {$$ = new MethodInvocation($1, $3, nullptr, driver.loc);}
+  | expr "." "id" "(" exprs ")" {$$ = new MethodInvocation($1, $3, $5, driver.loc);};
 
 
 exprs:
-    expr {$$ = new ExpressionList(nullptr, driver.loc); $$->AddExpression($1);}
+    expr {$$ = new ExpressionList(driver.loc); $$->AddExpression($1);}
   | exprs "," expr {$1->AddExpression($3); $$ = $1;};
 
 field_invocation:

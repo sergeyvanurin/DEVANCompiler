@@ -4,7 +4,9 @@
 
 #include "Formal.h"
 
-Formal::Formal(Type* type, const std::string& name, Scope *scope, yy::location loc) : type(type), name(name), Statement(scope, loc) {
+#include <utility>
+
+Formal::Formal(Type* type, std::string name, yy::location loc) : type(type), name(std::move(name)), Statement(loc) {
 
 }
 

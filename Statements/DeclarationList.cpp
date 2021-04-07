@@ -4,7 +4,7 @@
 
 #include "DeclarationList.h"
 
-DeclarationList::DeclarationList(Scope *Scope, yy::location loc) : Statement(Scope, loc) {}
+DeclarationList::DeclarationList(yy::location loc) : Statement(loc) {}
 
 void DeclarationList::Accept(Visitor *visitor) {
     visitor->Visit(this);

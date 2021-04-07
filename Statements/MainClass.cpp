@@ -8,4 +8,4 @@ void MainClass::Accept(Visitor *visitor) {
     visitor->Visit(this);
 }
 
-MainClass::MainClass(StatementList *statements, Scope *scope, yy::location loc): statements(statements), Statement(scope, loc) {}
+MainClass::MainClass(StatementList *statements, yy::location loc): statements(statements), Statement(loc) {}

@@ -83,6 +83,7 @@ void ScopeLayer::DeclareClass(const STClass& class_decl) {
     }
 
     classes_.emplace(class_decl.GetName(), class_decl);
+    EnterClass(&classes_.at(class_decl.GetName()));
 }
 
 void ScopeLayer::DeclareMethod(const STMethod& method) {
@@ -97,11 +98,11 @@ bool ScopeLayer::HasVariableAtLayer(const std::string& var_name) const {
     return variables_.count(var_name);
 }
 
-void ScopeLayer::EnterClass(STClass *cur_class) {
+void ScopeLayer::EnterClass(const STClass *cur_class) {
     current_class_ = cur_class;
 }
 
-STClass *ScopeLayer::GetCurrentClass() const {
+const STClass *ScopeLayer::GetCurrentClass() const {
     return current_class_;
 }
 

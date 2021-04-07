@@ -4,7 +4,7 @@
 
 #include "ClassDeclarationList.h"
 
-ClassDeclarationList::ClassDeclarationList(Scope *Scope, yy::location loc) : Statement(Scope, loc) {}
+ClassDeclarationList::ClassDeclarationList(yy::location loc) : Statement(loc) {}
 
 void ClassDeclarationList::Accept(Visitor *visitor) {
     visitor->Visit(this);

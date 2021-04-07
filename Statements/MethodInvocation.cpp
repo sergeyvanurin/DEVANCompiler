@@ -12,9 +12,9 @@ void MethodInvocation::Accept(Visitor *visitor) {
 }
 
 
-MethodInvocation::MethodInvocation(Expression *expr, const std::string &name, ExpressionList *args, Scope *scope,
+MethodInvocation::MethodInvocation(Expression *expr, const std::string &name, ExpressionList *args,
                                    yy::location loc) : class_expr(expr), method_name(name), arguments(args),
-                                                       Statement(scope, loc), Expression(loc) {
+                                                       Statement(loc), Expression(loc) {
 
 }
 

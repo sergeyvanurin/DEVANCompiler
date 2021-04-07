@@ -39,9 +39,9 @@ public:
 
     bool HasVariableAtLayer(const std::string& var_name) const;
 
-    void EnterClass(STClass* cur_class);
+    void EnterClass(const STClass* cur_class);
 
-    STClass* GetCurrentClass() const;
+    const STClass* GetCurrentClass() const;
 
     STClass* GetClassByName(const std::string& class_name);
 
@@ -55,7 +55,7 @@ private:
     std::unordered_map<std::string, STVariable> variables_;
     std::unordered_map<std::string, STClass> classes_;
 
-    STClass* current_class_ = nullptr;
+    const STClass* current_class_ = nullptr;
 
     std::vector<BaseSymbol> symbols_;
     //std::string name_;

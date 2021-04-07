@@ -11,7 +11,7 @@
 
 class Print : public Statement {
 public:
-    explicit Print(Expression* expr, Scope* scope, yy::location loc);
+    explicit Print(Expression* expr, yy::location loc);
     void Accept(Visitor* visitor) override;
     Expression* expr;
 };

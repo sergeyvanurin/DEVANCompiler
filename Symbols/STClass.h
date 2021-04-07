@@ -15,9 +15,9 @@
 class STClass : public BaseSymbol {
 public:
 
-    STVariable *FindFieldByName(const std::string &name);
+    STVariable *FindFieldByName(const std::string &name) const;
 
-    STMethod *FindMethodByName(std::string name);
+    STMethod *FindMethodByName(const std::string& name) const;
 
     explicit STClass(ClassDeclaration *class_);
 

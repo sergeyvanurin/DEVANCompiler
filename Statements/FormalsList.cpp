@@ -4,7 +4,7 @@
 
 #include "FormalsList.h"
 
-FormalsList::FormalsList(Scope *Scope, yy::location loc) : Statement(Scope, loc) {
+FormalsList::FormalsList(yy::location loc) : Statement(loc) {
 
 }
 

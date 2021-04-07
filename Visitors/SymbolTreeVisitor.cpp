@@ -18,66 +18,51 @@ void SymbolTreeVisitor::Visit(ClassDeclaration *class_decl) {
     // done
 }
 
-template <typename T>
-void BinaryExpressionVisit(T *expression, SymbolTreeVisitor *visitor){
-    visitor->NewLevelDown();
-    expression->expr1->Accept(visitor);
-    visitor->LevelUp();
-    visitor->NewLevelDown();
-    expression->expr2->Accept(visitor);
-    visitor->LevelUp();
-}
-
 void SymbolTreeVisitor::Visit(AddExpression *expression) {
-    BinaryExpressionVisit(expression, this);
+    expression->GetType(current_layer_);
 }
 
 void SymbolTreeVisitor::Visit(Assert *statement) {
-    NewLevelDown();
-    statement->expr->Accept(this);
-    LevelUp();
-    // done
+    statement->expr->GetType(current_layer_);
 }
 
 void SymbolTreeVisitor::Visit(DivExpression *expression) {
-    BinaryExpressionVisit(expression, this);
+    expression->GetType(current_layer_);
 }
 
-void SymbolTreeVisitor::Visit(IdentExpression *statement) {
-    current_layer_->HasVariableAtLayer(statement->var_name);
-    // done
+void SymbolTreeVisitor::Visit(IdentExpression *expression) {
+    expression->GetType(current_layer_);
 }
 
 void SymbolTreeVisitor::Visit(IfElse *statement) {
-    NewLevelDown();
-    statement->expr->Accept(this);
-    LevelUp();
+    statement->expr->GetType(current_layer_);
     NewLevelDown();
     statement->If->Accept(this);
     LevelUp();
     NewLevelDown();
     statement->Else->Accept(this);
     LevelUp();
-    // done
 }
 
 void SymbolTreeVisitor::Visit(MainClass *main_class) {
+    current_layer_->EnterClass(nullptr);
     main_class->statements->Accept(this);
 }
 
 void SymbolTreeVisitor::Visit(ModExpression *expression) {
-    BinaryExpressionVisit(expression, this);
+    expression->GetType(current_layer_);
 }
 
 void SymbolTreeVisitor::Visit(MulExpression *expression) {
-    BinaryExpressionVisit(expression, this);
+    expression->GetType(current_layer_);
 }
 
-void SymbolTreeVisitor::Visit(NumExpression *statement) {
-    // nothing
+void SymbolTreeVisitor::Visit(NumExpression *expression) {
+    expression->GetType(current_layer_);
 }
 
 void SymbolTreeVisitor::Visit(Program *program) {
+
     program->main_class->Accept(this);
 }
 
@@ -93,7 +78,7 @@ void SymbolTreeVisitor::Visit(StatementList *statements) {
 }
 
 void SymbolTreeVisitor::Visit(SubExpression *expression) {
-    BinaryExpressionVisit(expression, this);
+    expression->GetType(current_layer_);
 }
 
 void SymbolTreeVisitor::Visit(VarAssignment *statement) {
@@ -119,62 +104,51 @@ void SymbolTreeVisitor::Visit(While *statement) {
 }
 
 void SymbolTreeVisitor::Visit(IndexExpression *expression) {
-
-    NewLevelDown();
-    expression->inner->Accept(this);
-    LevelUp();
-    NewLevelDown();
-    expression->outer->Accept(this);
-    LevelUp();
+    expression->GetType(current_layer_);
 }
 
 void SymbolTreeVisitor::Visit(LogicalAndExpression *expression) {
-    BinaryExpressionVisit(expression, this);
+    expression->GetType(current_layer_);
 }
 
 void SymbolTreeVisitor::Visit(LogicalOrExpression *expression) {
-    BinaryExpressionVisit(expression, this);
+    expression->GetType(current_layer_);
 }
 
 void SymbolTreeVisitor::Visit(GreaterExpression *expression) {
-    BinaryExpressionVisit(expression, this);
+    expression->GetType(current_layer_);
 }
 
 void SymbolTreeVisitor::Visit(LessExpression *expression) {
-    BinaryExpressionVisit(expression, this);
+    expression->GetType(current_layer_);
 }
 
 void SymbolTreeVisitor::Visit(EqualExpression *expression) {
-    BinaryExpressionVisit(expression, this);
+    expression->GetType(current_layer_);
 }
 
 void SymbolTreeVisitor::Visit(NotExpression *expression) {
-    NewLevelDown();
-    expression->expr->Accept(this);
-    LevelUp();
+    expression->GetType(current_layer_);
 }
 
 void SymbolTreeVisitor::Visit(TrueExpression *expression) {
-    // nothing
+    expression->GetType(current_layer_);
 }
 
 void SymbolTreeVisitor::Visit(FalseExpression *expression) {
-    // nothing
+    expression->GetType(current_layer_);
 }
 
 void SymbolTreeVisitor::Visit(ThisExpression *expression) {
-    // nothing
+    expression->GetType(current_layer_);
 }
 
 void SymbolTreeVisitor::Visit(FieldInvokeExpression *expression) {
-    // TODO type deduction
-    // TODO check length only for arrays
+    expression->GetType(current_layer_);
 }
 
 void SymbolTreeVisitor::Visit(LengthExpression *expression) {
-    NewLevelDown();
-    expression->array_expr->Accept(this);
-    LevelUp();
+    expression->GetType(current_layer_);
 }
 
 void SymbolTreeVisitor::Visit(ClassDeclarationList *class_declaration_list) {

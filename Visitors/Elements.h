@@ -33,7 +33,6 @@
 #include "Statements/VarDeclaration.h"
 #include "Statements/MethodDeclaration.h"
 #include "Statements/While.h"
-#include "Statements/Scope.h"
 #include "Statements/StatementList.h"
 #include "Statements/Program.h"
 #include "Statements/ClassDeclaration.h"

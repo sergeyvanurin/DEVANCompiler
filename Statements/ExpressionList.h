@@ -12,7 +12,7 @@
 
 class ExpressionList : Statement {
 public:
-    explicit ExpressionList(Scope* scope, yy::location loc);
+    explicit ExpressionList(yy::location loc);
     void Accept(Visitor* visitor) override;
     void AddExpression(Expression* expr);
     std::vector<Expression*> expressions;

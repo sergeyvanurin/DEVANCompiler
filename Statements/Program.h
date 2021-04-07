@@ -11,7 +11,7 @@
 
 class Program : public Statement {
 public:
-    explicit Program(MainClass* main_clas, Scope* scope, yy::location loc);
+    explicit Program(MainClass* main_class, yy::location loc);
     void Accept(Visitor* visitor) override;
     MainClass* main_class;
 

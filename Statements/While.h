@@ -10,7 +10,7 @@
 
 class While: public Statement {
 public:
-    While(Expression *expr, Statement *statement, Scope *scope, yy::location loc);
+    While(Expression *expr, Statement *statement, yy::location loc);
     void Accept(Visitor* visitor) override;
 
 public:

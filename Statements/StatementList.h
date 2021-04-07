@@ -10,7 +10,7 @@
 
 class StatementList: public Statement {
 public:
-    StatementList(Scope* Scope, yy::location loc);
+    StatementList(yy::location loc);
     void AddStatement(Statement* statement);
     void Accept(Visitor* visitor) override;
 
