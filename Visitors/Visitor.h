@@ -40,7 +40,6 @@ public:
     virtual void Visit(VarAssignment* statement) = 0;
     virtual void Visit(IdentExpression* statement) = 0;
     virtual void Visit(NumExpression* statement) = 0;
-    virtual void Visit(Scope* scope) = 0;
     virtual void Visit(StatementList* statements) = 0;
     virtual void Visit(Formal* formal) = 0;
     virtual void Visit(FormalsList* formals_list) = 0;

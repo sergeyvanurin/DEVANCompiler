@@ -106,10 +106,6 @@ void PrintVisitor::Visit(Program *program) {
     program->main_class->Accept(this);
 }
 
-void PrintVisitor::Visit(Scope *scope) {
-
-}
-
 void PrintVisitor::Visit(StatementList *statements) {
     for (auto & statement : statements->statements){
         statement->Accept(this);

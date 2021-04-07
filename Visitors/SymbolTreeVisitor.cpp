@@ -62,19 +62,14 @@ void SymbolTreeVisitor::Visit(NumExpression *expression) {
 }
 
 void SymbolTreeVisitor::Visit(Program *program) {
-
+    // TODO ClassDeclarationList in parser.y
     program->main_class->Accept(this);
-}
-
-void SymbolTreeVisitor::Visit(Scope *scope) {
-    // deprecated
 }
 
 void SymbolTreeVisitor::Visit(StatementList *statements) {
     for (auto & statement : statements->statements ){
         statement->Accept(this);
     }
-    // done
 }
 
 void SymbolTreeVisitor::Visit(SubExpression *expression) {
@@ -82,22 +77,17 @@ void SymbolTreeVisitor::Visit(SubExpression *expression) {
 }
 
 void SymbolTreeVisitor::Visit(VarAssignment *statement) {
-    NewLevelDown();
-    statement->var_name->Accept(this);
-    LevelUp();
-    NewLevelDown();
-    statement->new_value->Accept(this);
-    LevelUp();
+    statement->var_name->GetType(current_layer_);
+    statement->new_value->GetType(current_layer_);
 }
 
 void SymbolTreeVisitor::Visit(VarDeclaration *var_decl) {
     current_layer_->DeclareVariable(STVariable(var_decl));
+    // TODO FieldDeclaration
 }
 
 void SymbolTreeVisitor::Visit(While *statement) {
-    NewLevelDown();
-    statement->expr->Accept(this);
-    LevelUp();
+    statement->expr->GetType(current_layer_);
     NewLevelDown();
     statement->statement->Accept(this);
     LevelUp();
@@ -170,10 +160,15 @@ void SymbolTreeVisitor::Visit(DeclarationList *statement) {
             std::get<MethodDeclaration*>(declare)->Accept(this);
         }
     }
+    for (auto &declare: statement->declarations){
+        try{
+            std::get<MethodDeclaration*>(declare)->statements->Accept(this);
+        } catch (const std::bad_variant_access&) {}
+    }
 }
 
 void SymbolTreeVisitor::Visit(Formal *formal) {
-    // TODO type deduction
+    current_layer_->DeclareVariable(STVariable(formal->name, *formal->type));
 }
 
 void SymbolTreeVisitor::Visit(FormalsList *formals_list) {
@@ -183,15 +178,11 @@ void SymbolTreeVisitor::Visit(FormalsList *formals_list) {
 }
 
 void SymbolTreeVisitor::Visit(Print *statement) {
-    NewLevelDown();
-    statement->expr->Accept(this);
-    LevelUp();
+    statement->expr->GetType(current_layer_);
 }
 
 void SymbolTreeVisitor::Visit(Return *statement) {
-    NewLevelDown();
-    statement->expr->Accept(this);
-    LevelUp();
+    statement->expr->GetType(current_layer_);
 }
 
 void SymbolTreeVisitor::Visit(ExpressionList *statement) {
@@ -202,7 +193,6 @@ void SymbolTreeVisitor::Visit(ExpressionList *statement) {
 
 void SymbolTreeVisitor::Visit(MethodInvocation *statement) {
     statement->GetType(current_layer_);
-
 }
 
 ScopeLayer *SymbolTreeVisitor::GetRoot() {

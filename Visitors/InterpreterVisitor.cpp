@@ -189,10 +189,6 @@ void InterpreterVisitor::Visit(IndexExpression *expression) {
 
 }
 
-void InterpreterVisitor::Visit(Scope *scope) {
-
-}
-
 void InterpreterVisitor::Visit(IfElse *statement) {
     statement->expr->Accept(this);
     int expr = local_results.top();
