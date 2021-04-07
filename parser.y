@@ -138,9 +138,9 @@
 %nterm <FieldInvokeExpression*> field_invocation;
 %nterm <MethodInvocation*> method_invocation;
 %nterm <ExpressionList*> exprs;
-%nterm <Type*> type;
-%nterm <Type*> simple_type;
-%nterm <Type*> array_type;
+%nterm <Type> type;
+%nterm <Type> simple_type;
+%nterm <Type> array_type;
 %nterm <std::string> type_identifier;
 
 %%
@@ -206,13 +206,13 @@ type:
     simple_type {$$ = $1;} | array_type {$$ = $1;};
 
 simple_type:
-    "int" {$$ = new Type("int");}
-  | "boolean" {$$ = new Type("bool");}
-  | "void" {$$ = new Type("void");}
-  | type_identifier {$$ = new Type($1);};
+    "int" {$$ = Type("int");}
+  | "boolean" {$$ = Type("bool");}
+  | "void" {$$ = Type("void");}
+  | type_identifier {$$ = Type($1);};
 
 array_type:
-    simple_type "[]" {$$ = $1; $$->is_array = true;};
+    simple_type "[]" {$$ = $1; $$.is_array = true;};
 
 type_identifier:
     "id" {$$ = $1;};
@@ -259,7 +259,7 @@ expr:
   | expr "%" expr {$$ = new ModExpression($1, $3, driver.loc);}
   | expr "[" expr "]" {$$ = new IndexExpression($1, $3, driver.loc);}
   | expr "." "length" {$$ = new LengthExpression($1, driver.loc);}
-  | "new" simple_type "[" expr "]" { $$ = new AllocExpression(Type($2->type_name, true), driver.loc); }
+  | "new" simple_type "[" expr "]" { $$ = new AllocExpression(Type($2.type_name, true), driver.loc); }
   | "new" type_identifier "(" ")" { $$ = new AllocExpression(Type($2), driver.loc); }
   | "!" expr {$$ = new NotExpression($2, driver.loc);}
   | "(" expr ")" {$$ = $2;}

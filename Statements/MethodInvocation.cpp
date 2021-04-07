@@ -47,13 +47,13 @@ Type MethodInvocation::EvalType(ScopeLayer *scope) {
     }
     for (size_t i = 0; i < method_ref->GetArguments().size(); ++i) {
         // TODO inheritance
-        if (arguments->expressions[i]->GetType(scope) != *method_ref->GetArguments()[i].type) {
+        if (arguments->expressions[i]->GetType(scope) != method_ref->GetArguments()[i].type) {
             std::cerr << arguments->expressions[i]->loc << std::endl;
             throw std::runtime_error("Method '" + method_name + "' of class '" + class_name.type_name + "' expect at " +
                                      std::to_string(i) + "-th argument type '" +
-                                     method_ref->GetArguments()[i].type->ToString() + "' but got '" +
+                                     method_ref->GetArguments()[i].type.ToString() + "' but got '" +
                                      arguments->expressions[i]->GetType(scope).ToString() + "'");
         }
     }
-    return *method_ref->return_type;
+    return method_ref->return_type;
 }

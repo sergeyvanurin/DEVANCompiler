@@ -12,7 +12,7 @@
 class STArgument : public BaseSymbol {
 public:
     explicit STArgument(Formal* argument);
-    Type *type;
+    Type type;
 };
 
 

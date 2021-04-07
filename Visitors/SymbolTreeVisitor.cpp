@@ -69,7 +69,7 @@ void SymbolTreeVisitor::Visit(Program *program) {
 }
 
 void SymbolTreeVisitor::Visit(StatementList *statements) {
-    for (Statement* statement : statements->statements) {
+    for (Statement *statement : statements->statements) {
         statement->Accept(this);
     }
 }
@@ -90,7 +90,7 @@ void SymbolTreeVisitor::Visit(VarAssignment *statement) {
 void SymbolTreeVisitor::Visit(VarDeclaration *var_decl) {
     try {
         current_layer_->DeclareVariable(STVariable(var_decl));
-    } catch (const std::runtime_error &e){
+    } catch (const std::runtime_error &e) {
         std::cerr << var_decl->loc << std::endl;
         throw e;
     }
@@ -183,7 +183,7 @@ void SymbolTreeVisitor::Visit(DeclarationList *statement) {
 }
 
 void SymbolTreeVisitor::Visit(Formal *formal) {
-    current_layer_->DeclareVariable(STVariable(formal->name, *formal->type));
+    current_layer_->DeclareVariable(STVariable(formal->name, formal->type));
 }
 
 void SymbolTreeVisitor::Visit(FormalsList *formals_list) {
@@ -202,10 +202,10 @@ void SymbolTreeVisitor::Visit(Return *statement) {
         std::cerr << statement->expr->loc << std::endl;
         throw std::runtime_error("'return' must be in method scope");
     }
-    if (*method_ptr->return_type != statement->expr->GetType(current_layer_)) {
+    if (method_ptr->return_type != statement->expr->GetType(current_layer_)) {
         std::cerr << statement->expr->loc << std::endl;
         throw std::runtime_error(
-                "'return' in method '" + method_ptr->GetName() + "' expect '" + method_ptr->return_type->ToString() +
+                "'return' in method '" + method_ptr->GetName() + "' expect '" + method_ptr->return_type.ToString() +
                 "' but got '" + statement->expr->GetType(current_layer_).ToString() + "'");
     }
 }

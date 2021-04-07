@@ -6,7 +6,7 @@
 
 #include <utility>
 
-Formal::Formal(Type* type, std::string name, yy::location loc) : type(type), name(std::move(name)), Statement(loc) {
+Formal::Formal(Type type, std::string name, yy::location loc) : type(std::move(type)), name(std::move(name)), Statement(loc) {
 
 }
 
