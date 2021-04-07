@@ -44,5 +44,6 @@
 #include "Statements/Return.h"
 #include "Statements/MethodInvocation.h"
 #include "Statements/ExpressionList.h"
+#include "Statements/ScopeBlock.h"
 
 #endif //DEVANCOMPILER_ELEMENTS_H

@@ -252,6 +252,10 @@ void InterpreterVisitor::Visit(ThisExpression *expression) {
 
 }
 
+void InterpreterVisitor::Visit(ScopeBlock *statement) {
+
+}
+
 
 
 

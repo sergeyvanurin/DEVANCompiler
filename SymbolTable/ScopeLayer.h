@@ -38,6 +38,7 @@ public:
     void DeclareMethod(const STMethod& method);
 
     bool HasVariableAtLayer(const std::string& var_name) const;
+    bool HasVariable(const std::string& var_name) const;
 
     void EnterClass(const STClass* cur_class);
 

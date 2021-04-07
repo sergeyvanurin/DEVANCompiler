@@ -50,6 +50,7 @@ public:
     void Visit(Return* statement) override;
     void Visit(ExpressionList* statement) override;
     void Visit(MethodInvocation* statement) override;
+    void Visit(ScopeBlock* statement) override;
 
     void NewLevelDown();
 

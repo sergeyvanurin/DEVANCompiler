@@ -43,5 +43,6 @@ class Print;
 class Return;
 class ExpressionList;
 class MethodInvocation;
+class ScopeBlock;
 
 #endif //DEVANCOMPILER_FORWARDDECLARATION_H

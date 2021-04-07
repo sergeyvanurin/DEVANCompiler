@@ -220,7 +220,7 @@ type_identifier:
 statement:
     "assert" "(" expr ")" {$$ = new Assert($3, driver.loc);}
   | local_variable_declaration {$$ = $1;}
-  | "{" statements "}" {$$ = $2; }
+  | "{" statements "}" {$$ = new ScopeBlock($2, driver.loc);}
   | "if" "(" expr ")" statement {$$ = new IfElse($3, $5, nullptr, driver.loc);}     %prec "then"
   | "if" "(" expr ")" statement "else" statement {$$ = new IfElse($3, $5, $7, driver.loc);}
   | "while" "(" expr ")" statement {$$ = new While($3, $5, driver.loc);}
@@ -273,7 +273,7 @@ expr:
 
 
 %%
-
+// TODO new and { statements }
 void yy::parser::error(const location_type& l, const std::string& m)
 {
   std::cerr << l << ": " << m << "\n";

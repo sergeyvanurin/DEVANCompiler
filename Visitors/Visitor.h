@@ -47,6 +47,7 @@ public:
     virtual void Visit(Return* statement) = 0;
     virtual void Visit(ExpressionList* statement) = 0;
     virtual void Visit(MethodInvocation* statement) = 0;
+    virtual void Visit(ScopeBlock* statement) = 0;
 };
 
 

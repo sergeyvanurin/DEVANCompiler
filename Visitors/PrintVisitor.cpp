@@ -278,3 +278,7 @@ void PrintVisitor::Visit(ThisExpression *expression) {
 }
 
 PrintVisitor::PrintVisitor(const std::string &filename): stream(filename) {}
+
+void PrintVisitor::Visit(ScopeBlock *statement) {
+
+}
