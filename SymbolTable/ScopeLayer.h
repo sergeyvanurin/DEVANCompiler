@@ -30,7 +30,6 @@ public:
     ScopeLayer* GetParent() const;
 
     void DeclareClass(const STClass& class_decl);
-    void DeclareMethod(const STMethod& method);
 
     bool HasVariableAtLayer(const std::string& var_name) const;
 
@@ -47,8 +46,6 @@ public:
 private:
     std::unordered_map<STVariable, std::shared_ptr<Object>> values_;
 
-    //std::unordered_map<STVariable, size_t> offsets_;
-    std::unordered_map<std::string, STMethod> methods_;
     std::unordered_map<std::string, STVariable> variables_;
     std::unordered_map<std::string, STClass> classes_;
 

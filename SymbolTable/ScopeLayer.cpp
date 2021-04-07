@@ -52,15 +52,6 @@ void ScopeLayer::DeclareClass(const STClass& class_decl) {
     EnterClass(&classes_.at(class_decl.GetName()));
 }
 
-void ScopeLayer::DeclareMethod(const STMethod& method) {
-    if (classes_.find(method.GetName()) != classes_.end()) {
-        throw std::runtime_error("Method has been declared");
-    }
-
-    methods_.emplace(method.GetName(), method);
-    EnterMethod(&methods_.at(method.GetName()));
-}
-
 bool ScopeLayer::HasVariableAtLayer(const std::string& var_name) const {
     return variables_.count(var_name);
 }

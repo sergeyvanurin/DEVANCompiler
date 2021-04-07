@@ -11,7 +11,3 @@ STMethod::STMethod(MethodDeclaration *method): BaseSymbol(method->method_name), 
         arguments.emplace_back(argument);
     }
 }
-
-const std::vector<STArgument> &STMethod::GetArguments() const {
-    return arguments;
-}

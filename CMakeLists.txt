@@ -3,6 +3,8 @@ cmake_minimum_required(VERSION 3.16)
 include_directories(/usr/local/opt/flex/include)
 add_compile_options(-std=c++17)
 
+set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -D_GLIBCXX_DEBUG")
+
 project(DEVANCompiler)
 set(
         HEADERS

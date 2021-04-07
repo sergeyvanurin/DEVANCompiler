@@ -18,7 +18,3 @@ std::string BaseSymbol::GetName() const {
 
 BaseSymbol::BaseSymbol(const std::string &name): name_(name) {
 }
-
-BaseSymbol::BaseSymbol(const BaseSymbol &other): name_(other.name_) {
-
-}

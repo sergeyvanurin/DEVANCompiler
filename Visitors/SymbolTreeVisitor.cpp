@@ -162,23 +162,22 @@ void SymbolTreeVisitor::Visit(ClassDeclarationList *class_declaration_list) {
 }
 
 void SymbolTreeVisitor::Visit(MethodDeclaration *statement) {
-    current_layer_->DeclareMethod(STMethod(statement));
+    current_layer_->EnterMethod(current_layer_->GetCurrentClass()->FindMethodByName(statement->method_name));
 }
 
 void SymbolTreeVisitor::Visit(DeclarationList *statement) {
     for (auto &declare: statement->declarations) {
-        try {
+        if (declare.index() == 0) {
             std::get<VarDeclaration *>(declare)->Accept(this);
-        }
-        catch (const std::bad_variant_access &) {
+        } else {
             std::get<MethodDeclaration *>(declare)->Accept(this);
         }
     }
     for (auto &declare: statement->declarations) {
-        try {
+        if (declare.index() == 1) {
             std::get<MethodDeclaration *>(declare)->formals->Accept(this);
             std::get<MethodDeclaration *>(declare)->statements->Accept(this);
-        } catch (const std::bad_variant_access &) {}
+        }
     }
 }
 

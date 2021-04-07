@@ -39,19 +39,19 @@ Type MethodInvocation::EvalType(ScopeLayer *scope) {
         std::cerr << Expression::loc << std::endl;
         throw std::runtime_error("Class '" + class_name.type_name + "' doesn't have method '" + method_name + "'");
     }
-    if (arguments->expressions.size() != method_ref->GetArguments().size()) {
+    if (arguments->expressions.size() != method_ref->arguments.size()) {
         std::cerr << Expression::loc << std::endl;
         throw std::runtime_error("Method '" + method_name + "' of class '" + class_name.type_name + "' expect " +
-                                 std::to_string(method_ref->GetArguments().size()) + " arguments but got " +
+                                 std::to_string(method_ref->arguments.size()) + " arguments but got " +
                                  std::to_string(arguments->expressions.size()));
     }
-    for (size_t i = 0; i < method_ref->GetArguments().size(); ++i) {
+    for (size_t i = 0; i < method_ref->arguments.size(); ++i) {
         // TODO inheritance
-        if (arguments->expressions[i]->GetType(scope) != method_ref->GetArguments()[i].type) {
+        if (arguments->expressions[i]->GetType(scope) != method_ref->arguments[i].type) {
             std::cerr << arguments->expressions[i]->loc << std::endl;
             throw std::runtime_error("Method '" + method_name + "' of class '" + class_name.type_name + "' expect at " +
                                      std::to_string(i) + "-th argument type '" +
-                                     method_ref->GetArguments()[i].type.ToString() + "' but got '" +
+                                     method_ref->arguments[i].type.ToString() + "' but got '" +
                                      arguments->expressions[i]->GetType(scope).ToString() + "'");
         }
     }

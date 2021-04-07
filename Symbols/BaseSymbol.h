@@ -15,9 +15,7 @@ public:
     bool operator!=(const BaseSymbol& other) const;
     std::string GetName() const;
     explicit BaseSymbol(const std::string& name);
-    BaseSymbol(const BaseSymbol& other);
 
-    BaseSymbol() = default;
 
 private:
     std::string name_;
