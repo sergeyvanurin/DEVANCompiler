@@ -221,7 +221,7 @@ void InterpreterVisitor::Visit(Print *statement) {
 }
 
 void InterpreterVisitor::Visit(MethodInvocation *statement) {
-
+    local_results.push(0);
 }
 
 void InterpreterVisitor::Visit(ExpressionList *statement) {
@@ -257,7 +257,7 @@ void InterpreterVisitor::Visit(ScopeBlock *statement) {
 }
 
 void InterpreterVisitor::Visit(AllocExpression *expression) {
-
+    local_results.push(0);
 }
 
 
