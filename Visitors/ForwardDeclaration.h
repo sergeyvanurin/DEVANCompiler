@@ -35,7 +35,7 @@ class While;
 class VarAssignment;
 class IdentExpression;
 class NumExpression;
-class Scope;
+class AllocExpression;
 class StatementList;
 class Formal;
 class FormalsList;

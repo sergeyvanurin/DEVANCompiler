@@ -17,6 +17,7 @@ void NotExpression::Accept(Visitor *visitor) {
 
 Type NotExpression::EvalType(ScopeLayer *scope) {
     if (expr->GetType(scope) != Type("bool")){
+        std::cerr << loc << std::endl;
         throw std::runtime_error("TypeError: Only bool can be negated");
     }
     return Type("bool");

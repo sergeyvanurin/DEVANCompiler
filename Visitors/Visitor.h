@@ -48,6 +48,7 @@ public:
     virtual void Visit(ExpressionList* statement) = 0;
     virtual void Visit(MethodInvocation* statement) = 0;
     virtual void Visit(ScopeBlock* statement) = 0;
+    virtual void Visit(AllocExpression* expression) = 0;
 };
 
 

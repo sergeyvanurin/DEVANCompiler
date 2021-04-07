@@ -13,8 +13,10 @@
 class STMethod : public BaseSymbol {
 public:
     explicit STMethod(MethodDeclaration* method);
-    std::vector<STArgument> arguments;
     Type* return_type;
+    const std::vector<STArgument> &GetArguments() const;
+private:
+    std::vector<STArgument> arguments;
 };
 
 

@@ -6,6 +6,7 @@
 
 Type ComparisonExpression::EvalType(ScopeLayer *scope) {
     if (expr1->GetType(scope) != Type("int") || expr2->GetType(scope) != Type("int")) {
+        std::cerr << loc << std::endl;
         throw std::runtime_error("TypeError: Cant compare non-int types");
     }
     return Type("bool");

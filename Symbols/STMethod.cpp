@@ -7,7 +7,11 @@
 #include "Statements/FormalsList.h"
 
 STMethod::STMethod(MethodDeclaration *method): BaseSymbol(method->method_name), return_type(method->return_type) {
-    for (auto* argument : method->formals->formals) {
+    for (Formal* argument : method->formals->formals) {
         arguments.emplace_back(argument);
     }
+}
+
+const std::vector<STArgument> &STMethod::GetArguments() const {
+    return arguments;
 }

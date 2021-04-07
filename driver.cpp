@@ -23,7 +23,7 @@ void Driver::run() {
     SymbolTreeVisitor scope_visitor = SymbolTreeVisitor();
     scope_visitor.Visit(program);
 
-    std::cout << "Symbol tree built\n";
+    std::cout << "Symbol tree built" << std::endl;
 
     InterpreterVisitor interpreter;
     program->Accept(&interpreter);

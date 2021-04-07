@@ -52,6 +52,8 @@ public:
     void Visit(MethodInvocation* statement) override;
     void Visit(ScopeBlock* statement) override;
 
+    void Visit(AllocExpression *expression) override;
+
     void NewLevelDown();
 
     void LevelUp();

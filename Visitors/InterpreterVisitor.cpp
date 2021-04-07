@@ -256,6 +256,10 @@ void InterpreterVisitor::Visit(ScopeBlock *statement) {
 
 }
 
+void InterpreterVisitor::Visit(AllocExpression *expression) {
+
+}
+
 
 
 

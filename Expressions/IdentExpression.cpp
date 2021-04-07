@@ -25,6 +25,7 @@ std::variant<int, std::string> IdentExpression::eval() const {
 Type IdentExpression::EvalType(ScopeLayer *scope) {
     auto var = scope->GetVariableByName(var_name);
     if (var == nullptr){
+        std::cerr << loc << std::endl;
         throw std::runtime_error("No variable " + var_name + " at this scope");
     }
     return var->type;

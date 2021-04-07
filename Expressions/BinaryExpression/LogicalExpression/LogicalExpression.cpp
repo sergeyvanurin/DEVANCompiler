@@ -6,6 +6,7 @@
 
 Type LogicalExpression::EvalType(ScopeLayer *scope) {
     if (expr1->GetType(scope) != Type("bool") || expr2->GetType(scope) != Type("bool")) {
+        std::cerr << loc << std::endl;
         throw std::runtime_error("TypeError: Logical operation only for bool");
     }
     return Type("bool");

@@ -48,6 +48,10 @@ class PrintVisitor: public Visitor {
     void Visit(ExpressionList* statement) override;
     void Visit(MethodInvocation* statement) override;
     void Visit(ScopeBlock* statement) override;
+
+public:
+    void Visit(AllocExpression *expression) override;
+
 public:
     PrintVisitor(const std::string& filename);
 

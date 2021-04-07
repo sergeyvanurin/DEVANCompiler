@@ -4,5 +4,9 @@ class Program {
       a = 5; b = 3;
       if  (a > 0) a = a - 1;
       else a = a + 1;
+      bool c;
+
+
+      a = a - 1 + c;
   }
 }

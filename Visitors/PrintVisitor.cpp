@@ -282,3 +282,7 @@ PrintVisitor::PrintVisitor(const std::string &filename): stream(filename) {}
 void PrintVisitor::Visit(ScopeBlock *statement) {
 
 }
+
+void PrintVisitor::Visit(AllocExpression *expression) {
+
+}

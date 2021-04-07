@@ -15,53 +15,19 @@ ScopeLayer::ScopeLayer(ScopeLayer* parent): parent_(parent) {
     parent_->AddChild(this);
 }
 
-void ScopeLayer::AttachParent() {
-
-}
-
 ScopeLayer::ScopeLayer(): parent_(nullptr) {}
 
 void ScopeLayer::DeclareVariable(const STVariable& var) {
     if (variables_.find(var.GetName()) != variables_.end()) {
-        throw std::runtime_error("Variable has been declared");
+        throw std::runtime_error("Variable '" + var.GetName() + "' has been declared in this scope");
     }
 
     variables_.emplace(var.GetName(), var);
     values_[var] = std::make_shared<Int>(0);
-    offsets_[var] = symbols_.size();
-    symbols_.push_back(var); // symbols_[offsets_[symbol]] === symbol
+    //offsets_[var] = symbols_.size();
+    //symbols_.push_back(var); // symbols_[offsets_[symbol]] === symbol
 }
 
-void ScopeLayer::Put(STVariable symbol, std::shared_ptr<Object> value) {
-    ScopeLayer* current_layer = this;
-
-    while (!current_layer->Has(symbol) && current_layer->parent_ != nullptr) {
-        current_layer = current_layer->parent_;
-    }
-    if (current_layer->Has(symbol)) {
-        current_layer->values_.find(symbol)->second = value;
-    } else {
-        throw std::runtime_error("Variable not declared");
-    }
-}
-
-bool ScopeLayer::Has(const BaseSymbol& symbol) const {
-    return std::find(symbols_.begin(), symbols_.end(), symbol) != symbols_.end();
-}
-
-
-std::shared_ptr<Object> ScopeLayer::Get(STVariable symbol) {
-    ScopeLayer* current_layer = this;
-
-    while (!current_layer->HasVariableAtLayer(symbol.GetName()) && current_layer->parent_ != nullptr) {
-        current_layer = current_layer->parent_;
-    }
-    if (current_layer->HasVariableAtLayer(symbol.GetName())) {
-        return current_layer->values_.find(symbol)->second;
-    } else {
-        throw std::runtime_error("Variable not declared");
-    }
-}
 
 ScopeLayer* ScopeLayer::GetChild(size_t index) {
     std::cout << "Children of scope: " << children_.size() << std::endl;
@@ -92,6 +58,7 @@ void ScopeLayer::DeclareMethod(const STMethod& method) {
     }
 
     methods_.emplace(method.GetName(), method);
+    EnterMethod(&methods_.at(method.GetName()));
 }
 
 bool ScopeLayer::HasVariableAtLayer(const std::string& var_name) const {
@@ -104,13 +71,21 @@ void ScopeLayer::EnterClass(const STClass *cur_class) {
 }
 
 const STClass *ScopeLayer::GetCurrentClass() const {
-    return current_class_;
+    if (current_class_ != nullptr){
+        return current_class_;
+    }
+    if (parent_ != nullptr){
+        return parent_->GetCurrentClass();
+    }
+    return nullptr;
 }
 
 STClass *ScopeLayer::GetClassByName(const std::string& class_name) {
-    if (!classes_.count(class_name))
+    if (classes_.count(class_name))
+        return &classes_.at(class_name);
+    if (parent_ == nullptr)
         return nullptr;
-    return &classes_.at(class_name);
+    return parent_->GetClassByName(class_name);
 }
 
 STVariable *ScopeLayer::GetVariableByName(const std::string &var_name) {
@@ -121,10 +96,16 @@ STVariable *ScopeLayer::GetVariableByName(const std::string &var_name) {
     return parent_->GetVariableByName(var_name);
 }
 
-bool ScopeLayer::HasVariable(const std::string &var_name) const {
-    ScopeLayer *current_layer = const_cast<ScopeLayer*>(this);
-    while (!current_layer->HasVariableAtLayer(var_name) && current_layer->parent_ != nullptr) {
-        current_layer = current_layer->parent_;
+void ScopeLayer::EnterMethod(const STMethod *cur_method) {
+    current_method_ = cur_method;
+}
+
+const STMethod *ScopeLayer::GetCurrentMethod() const {
+    if (current_method_ != nullptr){
+        return current_method_;
     }
-    return current_layer->HasVariableAtLayer(var_name);
+    if (parent_ != nullptr){
+        return parent_->GetCurrentMethod();
+    }
+    return nullptr;
 }

@@ -4,7 +4,9 @@
 
 #include "VarDeclaration.h"
 
-VarDeclaration::VarDeclaration(Type* type, const std::string& var_name, yy::location loc): type(type), var_name(var_name), Statement(loc) {}
+#include <utility>
+
+VarDeclaration::VarDeclaration(Type* type, std::string  var_name, yy::location loc): type(type), var_name(std::move(var_name)), Statement(loc) {}
 
 void VarDeclaration::Accept(Visitor *visitor) {
     visitor->Visit(this);

@@ -6,7 +6,7 @@
 #include "SymbolTreeVisitor.h"
 #include "Elements.h"
 
-SymbolTreeVisitor::SymbolTreeVisitor(): tree_(new ScopeLayer) {
+SymbolTreeVisitor::SymbolTreeVisitor() : tree_(new ScopeLayer) {
     current_layer_ = tree_.root_;
 }
 
@@ -34,7 +34,10 @@ void SymbolTreeVisitor::Visit(IdentExpression *expression) {
 }
 
 void SymbolTreeVisitor::Visit(IfElse *statement) {
-    statement->expr->GetType(current_layer_);
+    if (statement->expr->GetType(current_layer_) != Type("bool")) {
+        std::cerr << statement->expr->loc << std::endl;
+        throw std::runtime_error("Only bool may be in if expression");
+    }
     NewLevelDown();
     statement->If->Accept(this);
     LevelUp();
@@ -61,12 +64,12 @@ void SymbolTreeVisitor::Visit(NumExpression *expression) {
 }
 
 void SymbolTreeVisitor::Visit(Program *program) {
-    program->main_class->Accept(this);
     program->class_declarations->Accept(this);
+    program->main_class->Accept(this);
 }
 
 void SymbolTreeVisitor::Visit(StatementList *statements) {
-    for (auto & statement : statements->statements ){
+    for (Statement* statement : statements->statements) {
         statement->Accept(this);
     }
 }
@@ -76,17 +79,29 @@ void SymbolTreeVisitor::Visit(SubExpression *expression) {
 }
 
 void SymbolTreeVisitor::Visit(VarAssignment *statement) {
-    statement->var_name->GetType(current_layer_);
-    statement->new_value->GetType(current_layer_);
+    if (statement->var_name->GetType(current_layer_) != statement->new_value->GetType(current_layer_)) {
+        std::cerr << statement->loc << std::endl;
+        throw std::runtime_error(
+                "Assigment types isn't equal types '" + statement->var_name->GetType(current_layer_).ToString() +
+                "' and '" + statement->new_value->GetType(current_layer_).ToString() + "'");
+    }
 }
 
 void SymbolTreeVisitor::Visit(VarDeclaration *var_decl) {
-    current_layer_->DeclareVariable(STVariable(var_decl));
+    try {
+        current_layer_->DeclareVariable(STVariable(var_decl));
+    } catch (const std::runtime_error &e){
+        std::cerr << var_decl->loc << std::endl;
+        throw e;
+    }
     // TODO FieldDeclaration
 }
 
 void SymbolTreeVisitor::Visit(While *statement) {
-    statement->expr->GetType(current_layer_);
+    if (statement->expr->GetType(current_layer_) != Type("bool")) {
+        std::cerr << statement->expr->loc << std::endl;
+        throw std::runtime_error("Only bool may be in while expression");
+    }
     NewLevelDown();
     statement->statement->Accept(this);
     LevelUp();
@@ -141,7 +156,7 @@ void SymbolTreeVisitor::Visit(LengthExpression *expression) {
 }
 
 void SymbolTreeVisitor::Visit(ClassDeclarationList *class_declaration_list) {
-    for (auto &declaration: class_declaration_list->class_declarations){
+    for (auto &declaration: class_declaration_list->class_declarations) {
         declaration->Accept(this);
     }
 }
@@ -151,18 +166,19 @@ void SymbolTreeVisitor::Visit(MethodDeclaration *statement) {
 }
 
 void SymbolTreeVisitor::Visit(DeclarationList *statement) {
-    for (auto &declare: statement->declarations){
+    for (auto &declare: statement->declarations) {
         try {
-            std::get<VarDeclaration*>(declare)->Accept(this);
+            std::get<VarDeclaration *>(declare)->Accept(this);
         }
-        catch (const std::bad_variant_access&) {
-            std::get<MethodDeclaration*>(declare)->Accept(this);
+        catch (const std::bad_variant_access &) {
+            std::get<MethodDeclaration *>(declare)->Accept(this);
         }
     }
-    for (auto &declare: statement->declarations){
-        try{
-            std::get<MethodDeclaration*>(declare)->statements->Accept(this);
-        } catch (const std::bad_variant_access&) {}
+    for (auto &declare: statement->declarations) {
+        try {
+            std::get<MethodDeclaration *>(declare)->formals->Accept(this);
+            std::get<MethodDeclaration *>(declare)->statements->Accept(this);
+        } catch (const std::bad_variant_access &) {}
     }
 }
 
@@ -171,7 +187,7 @@ void SymbolTreeVisitor::Visit(Formal *formal) {
 }
 
 void SymbolTreeVisitor::Visit(FormalsList *formals_list) {
-    for (auto &form: formals_list->formals){
+    for (auto &form: formals_list->formals) {
         form->Accept(this);
     }
 }
@@ -181,11 +197,21 @@ void SymbolTreeVisitor::Visit(Print *statement) {
 }
 
 void SymbolTreeVisitor::Visit(Return *statement) {
-    statement->expr->GetType(current_layer_);
+    auto method_ptr = current_layer_->GetCurrentMethod();
+    if (method_ptr == nullptr) {
+        std::cerr << statement->expr->loc << std::endl;
+        throw std::runtime_error("'return' must be in method scope");
+    }
+    if (*method_ptr->return_type != statement->expr->GetType(current_layer_)) {
+        std::cerr << statement->expr->loc << std::endl;
+        throw std::runtime_error(
+                "'return' in method '" + method_ptr->GetName() + "' expect '" + method_ptr->return_type->ToString() +
+                "' but got '" + statement->expr->GetType(current_layer_).ToString() + "'");
+    }
 }
 
 void SymbolTreeVisitor::Visit(ExpressionList *statement) {
-    for (auto &expr: statement->expressions){
+    for (auto &expr: statement->expressions) {
         expr->Accept(this);
     }
 }
@@ -210,4 +236,8 @@ void SymbolTreeVisitor::NewLevelDown() {
 
 void SymbolTreeVisitor::LevelUp() {
     current_layer_ = current_layer_->GetParent();
+}
+
+void SymbolTreeVisitor::Visit(AllocExpression *expression) {
+    expression->GetType(current_layer_);
 }

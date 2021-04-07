@@ -25,6 +25,7 @@
 #include "Expressions/ConstantExpression/NumExpression.h"
 #include "Expressions/FieldInvokeExpression.h"
 #include "Expressions/LengthExpression.h"
+#include "Expressions/AllocExpression.h"
 #include "Statements/Assert.h"
 #include "Statements/IfElse.h"
 #include "Statements/MainClass.h"

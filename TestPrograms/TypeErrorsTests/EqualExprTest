@@ -1,0 +1,15 @@
+class Program {
+  public static void main () {
+      int a;
+      int b;
+      bool c;
+      c = a == b;
+      bool d;
+      d = c == d;
+      Double f;
+      d = f == f;
+      d = a == c;
+  }
+}
+
+class Double{ }

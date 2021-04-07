@@ -233,8 +233,8 @@ local_variable_declaration:
     variable_declaration {$$ = $1;};
 
 method_invocation:
-    "this." "id" "(" ")" {$$ = new MethodInvocation(nullptr, $2, nullptr, driver.loc);}
-  | "this." "id" "(" exprs ")" {$$ = new MethodInvocation(nullptr, $2, $4, driver.loc);};
+    "this." "id" "(" ")" {$$ = new MethodInvocation(new ThisExpression(driver.loc), $2, nullptr, driver.loc);}
+  | "this." "id" "(" exprs ")" {$$ = new MethodInvocation(new ThisExpression(driver.loc), $2, $4, driver.loc);};
   | expr "." "id" "(" ")" {$$ = new MethodInvocation($1, $3, nullptr, driver.loc);}
   | expr "." "id" "(" exprs ")" {$$ = new MethodInvocation($1, $3, $5, driver.loc);};
 
@@ -259,8 +259,8 @@ expr:
   | expr "%" expr {$$ = new ModExpression($1, $3, driver.loc);}
   | expr "[" expr "]" {$$ = new IndexExpression($1, $3, driver.loc);}
   | expr "." "length" {$$ = new LengthExpression($1, driver.loc);}
-  | "new" simple_type "[" expr "]" {}
-  | "new" type_identifier "(" ")" {}
+  | "new" simple_type "[" expr "]" { $$ = new AllocExpression(Type($2->type_name, true), driver.loc); }
+  | "new" type_identifier "(" ")" { $$ = new AllocExpression(Type($2), driver.loc); }
   | "!" expr {$$ = new NotExpression($2, driver.loc);}
   | "(" expr ")" {$$ = $2;}
   | "id" {$$ = new IdentExpression($1, driver.loc);}

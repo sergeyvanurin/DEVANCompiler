@@ -52,6 +52,9 @@ class InterpreterVisitor: public Visitor {
     void Visit(MethodInvocation* statement) override;
     void Visit(ScopeBlock* statement) override;
 
+public:
+    void Visit(AllocExpression *expression) override;
+
 private:
     std::map<std::string, int> variables;
     std::stack<int> local_results;

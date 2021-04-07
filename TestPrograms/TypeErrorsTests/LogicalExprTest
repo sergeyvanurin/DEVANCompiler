@@ -1,0 +1,10 @@
+class Program {
+  public static void main () {
+      bool a;
+      bool b;
+      a = a || b;
+      a = a && b;
+      int c;
+      a = a || c;
+  }
+}
