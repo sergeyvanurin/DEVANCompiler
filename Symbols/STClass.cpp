@@ -10,28 +10,26 @@ STClass::STClass(ClassDeclaration *class_) : base_class_name(class_->base_class_
     for (auto decl : class_->declaration_list->declarations) {
         if (decl.index() == 0) {
             VarDeclaration *var = std::get<VarDeclaration *>(decl);
-            fields.emplace_back(var);
-            fields_.emplace(var->var_name, &fields.back());
+            fields_.emplace(var->var_name, var);
         } else {
             MethodDeclaration *method = std::get<MethodDeclaration *>(decl);
-            methods.emplace_back(method);
-            methods_.emplace(method->method_name, &methods.back());
+            methods_.emplace(method->method_name, method);
         }
     }
 
 
 }
 
-STVariable *STClass::FindFieldByName(const std::string &name) const {
+const STVariable *STClass::FindFieldByName(const std::string &name) const {
     if (fields_.count(name)) {
-        return fields_.at(name);
+        return &fields_.at(name);
     }
     return nullptr;
 }
 
-STMethod *STClass::FindMethodByName(const std::string& name) const {
+const STMethod *STClass::FindMethodByName(const std::string& name) const {
     if (methods_.count(name)) {
-        return methods_.at(name);
+        return &methods_.at(name);
     }
     return nullptr;
 }

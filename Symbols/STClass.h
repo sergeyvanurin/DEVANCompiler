@@ -15,18 +15,16 @@
 class STClass : public BaseSymbol {
 public:
 
-    STVariable *FindFieldByName(const std::string &name) const;
+    const STVariable *FindFieldByName(const std::string &name) const;
 
-    STMethod *FindMethodByName(const std::string& name) const;
+    const STMethod *FindMethodByName(const std::string& name) const;
 
     explicit STClass(ClassDeclaration *class_);
 
     std::string base_class_name = "";
-    std::vector<STMethod> methods;
-    std::vector<STVariable> fields;
 private:
-    std::unordered_map<std::string, STMethod *> methods_;
-    std::unordered_map<std::string, STVariable *> fields_;
+    std::unordered_map<std::string, STMethod> methods_;
+    std::unordered_map<std::string, STVariable> fields_;
 };
 
 
