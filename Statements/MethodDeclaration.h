@@ -9,6 +9,8 @@
 #include <vector>
 #include <Symbols/Type.h>
 #include "Statement.h"
+#include "FormalsList.h"
+#include "StatementList.h"
 
 class MethodDeclaration : public Statement {
 public:

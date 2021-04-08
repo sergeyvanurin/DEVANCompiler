@@ -14,8 +14,10 @@ public:
     void Accept(Visitor* visitor) override;
     std::variant<int, std::string> eval() const override;
 
+    int GetValue() const;
+
 private:
-    int value;
+    int value_;
 
     Type EvalType(ScopeLayer *scope) override;
 };

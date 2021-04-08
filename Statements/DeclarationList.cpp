@@ -3,6 +3,7 @@
 //
 
 #include "DeclarationList.h"
+#include "Visitors/Visitor.h"
 
 DeclarationList::DeclarationList(yy::location loc) : Statement(loc) {}
 

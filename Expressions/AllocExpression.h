@@ -10,11 +10,12 @@
 
 class AllocExpression : public Expression {
 public:
-    AllocExpression(Type type, yy::location loc);
+    AllocExpression(Type type, Expression* size_expr, yy::location loc);
 
     std::variant<int, std::string> eval() const override;
 
     Type type;
+    Expression* size_expr;
 
     void Accept(Visitor *visitor) override;
 

@@ -10,7 +10,7 @@
 #include "Symbols/STMethod.h"
 #include "Statements/FormalsList.h"
 
-const int THIS_OFFSET = -POINTER_SIZE;
+const long long THIS_OFFSET = -1;
 
 ScopeLayer::ScopeLayer(ScopeLayer *parent) : parent_(parent), offsets_(parent->GetCurrentOffset()) {
     if (parent_ != nullptr)
@@ -90,9 +90,7 @@ long long ScopeLayer::GetCurrentOffset() const {
 void ScopeLayer::DeclareMethod(const std::string &method_name) {
     current_method_ = GetCurrentClass()->FindMethodByName(method_name);
     current_offset_ = THIS_OFFSET;
-    for (const auto &arg: current_method_->arguments) {
-        current_offset_ -= arg.type.GetSize();
-    }
+    current_offset_ -= current_method_->arguments.size();
 }
 
 void ScopeLayer::DeclareLocalVariable(const STVariable &var) {
@@ -106,7 +104,7 @@ void ScopeLayer::DeclareLocalVariable(const STVariable &var) {
     std::cout << "Local variable '" << var.GetName() << "' in method '" << current_method_->GetName() << "' of type '"
               << var.type.ToString() << "' has offset: " << current_offset_ << std::endl;
     offsets_.emplace(var.GetName(), current_offset_);
-    current_offset_ += var.type.GetSize();
+    current_offset_ += 1;
 }
 
 const STMethod *ScopeLayer::GetCurrentMethod() const {
@@ -120,5 +118,11 @@ const STMethod *ScopeLayer::GetCurrentMethod() const {
 }
 
 long long ScopeLayer::GetOffsetOfVariable(const std::string &var_name) const {
-    return offsets_.at(var_name);
+    if (offsets_.count(var_name)) {
+        return offsets_.at(var_name);
+    }
+    if (parent_ != nullptr){
+        return parent_->GetOffsetOfVariable(var_name);
+    }
+    throw std::runtime_error("Has no variable");
 }

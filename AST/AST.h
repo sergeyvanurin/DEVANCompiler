@@ -2,10 +2,11 @@
 // Created by Sergey Vanurin on 02.03.2021.
 //
 
-#include "Statements/MainClass.h"
 #ifndef DEVANCOMPILER_AST_H
 #define DEVANCOMPILER_AST_H
 
+#include "Statements/MainClass.h"
+#include "Statements/Program.h"
 
 class AST {
 public:

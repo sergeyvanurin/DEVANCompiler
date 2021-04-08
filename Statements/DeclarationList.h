@@ -9,6 +9,8 @@
 #include <vector>
 #include <variant>
 #include "Statement.h"
+#include "FieldDeclaration.h"
+#include "MethodDeclaration.h"
 
 class DeclarationList : public Statement {
 public:

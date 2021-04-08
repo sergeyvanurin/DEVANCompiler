@@ -16,6 +16,7 @@ public:
 
     Type GetType(ScopeLayer *scope) {
         if (expr_type_.type_name.empty()){
+            SetScope(scope);
             expr_type_ = EvalType(scope);
         }
         return expr_type_;
@@ -28,7 +29,16 @@ public:
         return expr_type_;
     }
 
+    void SetScope(ScopeLayer *scope){
+        scope_ = scope;
+    }
+
+    ScopeLayer* GetScope() const {
+        return scope_;
+    }
+
 private:
+    ScopeLayer *scope_;
     virtual Type EvalType(ScopeLayer *scope) = 0;
     Type expr_type_;
 };

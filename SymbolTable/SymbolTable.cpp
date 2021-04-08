@@ -58,7 +58,7 @@ void SymbolTable::EndScope() {
         }
         symbols_.pop();
         if (symbols_.empty())
-            throw std::runtime_error("Expected { on the top of the stack, got" + symbol.GetName());
+            throw std::runtime_error("Expected { on the top of the stack_, got" + symbol.GetName());
     }
     symbols_.pop();
 }

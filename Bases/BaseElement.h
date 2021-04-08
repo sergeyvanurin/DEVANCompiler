@@ -5,8 +5,12 @@
 #define DEVANCOMPILER_BASEELEMENT_H
 
 #include "location.hh"
-#include "Visitors/Visitor.h"
+//#include "Visitors/Visitor.h"
 #include <variant>
+//#include <SymbolTable/ScopeLayer.h>
+
+class Visitor;
+class ScopeLayer;
 
 class BaseElement {
 public:

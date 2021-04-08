@@ -3,6 +3,7 @@
 //
 
 #include "FormalsList.h"
+#include "Visitors/Visitor.h"
 
 FormalsList::FormalsList(yy::location loc) : Statement(loc) {
 

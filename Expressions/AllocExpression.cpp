@@ -6,8 +6,12 @@
 
 #include <utility>
 
-AllocExpression::AllocExpression(Type type, yy::location loc) : type(std::move(type)), Expression(loc) {
-
+AllocExpression::AllocExpression(Type type, Expression *size_expr, yy::location loc) : type(std::move(type)),
+                                                                                       size_expr(size_expr),
+                                                                                       Expression(loc) {
+    if (size_expr != nullptr){
+        type.is_array = true;
+    }
 }
 
 std::variant<int, std::string> AllocExpression::eval() const {
@@ -19,5 +23,15 @@ void AllocExpression::Accept(Visitor *visitor) {
 }
 
 Type AllocExpression::EvalType(ScopeLayer *scope) {
+    if (size_expr != nullptr) {
+        if (type.type_name == "void") {
+            std::cerr << loc << std::endl;
+            throw std::runtime_error("Array of 'void' not allowed");
+        }
+        if (size_expr->GetType(scope) != Type("int")) {
+            std::cerr << loc << std::endl;
+            throw std::runtime_error("Array size expect 'int' but got '" + size_expr->GetType(scope).ToString() + "'");
+        }
+    }
     return type;
 }

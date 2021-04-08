@@ -4,6 +4,7 @@
 
 #include "MethodDeclaration.h"
 #include "FormalsList.h"
+#include "Visitors/Visitor.h"
 
 #include <utility>
 
