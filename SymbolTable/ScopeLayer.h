@@ -20,6 +20,7 @@
 class ScopeLayer {
 public:
     explicit ScopeLayer(ScopeLayer* parent);
+    ScopeLayer(ScopeLayer* parent, long long new_offset);
     ScopeLayer();
 
     void DeclareVariable(const STVariable& symbol);
@@ -43,17 +44,20 @@ public:
 
     STVariable* GetVariableByName(const std::string& var_name);
 
+    long long GetOffsetOfVariable(const std::string& var_name) const;
+
+    long long GetCurrentOffset() const;
+
 private:
-    std::unordered_map<STVariable, std::shared_ptr<Object>> values_;
 
     std::unordered_map<std::string, STVariable> variables_;
     std::unordered_map<std::string, STClass> classes_;
 
+    std::unordered_map<std::string, long long> offset_;
+    long long current_offset_ = 0;
+
     const STClass* current_class_ = nullptr;
     const STMethod* current_method_ = nullptr;
-
-    //std::vector<BaseSymbol> symbols_;
-    //std::string name_;
 
     ScopeLayer* parent_;
     std::vector<ScopeLayer*> children_;

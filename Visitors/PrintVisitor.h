@@ -24,7 +24,7 @@ class PrintVisitor: public Visitor {
     void Visit(StatementList *statements) override;
     void Visit(SubExpression *expression) override;
     void Visit(VarAssignment *statement) override;
-    void Visit(VarDeclaration *statement) override;
+    void Visit(LocalVarDeclaration *statement) override;
     void Visit(While *statement) override;
     void Visit(IndexExpression* expression) override;
     void Visit(LogicalAndExpression* expression) override;
@@ -48,6 +48,9 @@ class PrintVisitor: public Visitor {
     void Visit(ExpressionList* statement) override;
     void Visit(MethodInvocation* statement) override;
     void Visit(ScopeBlock* statement) override;
+
+public:
+    void Visit(FieldDeclaration *statement) override;
 
 public:
     void Visit(AllocExpression *expression) override;

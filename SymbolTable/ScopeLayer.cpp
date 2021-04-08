@@ -8,24 +8,26 @@
 #include <algorithm>
 
 
-ScopeLayer::ScopeLayer(ScopeLayer* parent): parent_(parent) {
-    std::cout << "Constructor called" << std::endl;
-    std::cout << "End contstructor called" << std::endl;
+ScopeLayer::ScopeLayer(ScopeLayer* parent): parent_(parent), offset_(parent->GetCurrentOffset()) {
+    if (parent_ != nullptr)
+        parent_->AddChild(this);
+}
 
-    parent_->AddChild(this);
+ScopeLayer::ScopeLayer(ScopeLayer *parent, long long int new_offset) : parent_(parent), offset_(new_offset) {
+    if (parent_ != nullptr)
+        parent->AddChild(this);
 }
 
 ScopeLayer::ScopeLayer(): parent_(nullptr) {}
 
 void ScopeLayer::DeclareVariable(const STVariable& var) {
-    if (variables_.find(var.GetName()) != variables_.end()) {
+    if (variables_.count(var.GetName())) {
         throw std::runtime_error("Variable '" + var.GetName() + "' has been declared in this scope");
     }
 
     variables_.emplace(var.GetName(), var);
-    values_[var] = std::make_shared<Int>(0);
-    //offsets_[var] = symbols_.size();
-    //symbols_.push_back(var); // symbols_[offsets_[symbol]] === symbol
+    //values_[var] = std::make_shared<Int>(0);
+    // TODO offsets
 }
 
 
@@ -99,4 +101,12 @@ const STMethod *ScopeLayer::GetCurrentMethod() const {
         return parent_->GetCurrentMethod();
     }
     return nullptr;
+}
+
+long long ScopeLayer::GetOffsetOfVariable(const std::string& var_name) const {
+    return offset_.at(var_name);
+}
+
+long long ScopeLayer::GetCurrentOffset() const {
+    return current_offset_;
 }

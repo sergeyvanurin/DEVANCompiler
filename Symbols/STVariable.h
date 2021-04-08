@@ -12,7 +12,7 @@
 
 class STVariable : public BaseSymbol {
 public:
-    explicit STVariable(const std::string& name, Type type = std::string("int"));
+    explicit STVariable(const std::string& name, Type type = Type("int"));
     explicit STVariable(VarDeclaration* var_decl);
 
     Type type;

@@ -21,3 +21,19 @@ bool Type::operator!=(const Type &other) const {
 std::string Type::ToString() const {
     return type_name + (is_array ? "[]" : "");
 }
+
+int Type::GetSize() const {
+    if (is_array){
+        return POINTER_SIZE;
+    }
+    if (type_name == "int"){
+        return 4;
+    }
+    if (type_name == "bool"){
+        return 1;
+    }
+    if (type_name == "void"){
+        return 0;
+    }
+    return POINTER_SIZE;
+}

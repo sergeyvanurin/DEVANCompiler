@@ -5,11 +5,13 @@
 #include "STClass.h"
 #include "Statements/DeclarationList.h"
 #include "Statements/MethodDeclaration.h"
+#include "Statements/FieldDeclaration.h"
 
-STClass::STClass(ClassDeclaration *class_) : base_class_name(class_->base_class_name), BaseSymbol(class_->class_name) {
+STClass::STClass(ClassDeclaration *class_) : type(class_->class_name), base_class_name(class_->base_class_name),
+                                             BaseSymbol(class_->class_name) {
     for (auto decl : class_->declaration_list->declarations) {
         if (decl.index() == 0) {
-            VarDeclaration *var = std::get<VarDeclaration *>(decl);
+            FieldDeclaration *var = std::get<FieldDeclaration *>(decl);
             fields.emplace_back(var);
             fields_.emplace(var->var_name, &fields.back());
         } else {
@@ -29,9 +31,13 @@ STVariable *STClass::FindFieldByName(const std::string &name) const {
     return nullptr;
 }
 
-STMethod *STClass::FindMethodByName(const std::string& name) const {
+STMethod *STClass::FindMethodByName(const std::string &name) const {
     if (methods_.count(name)) {
         return methods_.at(name);
     }
     return nullptr;
+}
+
+Type STClass::GetType() const {
+    return type;
 }

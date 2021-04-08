@@ -18,5 +18,5 @@ std::variant<int, std::string> ThisExpression::eval() const {
 }
 
 Type ThisExpression::EvalType(ScopeLayer *scope) {
-    return scope->GetCurrentClass()->GetName();
+    return scope->GetCurrentClass()->GetType();
 }

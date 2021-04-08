@@ -129,11 +129,10 @@
 %nterm <StatementList*> statements
 %nterm <Program*> program
 %nterm <MainClass*> main_class;
-%nterm <VarDeclaration*> variable_declaration;
 %nterm <MethodDeclaration*> method_declaration;
-%nterm <VarDeclaration*> local_variable_declaration;
+%nterm <LocalVarDeclaration*> local_variable_declaration;
 %nterm <DeclarationList*> declarations;
-%nterm <std::variant<VarDeclaration*, MethodDeclaration*>> declaration;
+%nterm <std::variant<FieldDeclaration*, MethodDeclaration*>> declaration;
 %nterm <FormalsList*> formals;
 %nterm <FieldInvokeExpression*> field_invocation;
 %nterm <MethodInvocation*> method_invocation;
@@ -142,6 +141,7 @@
 %nterm <Type> simple_type;
 %nterm <Type> array_type;
 %nterm <std::string> type_identifier;
+%nterm <FieldDeclaration*> field_declaration;
 
 %%
 
@@ -189,14 +189,14 @@ declarations:
    | declarations declaration {$1->AddDeclaration($2); $$ = $1;};
 
 declaration:
-    variable_declaration {$$ = $1;} | method_declaration {$$ = $1;};
+    field_declaration {$$ = $1;} | method_declaration {$$ = $1;};
+
+field_declaration:
+    type "id" ";" {$$ = new FieldDeclaration($1, $2, driver.loc);};
 
 method_declaration:
     "public" type "id" "(" formals ")" "{" statements "}" {$$ = new MethodDeclaration($3, $2, $5, $8, driver.loc);}
   | "public" type "id" "(" ")" "{" statements "}" {$$ = new MethodDeclaration($3, $2, nullptr, $7, driver.loc);};
-
-variable_declaration:
-    type "id" ";" {$$ = new VarDeclaration($1, $2, driver.loc);};
 
 formals:
     type "id" {$$ = new FormalsList(driver.loc); $$->AddFormal(new Formal($1, $2, driver.loc));}
@@ -230,7 +230,7 @@ statement:
   | method_invocation ";" {$$ = $1;};
 
 local_variable_declaration:
-    variable_declaration {$$ = $1;};
+    type "id" ";" {$$ = new LocalVarDeclaration($1, $2, driver.loc);};
 
 method_invocation:
     "this." "id" "(" ")" {$$ = new MethodInvocation(new ThisExpression(driver.loc), $2, nullptr, driver.loc);}

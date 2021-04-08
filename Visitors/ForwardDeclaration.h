@@ -27,7 +27,6 @@ class MainClass;
 class ClassDeclaration;
 class ClassDeclarationList;
 class Assert;
-class VarDeclaration;
 class MethodDeclaration;
 class DeclarationList;
 class IfElse;
@@ -44,5 +43,7 @@ class Return;
 class ExpressionList;
 class MethodInvocation;
 class ScopeBlock;
+class FieldDeclaration;
+class LocalVarDeclaration;
 
 #endif //DEVANCOMPILER_FORWARDDECLARATION_H

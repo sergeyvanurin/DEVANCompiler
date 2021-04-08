@@ -87,7 +87,7 @@ void SymbolTreeVisitor::Visit(VarAssignment *statement) {
     }
 }
 
-void SymbolTreeVisitor::Visit(VarDeclaration *var_decl) {
+void SymbolTreeVisitor::Visit(LocalVarDeclaration *var_decl) {
     try {
         current_layer_->DeclareVariable(STVariable(var_decl));
     } catch (const std::runtime_error &e) {
@@ -168,7 +168,7 @@ void SymbolTreeVisitor::Visit(MethodDeclaration *statement) {
 void SymbolTreeVisitor::Visit(DeclarationList *statement) {
     for (auto &declare: statement->declarations) {
         if (declare.index() == 0) {
-            std::get<VarDeclaration *>(declare)->Accept(this);
+            std::get<FieldDeclaration *>(declare)->Accept(this);
         } else {
             std::get<MethodDeclaration *>(declare)->Accept(this);
         }
@@ -239,4 +239,8 @@ void SymbolTreeVisitor::LevelUp() {
 
 void SymbolTreeVisitor::Visit(AllocExpression *expression) {
     expression->GetType(current_layer_);
+}
+
+void SymbolTreeVisitor::Visit(FieldDeclaration *statement) {
+    // nothing
 }

@@ -6,7 +6,7 @@
 #include "Elements.h"
 
 
-void InterpreterVisitor::Visit(VarDeclaration *statement) {
+void InterpreterVisitor::Visit(LocalVarDeclaration *statement) {
     variables[statement->var_name] = 0;
 }
 
@@ -260,7 +260,6 @@ void InterpreterVisitor::Visit(AllocExpression *expression) {
     local_results.push(0);
 }
 
-
-
-
-
+void InterpreterVisitor::Visit(FieldDeclaration *statement) {
+    variables[statement->var_name] = 0;
+}

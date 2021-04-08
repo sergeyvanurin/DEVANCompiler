@@ -63,7 +63,7 @@ void PrintVisitor::Visit(IfElse *statement) {
     PrintTabs();
     stream << "Else statements:" << std::endl;
 
-    if (statement->Else != nullptr){
+    if (statement->Else != nullptr) {
         num_tabs_++;
         statement->Else->Accept(this);
         stream << std::endl;
@@ -78,7 +78,7 @@ void PrintVisitor::Visit(MainClass *main_class) {
 
 void PrintVisitor::Visit(ModExpression *expression) {
     PrintTabs();
-    stream << "Mod expression: "<< std::endl;
+    stream << "Mod expression: " << std::endl;
     num_tabs_++;
     expression->expr1->Accept(this);
     expression->expr2->Accept(this);
@@ -88,7 +88,7 @@ void PrintVisitor::Visit(ModExpression *expression) {
 
 void PrintVisitor::Visit(MulExpression *expression) {
     PrintTabs();
-    stream << "Mull expression: "<< std::endl;
+    stream << "Mull expression: " << std::endl;
     num_tabs_++;
     expression->expr1->Accept(this);
     expression->expr2->Accept(this);
@@ -107,7 +107,7 @@ void PrintVisitor::Visit(Program *program) {
 }
 
 void PrintVisitor::Visit(StatementList *statements) {
-    for (auto & statement : statements->statements){
+    for (auto &statement : statements->statements) {
         statement->Accept(this);
     }
 }
@@ -134,9 +134,10 @@ void PrintVisitor::Visit(VarAssignment *statement) {
 
 }
 
-void PrintVisitor::Visit(VarDeclaration *statement) {
+void PrintVisitor::Visit(LocalVarDeclaration *statement) {
     PrintTabs();
-    stream << "var declr: " << statement->var_name << std::endl;
+    stream << "local var declaration: '" << statement->var_name << "' of type '" << statement->type.ToString() << "'"
+           << std::endl;
 }
 
 void PrintVisitor::Visit(While *statement) {
@@ -153,7 +154,7 @@ void PrintVisitor::Visit(While *statement) {
     stream << std::endl;
 }
 
-void PrintVisitor::Visit(IndexExpression* expression){
+void PrintVisitor::Visit(IndexExpression *expression) {
     PrintTabs();
     stream << "indexing: ";
     expression->outer->Accept(this);
@@ -163,7 +164,8 @@ void PrintVisitor::Visit(IndexExpression* expression){
     num_tabs_--;
 
 }
-void PrintVisitor::Visit(LogicalAndExpression* expression){
+
+void PrintVisitor::Visit(LogicalAndExpression *expression) {
     PrintTabs();
     stream << "AND expression: " << std::endl;
     num_tabs_++;
@@ -172,7 +174,7 @@ void PrintVisitor::Visit(LogicalAndExpression* expression){
     num_tabs_--;
 }
 
-void PrintVisitor::Visit(LogicalOrExpression* expression){
+void PrintVisitor::Visit(LogicalOrExpression *expression) {
     PrintTabs();
     stream << "OR expression: " << std::endl;
     num_tabs_++;
@@ -181,7 +183,7 @@ void PrintVisitor::Visit(LogicalOrExpression* expression){
     num_tabs_--;
 }
 
-void PrintVisitor::Visit(GreaterExpression* expression){
+void PrintVisitor::Visit(GreaterExpression *expression) {
     PrintTabs();
     stream << "GREATER expression: " << std::endl;
     num_tabs_++;
@@ -189,7 +191,8 @@ void PrintVisitor::Visit(GreaterExpression* expression){
     expression->expr2->Accept(this);
     num_tabs_--;
 }
-void PrintVisitor::Visit(LessExpression* expression){
+
+void PrintVisitor::Visit(LessExpression *expression) {
     PrintTabs();
     stream << "LESS expression: " << std::endl;
     num_tabs_++;
@@ -197,7 +200,8 @@ void PrintVisitor::Visit(LessExpression* expression){
     expression->expr2->Accept(this);
     num_tabs_--;
 }
-void PrintVisitor::Visit(EqualExpression* expression){
+
+void PrintVisitor::Visit(EqualExpression *expression) {
     PrintTabs();
     stream << "EQUAL expression: " << std::endl;
     num_tabs_++;
@@ -205,28 +209,34 @@ void PrintVisitor::Visit(EqualExpression* expression){
     expression->expr2->Accept(this);
     num_tabs_--;
 }
-void PrintVisitor::Visit(NotExpression* expression){
+
+void PrintVisitor::Visit(NotExpression *expression) {
     PrintTabs();
     stream << "NOT expression: " << std::endl;
     num_tabs_++;
     expression->expr->Accept(this);
     num_tabs_--;
 }
-void PrintVisitor::Visit(TrueExpression* expression){
+
+void PrintVisitor::Visit(TrueExpression *expression) {
     PrintTabs();
     stream << "TRUE ";
 }
-void PrintVisitor::Visit(FalseExpression* expression){
+
+void PrintVisitor::Visit(FalseExpression *expression) {
     PrintTabs();
     stream << "FALSE ";
 }
-void PrintVisitor::Visit(ClassDeclarationList* class_declaration_list){
+
+void PrintVisitor::Visit(ClassDeclarationList *class_declaration_list) {
 
 }
-void PrintVisitor::Visit(MethodDeclaration* statement){
+
+void PrintVisitor::Visit(MethodDeclaration *statement) {
 
 }
-void PrintVisitor::Visit(DeclarationList* statement){
+
+void PrintVisitor::Visit(DeclarationList *statement) {
 
 }
 
@@ -239,7 +249,7 @@ void PrintVisitor::Visit(Formal *formal) {
 }
 
 void PrintVisitor::PrintTabs() {
-    for (int i = 0; i < num_tabs_; i++){
+    for (int i = 0; i < num_tabs_; i++) {
         stream << '\t';
     }
 }
@@ -277,7 +287,7 @@ void PrintVisitor::Visit(ThisExpression *expression) {
 
 }
 
-PrintVisitor::PrintVisitor(const std::string &filename): stream(filename) {}
+PrintVisitor::PrintVisitor(const std::string &filename) : stream(filename) {}
 
 void PrintVisitor::Visit(ScopeBlock *statement) {
 
@@ -285,4 +295,9 @@ void PrintVisitor::Visit(ScopeBlock *statement) {
 
 void PrintVisitor::Visit(AllocExpression *expression) {
 
+}
+
+void PrintVisitor::Visit(FieldDeclaration *statement) {
+    stream << "field declaration: '" << statement->var_name << "' of type '" << statement->type.ToString() << "'"
+           << std::endl;
 }

@@ -31,7 +31,6 @@
 #include "Statements/MainClass.h"
 #include "Statements/Statement.h"
 #include "Statements/VarAssignment.h"
-#include "Statements/VarDeclaration.h"
 #include "Statements/MethodDeclaration.h"
 #include "Statements/While.h"
 #include "Statements/StatementList.h"
@@ -46,5 +45,7 @@
 #include "Statements/MethodInvocation.h"
 #include "Statements/ExpressionList.h"
 #include "Statements/ScopeBlock.h"
+#include "Statements/FieldDeclaration.h"
+#include "Statements/LocalVarDeclaration.h"
 
 #endif //DEVANCOMPILER_ELEMENTS_H
