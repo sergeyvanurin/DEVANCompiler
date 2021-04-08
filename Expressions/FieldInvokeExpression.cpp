@@ -18,7 +18,7 @@ void FieldInvokeExpression::Accept(Visitor *visitor) {
 }
 
 Type FieldInvokeExpression::EvalType(ScopeLayer *scope) {
-    STVariable* var = scope->GetCurrentClass()->FindFieldByName(field_name);
+    auto var = scope->GetCurrentClass()->FindFieldByName(field_name);
     if (var == nullptr){
         std::cerr << loc << std::endl;
         throw std::runtime_error("Class " + scope->GetCurrentClass()->GetName() +  " doesn't contain field " + field_name);
