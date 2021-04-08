@@ -196,7 +196,7 @@ field_declaration:
 
 method_declaration:
     "public" type "id" "(" formals ")" "{" statements "}" {$$ = new MethodDeclaration($3, $2, $5, $8, driver.loc);}
-  | "public" type "id" "(" ")" "{" statements "}" {$$ = new MethodDeclaration($3, $2, nullptr, $7, driver.loc);};
+  | "public" type "id" "(" ")" "{" statements "}" {$$ = new MethodDeclaration($3, $2, new FormalsList(driver.loc), $7, driver.loc);};
 
 formals:
     type "id" {$$ = new FormalsList(driver.loc); $$->AddFormal(new Formal($1, $2, driver.loc));}

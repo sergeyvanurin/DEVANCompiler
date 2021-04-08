@@ -23,7 +23,6 @@ public:
     ScopeLayer(ScopeLayer* parent, long long new_offset);
     ScopeLayer();
 
-    void DeclareVariable(const STVariable& symbol);
 
     ScopeLayer* AddChild(ScopeLayer* child);
 
@@ -31,11 +30,13 @@ public:
     ScopeLayer* GetParent() const;
 
     void DeclareClass(const STClass& class_decl);
+    void DeclareLocalVariable(const STVariable& var);
+
+    void DeclareMethod(const std::string& method_name);
 
     bool HasVariableAtLayer(const std::string& var_name) const;
 
     void EnterClass(const STClass* cur_class);
-    void EnterMethod(const STMethod* cur_method);
 
     const STClass* GetCurrentClass() const;
     const STMethod* GetCurrentMethod() const;
@@ -53,7 +54,7 @@ private:
     std::unordered_map<std::string, STVariable> variables_;
     std::unordered_map<std::string, STClass> classes_;
 
-    std::unordered_map<std::string, long long> offset_;
+    std::unordered_map<std::string, long long> offsets_;
     long long current_offset_ = 0;
 
     const STClass* current_class_ = nullptr;

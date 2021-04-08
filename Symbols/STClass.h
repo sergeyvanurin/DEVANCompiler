@@ -21,8 +21,11 @@ public:
 
     explicit STClass(ClassDeclaration *class_);
 
+    Type GetType() const;
+
     std::string base_class_name = "";
 private:
+    Type type;
     std::unordered_map<std::string, STMethod> methods_;
     std::unordered_map<std::string, STVariable> fields_;
 };

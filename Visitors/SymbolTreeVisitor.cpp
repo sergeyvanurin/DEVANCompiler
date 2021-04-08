@@ -89,7 +89,7 @@ void SymbolTreeVisitor::Visit(VarAssignment *statement) {
 
 void SymbolTreeVisitor::Visit(LocalVarDeclaration *var_decl) {
     try {
-        current_layer_->DeclareVariable(STVariable(var_decl));
+        current_layer_->DeclareLocalVariable(STVariable(var_decl));
     } catch (const std::runtime_error &e) {
         std::cerr << var_decl->loc << std::endl;
         throw e;
@@ -162,27 +162,28 @@ void SymbolTreeVisitor::Visit(ClassDeclarationList *class_declaration_list) {
 }
 
 void SymbolTreeVisitor::Visit(MethodDeclaration *statement) {
-    current_layer_->EnterMethod(current_layer_->GetCurrentClass()->FindMethodByName(statement->method_name));
+    NewLevelDown();
+    current_layer_->DeclareMethod(statement->method_name);
+    statement->formals->Accept(this);
+    statement->statements->Accept(this);
+    LevelUp();
 }
 
 void SymbolTreeVisitor::Visit(DeclarationList *statement) {
     for (auto &declare: statement->declarations) {
         if (declare.index() == 0) {
             std::get<FieldDeclaration *>(declare)->Accept(this);
-        } else {
-            std::get<MethodDeclaration *>(declare)->Accept(this);
         }
     }
     for (auto &declare: statement->declarations) {
         if (declare.index() == 1) {
-            std::get<MethodDeclaration *>(declare)->formals->Accept(this);
-            std::get<MethodDeclaration *>(declare)->statements->Accept(this);
+            std::get<MethodDeclaration *>(declare)->Accept(this);
         }
     }
 }
 
 void SymbolTreeVisitor::Visit(Formal *formal) {
-    current_layer_->DeclareVariable(STVariable(formal->name, formal->type));
+    current_layer_->DeclareLocalVariable(STVariable(formal->name, formal->type));
 }
 
 void SymbolTreeVisitor::Visit(FormalsList *formals_list) {
