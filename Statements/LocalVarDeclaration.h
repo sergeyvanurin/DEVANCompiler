@@ -1,5 +1,5 @@
 //
-// Created by arseny on 08.04.2021.
+// Created by deliza on 08.04.2021.
 //
 
 #ifndef DEVANCOMPILER_LOCALVARDECLARATION_H

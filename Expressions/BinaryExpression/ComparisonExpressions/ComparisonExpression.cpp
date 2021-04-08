@@ -1,5 +1,5 @@
 //
-// Created by arseny on 06.04.2021.
+// Created by Sergey Vanurin on 06.04.2021.
 //
 
 #include "ComparisonExpression.h"

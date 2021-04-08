@@ -1,5 +1,5 @@
 //
-// Created by arseny on 07.04.2021.
+// Created by Sergey Vanurin on 07.04.2021.
 //
 
 #ifndef DEVANCOMPILER_ALLOCEXPRESSION_H

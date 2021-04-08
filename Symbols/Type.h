@@ -1,5 +1,5 @@
 //
-// Created by arseny on 06.04.2021.
+// Created by deliza on 06.04.2021.
 //
 
 #ifndef DEVANCOMPILER_TYPE_H

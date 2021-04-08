@@ -1,5 +1,5 @@
 //
-// Created by arseny on 08.04.2021.
+// Created by Sergey Vanurin on 08.04.2021.
 //
 
 #include "FieldDeclaration.h"
