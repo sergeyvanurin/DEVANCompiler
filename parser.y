@@ -259,8 +259,8 @@ expr:
   | expr "%" expr {$$ = new ModExpression($1, $3, driver.loc);}
   | expr "[" expr "]" {$$ = new IndexExpression($1, $3, driver.loc);}
   | expr "." "length" {$$ = new LengthExpression($1, driver.loc);}
-  | "new" simple_type "[" expr "]" { $$ = new AllocExpression(Type($2.type_name, true), driver.loc); }
-  | "new" type_identifier "(" ")" { $$ = new AllocExpression(Type($2), driver.loc); }
+  | "new" simple_type "[" expr "]" { $$ = new AllocExpression(Type($2.type_name, true), $4, driver.loc); }
+  | "new" type_identifier "(" ")" { $$ = new AllocExpression(Type($2), nullptr, driver.loc); }
   | "!" expr {$$ = new NotExpression($2, driver.loc);}
   | "(" expr ")" {$$ = $2;}
   | "id" {$$ = new IdentExpression($1, driver.loc);}

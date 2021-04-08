@@ -1,3 +1,4 @@
+#include <Visitors/ExecuteVisitor.h>
 #include "driver.hpp"
 
 Driver::Driver(): scanner(*this), parser(scanner, *this), trace_parsing(false), trace_scanning(false) {
@@ -25,7 +26,7 @@ void Driver::run() {
 
     std::cout << "Symbol tree built" << std::endl;
 
-    InterpreterVisitor interpreter;
+    ExecuteVisitor interpreter;
     program->Accept(&interpreter);
 }
 

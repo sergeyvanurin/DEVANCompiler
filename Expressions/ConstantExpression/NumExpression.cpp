@@ -4,7 +4,7 @@
 
 #include "NumExpression.h"
 
-NumExpression::NumExpression(int value, yy::location loc): value(value), Expression(loc) {}
+NumExpression::NumExpression(int value, yy::location loc): value_(value), Expression(loc) {}
 
 void NumExpression::Accept(Visitor *visitor) {
     visitor->Visit(this);
@@ -12,9 +12,13 @@ void NumExpression::Accept(Visitor *visitor) {
 }
 
 std::variant<int, std::string> NumExpression::eval() const {
-    return value;
+    return value_;
 }
 
 Type NumExpression::EvalType(ScopeLayer *scope) {
     return Type("int");
+}
+
+int NumExpression::GetValue() const {
+    return value_;
 }

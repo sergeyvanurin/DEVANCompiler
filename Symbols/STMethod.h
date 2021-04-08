@@ -10,12 +10,13 @@
 #include <string>
 #include <vector>
 #include "Type.h"
+#include "Statements/MethodDeclaration.h"
 
 class STMethod : public BaseSymbol {
 public:
     explicit STMethod(MethodDeclaration* method);
     Type return_type;
-
+    Statement* method_body;
     std::vector<STArgument> arguments;
 };
 

@@ -193,7 +193,12 @@ void SymbolTreeVisitor::Visit(FormalsList *formals_list) {
 }
 
 void SymbolTreeVisitor::Visit(Print *statement) {
-    statement->expr->GetType(current_layer_);
+    if (statement->expr->GetType(current_layer_) != Type("int") &&
+        statement->expr->GetType(current_layer_) != Type("bool")) {
+        std::cerr << statement->loc << std::endl;
+        throw std::runtime_error(
+                "Can print only 'int' or 'bool'. not '" + statement->expr->GetType(current_layer_).ToString() + "'");
+    }
 }
 
 void SymbolTreeVisitor::Visit(Return *statement) {

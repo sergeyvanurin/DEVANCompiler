@@ -2,11 +2,12 @@
 // Created by deliza on 11.03.2021.
 //
 
-#include "Statement.h"
-#include <vector>
 #ifndef DEVANCOMPILER_CLASSDECLARATIONLIST_H
 #define DEVANCOMPILER_CLASSDECLARATIONLIST_H
 
+#include "Statement.h"
+#include "ClassDeclaration.h"
+#include <vector>
 
 class ClassDeclarationList : public Statement {
 public:

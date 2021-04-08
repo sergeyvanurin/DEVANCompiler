@@ -3,6 +3,7 @@
 //
 
 #include "ScopeBlock.h"
+#include "Visitors/Visitor.h"
 
 ScopeBlock::ScopeBlock(StatementList *statements, yy::location loc): statements(statements), Statement(loc) {
 

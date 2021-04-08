@@ -12,7 +12,7 @@ STClass::STClass(ClassDeclaration *class_) : type(class_->class_name), base_clas
     for (auto decl : class_->declaration_list->declarations) {
         if (decl.index() == 0) {
             FieldDeclaration *var = std::get<FieldDeclaration *>(decl);
-            fields_.emplace(var->var_name, var);
+            fields.emplace(var->var_name, var);
         } else {
             MethodDeclaration *method = std::get<MethodDeclaration *>(decl);
             methods_.emplace(method->method_name, method);
@@ -23,8 +23,8 @@ STClass::STClass(ClassDeclaration *class_) : type(class_->class_name), base_clas
 }
 
 const STVariable *STClass::FindFieldByName(const std::string &name) const {
-    if (fields_.count(name)) {
-        return &fields_.at(name);
+    if (fields.count(name)) {
+        return &fields.at(name);
     }
     return nullptr;
 }

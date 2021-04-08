@@ -3,6 +3,7 @@
 //
 
 #include "MainClass.h"
+#include "Visitors/Visitor.h"
 
 void MainClass::Accept(Visitor *visitor) {
     visitor->Visit(this);
