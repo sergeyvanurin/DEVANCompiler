@@ -11,6 +11,7 @@
 #include <unordered_map>
 #include "Symbols/STMethod.h"
 #include "Symbols/Type.h"
+#include "Symbols/PhysicalVariable.h"
 
 class MethodFrame {
     MethodFrame(std::shared_ptr<STMethod> function);
