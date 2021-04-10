@@ -261,7 +261,7 @@ void PrintVisitor::Visit(Return *statement) {
 
 }
 
-void PrintVisitor::Visit(FieldInvocExpression *expression) {
+void PrintVisitor::Visit(FieldInvokeExpression *expression) {
 
 }
 

@@ -2,20 +2,21 @@
 // Created by deliza on 04.03.2021.
 //
 
-#include <vector>
-#include "Statement.h"
 
 #ifndef DEVANCOMPILER_METHODDECLARATION_H
 #define DEVANCOMPILER_METHODDECLARATION_H
 
+#include <vector>
+#include <Symbols/Type.h>
+#include "Statement.h"
 
 class MethodDeclaration : public Statement {
 public:
-    MethodDeclaration(const std::string& method_name, FormalsList* formals, StatementList* statements, Scope* scope, yy::location loc);
+    MethodDeclaration(std::string  method_name, Type*  return_type, FormalsList* formals, StatementList* statements, Scope* scope, yy::location loc);
     void Accept(Visitor* visitor) override;
-    // returns void
 
     std::string method_name;
+    Type* return_type;
     FormalsList* formals;
     StatementList* statements;
 };

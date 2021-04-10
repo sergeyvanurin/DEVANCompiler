@@ -13,6 +13,9 @@ public:
     explicit ThisExpression(yy::location loc);
     void Accept(Visitor* visitor) override;
     std::variant<int, std::string> eval() const override;
+
+private:
+    std::string EvalType(ScopeLayer *scope) override;
 };
 
 

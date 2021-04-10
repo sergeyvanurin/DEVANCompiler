@@ -20,7 +20,7 @@ class NotExpression;
 class TrueExpression;
 class FalseExpression;
 class ThisExpression;
-class FieldInvocExpression;
+class FieldInvokeExpression;
 class LengthExpression;
 class Program;
 class MainClass;

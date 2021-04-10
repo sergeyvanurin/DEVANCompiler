@@ -15,3 +15,8 @@ void IndexExpression::Accept(Visitor *visitor) {
     visitor->Visit(this);
 
 }
+
+std::string IndexExpression::EvalType(ScopeLayer *scope) {
+    // TODO check if array
+    return std::string();
+}

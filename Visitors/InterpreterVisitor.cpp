@@ -5,6 +5,7 @@
 #include "InterpreterVisitor.h"
 #include "Elements.h"
 
+
 void InterpreterVisitor::Visit(VarDeclaration *statement) {
     variables[statement->var_name] = 0;
 }
@@ -247,7 +248,7 @@ void InterpreterVisitor::Visit(LengthExpression *expression) {
 
 }
 
-void InterpreterVisitor::Visit(FieldInvocExpression *expression) {
+void InterpreterVisitor::Visit(FieldInvokeExpression *expression) {
 
 }
 

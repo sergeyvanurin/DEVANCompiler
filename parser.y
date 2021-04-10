@@ -11,7 +11,7 @@
 %code requires {
     #include <string>
     #include <iostream>
-    #include "Expressions/Expression.h"
+    /*#include "Expressions/Expression.h"
     #include "Expressions/IdentExpression.h"
     #include "Expressions/AddExpression.h"
     #include "Expressions/MulExpression.h"
@@ -29,7 +29,7 @@
     #include "Expressions/ThisExpression.h"
     #include "Expressions/SubExpression.h"
     #include "Expressions/NumExpression.h"
-    #include "Expressions/FieldInvocExpression.h"
+    #include "Expressions/FieldInvokeExpression.h"
     #include "Expressions/LengthExpression.h"
     #include "Statements/Assert.h"
     #include "Statements/IfElse.h"
@@ -49,7 +49,9 @@
     #include "Statements/Print.h"
     #include "Statements/Return.h"
     #include "Statements/MethodInvocation.h"
-    #include "Statements/ExpressionList.h"
+    #include "Statements/ExpressionList.h"*/
+    #include "Visitors/Elements.h"
+    #include "Symbols/Type.h"
     class Scanner;
     class Driver;
 }
@@ -133,9 +135,13 @@
 %nterm <DeclarationList*> declarations;
 %nterm <std::variant<VarDeclaration*, MethodDeclaration*>> declaration;
 %nterm <FormalsList*> formals;
-%nterm <FieldInvocExpression*> field_invocation;
+%nterm <FieldInvokeExpression*> field_invocation;
 %nterm <MethodInvocation*> method_invocation;
 %nterm <ExpressionList*> exprs;
+%nterm <Type*> type;
+%nterm <Type*> simple_type;
+%nterm <Type*> array_type;
+%nterm <std::string> type_identifier;
 
 %%
 
@@ -175,8 +181,8 @@ statements:
    | statements statement {$1->AddStatement($2); $$ = $1;};
 
 class_declaration:
-    "class" "id" "extends" "id" "{" declarations "}" {$$ = new ClassDeclaration($2, $4, nullptr, driver.loc); $$->AddDeclarations($6);}
-  | "class" "id" "{" declarations "}" {$$ = new ClassDeclaration($2, "", nullptr, driver.loc); $$->AddDeclarations($4);};
+    "class" "id" "extends" "id" "{" declarations "}" {$$ = new ClassDeclaration($2, $4, $6, nullptr, driver.loc);}
+  | "class" "id" "{" declarations "}" {$$ = new ClassDeclaration($2, "", $4, nullptr, driver.loc);};
 
 declarations:
     %empty {$$ = new DeclarationList(nullptr, driver.loc);}
@@ -186,27 +192,30 @@ declaration:
     variable_declaration {$$ = $1;} | method_declaration {$$ = $1;};
 
 method_declaration:
-    "public" type "id" "(" formals ")" "{" statements "}" {$$ = new MethodDeclaration($3, $5, $8, nullptr, driver.loc);}
-  | "public" type "id" "(" ")" "{" statements "}" {$$ = new MethodDeclaration($3, nullptr, $7, nullptr, driver.loc);};
+    "public" type "id" "(" formals ")" "{" statements "}" {$$ = new MethodDeclaration($3, $2, $5, $8, nullptr, driver.loc);}
+  | "public" type "id" "(" ")" "{" statements "}" {$$ = new MethodDeclaration($3, $2, nullptr, $7, nullptr, driver.loc);};
 
 variable_declaration:
-    type "id" ";" {$$ = new VarDeclaration($2, driver.get_scope(), driver.loc);};
+    type "id" ";" {$$ = new VarDeclaration($1, $2, driver.get_scope(), driver.loc);};
 
 formals:
-    type "id" {$$ = new FormalsList(nullptr, driver.loc); $$->AddFormal(new Formal($2, nullptr, driver.loc));}
-   | formals "," type "id" {$1->AddFormal(new Formal($4, nullptr, driver.loc)); $$ = $1;};
+    type "id" {$$ = new FormalsList(nullptr, driver.loc); $$->AddFormal(new Formal($1, $2, nullptr, driver.loc));}
+   | formals "," type "id" {$1->AddFormal(new Formal($3, $4, nullptr, driver.loc)); $$ = $1;};
 
 type:
-    simple_type {} | array_type {};
+    simple_type {$$ = $1;} | array_type {$$ = $1;};
 
 simple_type:
-    "int" {} | "boolean" {} | "void" {} | type_identifier {};
+    "int" {$$ = new Type("int");}
+  | "boolean" {$$ = new Type("bool");}
+  | "void" {$$ = new Type("void");}
+  | type_identifier {$$ = new Type($1);};
 
 array_type:
-    simple_type "[]" {};
+    simple_type "[]" {$$ = $1; $$->is_array = true;};
 
 type_identifier:
-    "id" {};
+    "id" {$$ = $1;};
 
 statement:
     "assert" "(" expr ")" {$$ = new Assert($3, driver.get_scope(), driver.loc);}
@@ -235,7 +244,7 @@ exprs:
   | exprs "," expr {$1->AddExpression($3); $$ = $1;};
 
 field_invocation:
-    "this." "id" {$$ = new FieldInvocExpression($2, driver.loc);};
+    "this." "id" {$$ = new FieldInvokeExpression($2, driver.loc);};
 
 expr:
     expr "&&" expr {$$ = new LogicalAndExpression($1, $3, driver.loc);}

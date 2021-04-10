@@ -1,12 +1,12 @@
 //
 // Created by Sergey Vanurin on 01.03.2021.
 //
-#include "location.hh"
-#include "Visitors/Visitor.h"
-#include <variant>
 #ifndef DEVANCOMPILER_BASEELEMENT_H
 #define DEVANCOMPILER_BASEELEMENT_H
 
+#include "location.hh"
+#include "Visitors/Visitor.h"
+#include <variant>
 
 class BaseElement {
 public:
