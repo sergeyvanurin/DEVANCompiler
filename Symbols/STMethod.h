@@ -8,6 +8,7 @@
 #include "BaseSymbol.h"
 #include "STArgument.h"
 #include <string>
+#include <vector>
 #include "Type.h"
 
 class STMethod : public BaseSymbol {
