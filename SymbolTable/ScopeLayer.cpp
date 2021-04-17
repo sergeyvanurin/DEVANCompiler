@@ -101,7 +101,7 @@ void ScopeLayer::DeclareLocalVariable(const STVariable &var) {
         current_offset_ = 0;
 
     variables_.emplace(var.GetName(), var);
-    std::cout << "Local variable '" << var.GetName() << "' in method '" << current_method_->GetName() << "' of type '"
+    std::cout << "Local variable '" << var.GetName() << "' in method '" << (current_method_ == nullptr ? "main" : current_method_->GetName()) << "' of type '"
               << var.type.ToString() << "' has offset: " << current_offset_ << std::endl;
     offsets_.emplace(var.GetName(), current_offset_);
     current_offset_ += 1;
