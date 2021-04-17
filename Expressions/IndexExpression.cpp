@@ -16,7 +16,15 @@ void IndexExpression::Accept(Visitor *visitor) {
 
 }
 
-std::string IndexExpression::EvalType(ScopeLayer *scope) {
-    // TODO check if array
-    return std::string();
+Type IndexExpression::EvalType(ScopeLayer *scope) {
+    auto type = outer->GetType(scope);
+    if (!type.is_array){
+        std::cerr << loc << std::endl;
+        throw std::runtime_error("You cant indexing of non-array object");
+    }
+    if (inner->GetType(scope) != Type("int")){
+        std::cerr << loc << std::endl;
+        throw std::runtime_error("Index must be int");
+    }
+    return Type(type.type_name);
 }

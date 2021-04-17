@@ -11,10 +11,10 @@
 
 class Formal : public Statement {
 public:
-    explicit Formal(Type* type, const std::string& name, Scope* scope, yy::location loc);
+    explicit Formal(Type type, std::string name, yy::location loc);
     void Accept(Visitor* visitor) override;
     std::string name;
-    Type* type;
+    Type type;
 };
 
 

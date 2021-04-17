@@ -10,7 +10,7 @@ STVariable::STVariable(const std::string &name, Type type) : BaseSymbol(name), t
 
 }
 
-STVariable::STVariable(VarDeclaration *var_decl) : BaseSymbol(var_decl->var_name) {
+STVariable::STVariable(VarDeclaration *var_decl) : BaseSymbol(var_decl->var_name), type(var_decl->type) {
 
 }
 

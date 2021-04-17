@@ -14,7 +14,7 @@ public:
     void Accept(Visitor* visitor) override;
 
 private:
-    std::string EvalType(ScopeLayer *scope) override;
+    Type EvalType(ScopeLayer *scope) override;
 
 public:
     Expression* inner;

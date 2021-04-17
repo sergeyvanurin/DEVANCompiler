@@ -20,45 +20,45 @@
 class ScopeLayer {
 public:
     explicit ScopeLayer(ScopeLayer* parent);
+    ScopeLayer(ScopeLayer* parent, long long new_offset);
     ScopeLayer();
 
-    void DeclareVariable(const STVariable& symbol);
-    void Put(STVariable symbol, std::shared_ptr<Object> value);
-    std::shared_ptr<Object> Get(STVariable symbol);
-
-    bool Has(const BaseSymbol& symbol) const;
 
     ScopeLayer* AddChild(ScopeLayer* child);
-    void AttachParent();
 
     ScopeLayer* GetChild(size_t index);
     ScopeLayer* GetParent() const;
 
     void DeclareClass(const STClass& class_decl);
-    void DeclareMethod(const STMethod& method);
+    void DeclareLocalVariable(const STVariable& var);
+
+    void DeclareMethod(const std::string& method_name);
 
     bool HasVariableAtLayer(const std::string& var_name) const;
 
-    void EnterClass(STClass* cur_class);
+    void EnterClass(const STClass* cur_class);
 
-    STClass* GetCurrentClass() const;
+    const STClass* GetCurrentClass() const;
+    const STMethod* GetCurrentMethod() const;
 
     STClass* GetClassByName(const std::string& class_name);
 
     STVariable* GetVariableByName(const std::string& var_name);
 
-private:
-    std::unordered_map<STVariable, std::shared_ptr<Object>> values_;
+    long long GetOffsetOfVariable(const std::string& var_name) const;
 
-    std::unordered_map<STVariable, size_t> offsets_;
-    std::unordered_map<std::string, STMethod> methods_;
+    long long GetCurrentOffset() const;
+
+private:
+
     std::unordered_map<std::string, STVariable> variables_;
     std::unordered_map<std::string, STClass> classes_;
 
-    STClass* current_class_ = nullptr;
+    std::unordered_map<std::string, long long> offsets_;
+    long long current_offset_ = 0;
 
-    std::vector<BaseSymbol> symbols_;
-    //std::string name_;
+    const STClass* current_class_ = nullptr;
+    const STMethod* current_method_ = nullptr;
 
     ScopeLayer* parent_;
     std::vector<ScopeLayer*> children_;

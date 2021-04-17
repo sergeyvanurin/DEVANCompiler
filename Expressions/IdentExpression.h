@@ -15,7 +15,7 @@ public:
     std::variant<int, std::string> eval() const override;
     std::string var_name;
 private:
-    std::string EvalType(ScopeLayer *scope) override;
+    Type EvalType(ScopeLayer *scope) override;
 };
 
 

@@ -15,9 +15,10 @@ public:
     std::variant<int, std::string> eval() const override;
     void Accept(Visitor* visitor) override;
 
-    std::string EvalType(ScopeLayer *scope) override;
-
     std::string field_name;
+
+private:
+    Type EvalType(ScopeLayer *scope) override;
 };
 
 

@@ -6,7 +6,7 @@
 #include "Elements.h"
 
 
-void InterpreterVisitor::Visit(VarDeclaration *statement) {
+void InterpreterVisitor::Visit(LocalVarDeclaration *statement) {
     variables[statement->var_name] = 0;
 }
 
@@ -189,10 +189,6 @@ void InterpreterVisitor::Visit(IndexExpression *expression) {
 
 }
 
-void InterpreterVisitor::Visit(Scope *scope) {
-
-}
-
 void InterpreterVisitor::Visit(IfElse *statement) {
     statement->expr->Accept(this);
     int expr = local_results.top();
@@ -225,7 +221,7 @@ void InterpreterVisitor::Visit(Print *statement) {
 }
 
 void InterpreterVisitor::Visit(MethodInvocation *statement) {
-
+    local_results.push(0);
 }
 
 void InterpreterVisitor::Visit(ExpressionList *statement) {
@@ -256,7 +252,14 @@ void InterpreterVisitor::Visit(ThisExpression *expression) {
 
 }
 
+void InterpreterVisitor::Visit(ScopeBlock *statement) {
 
+}
 
+void InterpreterVisitor::Visit(AllocExpression *expression) {
+    local_results.push(0);
+}
 
-
+void InterpreterVisitor::Visit(FieldDeclaration *statement) {
+    variables[statement->var_name] = 0;
+}

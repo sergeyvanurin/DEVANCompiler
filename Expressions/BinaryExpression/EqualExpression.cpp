@@ -17,9 +17,10 @@ void EqualExpression::Accept(Visitor *visitor) {
     visitor->Visit(this);
 }
 
-std::string EqualExpression::EvalType(ScopeLayer *scope) {
-    if (expr1->GetType(nullptr) != expr2->GetType(nullptr)) {
+Type EqualExpression::EvalType(ScopeLayer *scope) {
+    if (expr1->GetType(scope) != expr2->GetType(scope)) {
+        std::cerr << loc << std::endl;
         throw std::runtime_error("TypeError: types must be equal");
     }
-    return "bool";
+    return Type("bool");
 }

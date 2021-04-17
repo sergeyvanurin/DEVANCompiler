@@ -129,19 +129,19 @@
 %nterm <StatementList*> statements
 %nterm <Program*> program
 %nterm <MainClass*> main_class;
-%nterm <VarDeclaration*> variable_declaration;
 %nterm <MethodDeclaration*> method_declaration;
-%nterm <VarDeclaration*> local_variable_declaration;
+%nterm <LocalVarDeclaration*> local_variable_declaration;
 %nterm <DeclarationList*> declarations;
-%nterm <std::variant<VarDeclaration*, MethodDeclaration*>> declaration;
+%nterm <std::variant<FieldDeclaration*, MethodDeclaration*>> declaration;
 %nterm <FormalsList*> formals;
 %nterm <FieldInvokeExpression*> field_invocation;
 %nterm <MethodInvocation*> method_invocation;
 %nterm <ExpressionList*> exprs;
-%nterm <Type*> type;
-%nterm <Type*> simple_type;
-%nterm <Type*> array_type;
+%nterm <Type> type;
+%nterm <Type> simple_type;
+%nterm <Type> array_type;
 %nterm <std::string> type_identifier;
+%nterm <FieldDeclaration*> field_declaration;
 
 %%
 
@@ -167,80 +167,80 @@
 %start program;
 
 program:
-    main_class class_declarations {$$ = new Program($1, nullptr, driver.loc); driver.program = $$;};
+    main_class class_declarations {$$ = new Program($1, $2, driver.loc); driver.program = $$;};
 
 class_declarations:
-    %empty {$$ = new ClassDeclarationList(nullptr, driver.loc);}
+    %empty {$$ = new ClassDeclarationList(driver.loc);}
     | class_declarations class_declaration {$1->AddClassDeclaration($2); $$ = $1;};
 
 main_class:
-    "class" "id" "{" "public static void main" "(" ")" "{" statements "}" "}" {$$ = new MainClass($8, nullptr, driver.loc);};
+    "class" "id" "{" "public static void main" "(" ")" "{" statements "}" "}" {$$ = new MainClass($8, driver.loc);};
 
 statements:
-    %empty {driver.add_scope(); $$ = new StatementList(driver.get_scope(), driver.loc);}
+    %empty {$$ = new StatementList(driver.loc);}
    | statements statement {$1->AddStatement($2); $$ = $1;};
 
 class_declaration:
-    "class" "id" "extends" "id" "{" declarations "}" {$$ = new ClassDeclaration($2, $4, $6, nullptr, driver.loc);}
-  | "class" "id" "{" declarations "}" {$$ = new ClassDeclaration($2, "", $4, nullptr, driver.loc);};
+    "class" "id" "extends" "id" "{" declarations "}" {$$ = new ClassDeclaration($2, $4, $6, driver.loc);}
+  | "class" "id" "{" declarations "}" {$$ = new ClassDeclaration($2, "", $4, driver.loc);};
 
 declarations:
-    %empty {$$ = new DeclarationList(nullptr, driver.loc);}
+    %empty {$$ = new DeclarationList(driver.loc);}
    | declarations declaration {$1->AddDeclaration($2); $$ = $1;};
 
 declaration:
-    variable_declaration {$$ = $1;} | method_declaration {$$ = $1;};
+    field_declaration {$$ = $1;} | method_declaration {$$ = $1;};
+
+field_declaration:
+    type "id" ";" {$$ = new FieldDeclaration($1, $2, driver.loc);};
 
 method_declaration:
-    "public" type "id" "(" formals ")" "{" statements "}" {$$ = new MethodDeclaration($3, $2, $5, $8, nullptr, driver.loc);}
-  | "public" type "id" "(" ")" "{" statements "}" {$$ = new MethodDeclaration($3, $2, nullptr, $7, nullptr, driver.loc);};
-
-variable_declaration:
-    type "id" ";" {$$ = new VarDeclaration($1, $2, driver.get_scope(), driver.loc);};
+    "public" type "id" "(" formals ")" "{" statements "}" {$$ = new MethodDeclaration($3, $2, $5, $8, driver.loc);}
+  | "public" type "id" "(" ")" "{" statements "}" {$$ = new MethodDeclaration($3, $2, new FormalsList(driver.loc), $7, driver.loc);};
 
 formals:
-    type "id" {$$ = new FormalsList(nullptr, driver.loc); $$->AddFormal(new Formal($1, $2, nullptr, driver.loc));}
-   | formals "," type "id" {$1->AddFormal(new Formal($3, $4, nullptr, driver.loc)); $$ = $1;};
+    type "id" {$$ = new FormalsList(driver.loc); $$->AddFormal(new Formal($1, $2, driver.loc));}
+   | formals "," type "id" {$1->AddFormal(new Formal($3, $4, driver.loc)); $$ = $1;};
 
 type:
     simple_type {$$ = $1;} | array_type {$$ = $1;};
 
 simple_type:
-    "int" {$$ = new Type("int");}
-  | "boolean" {$$ = new Type("bool");}
-  | "void" {$$ = new Type("void");}
-  | type_identifier {$$ = new Type($1);};
+    "int" {$$ = Type("int");}
+  | "boolean" {$$ = Type("bool");}
+  | "void" {$$ = Type("void");}
+  | type_identifier {$$ = Type($1);};
 
 array_type:
-    simple_type "[]" {$$ = $1; $$->is_array = true;};
+    simple_type "[]" {$$ = $1; $$.is_array = true;};
 
 type_identifier:
     "id" {$$ = $1;};
 
 statement:
-    "assert" "(" expr ")" {$$ = new Assert($3, driver.get_scope(), driver.loc);}
+    "assert" "(" expr ")" {$$ = new Assert($3, driver.loc);}
   | local_variable_declaration {$$ = $1;}
-  | "{" statements "}" {$$ = $2; driver.remove_scope();}
-  | "if" "(" expr ")" statement {$$ = new IfElse($3, $5, nullptr, driver.get_scope(), driver.loc);}     %prec "then"
-  | "if" "(" expr ")" statement "else" statement {$$ = new IfElse($3, $5, $7, driver.get_scope(), driver.loc);}
-  | "while" "(" expr ")" statement {$$ = new While($3, $5, driver.get_scope(), driver.loc);}
-  | "System.out.println" "(" expr ")" ";" {$$ = new Print($3, nullptr, driver.loc);}
-  | expr "=" expr ";" {$$ = new VarAssignment($1, $3, driver.get_scope(), driver.loc);}
-  | "return" expr ";" {$$ = new Return($2, nullptr, driver.loc);}
+  | "{" statements "}" {$$ = new ScopeBlock($2, driver.loc);}
+  | "if" "(" expr ")" statement {$$ = new IfElse($3, $5, nullptr, driver.loc);}     %prec "then"
+  | "if" "(" expr ")" statement "else" statement {$$ = new IfElse($3, $5, $7, driver.loc);}
+  | "while" "(" expr ")" statement {$$ = new While($3, $5, driver.loc);}
+  | "System.out.println" "(" expr ")" ";" {$$ = new Print($3, driver.loc);}
+  | expr "=" expr ";" {$$ = new VarAssignment($1, $3, driver.loc);}
+  | "return" expr ";" {$$ = new Return($2, driver.loc);}
   | method_invocation ";" {$$ = $1;};
 
 local_variable_declaration:
-    variable_declaration {$$ = $1;};
+    type "id" ";" {$$ = new LocalVarDeclaration($1, $2, driver.loc);};
 
 method_invocation:
-    "this." "id" "(" ")" {$$ = new MethodInvocation(nullptr, $2, nullptr, nullptr, driver.loc);}
-  | "this." "id" "(" exprs ")" {$$ = new MethodInvocation(nullptr, $2, $4, nullptr, driver.loc);};
-  | expr "." "id" "(" ")" {$$ = new MethodInvocation($1, $3, nullptr, nullptr, driver.loc);}
-  | expr "." "id" "(" exprs ")" {$$ = new MethodInvocation($1, $3, $5, nullptr, driver.loc);};
+    "this." "id" "(" ")" {$$ = new MethodInvocation(new ThisExpression(driver.loc), $2, nullptr, driver.loc);}
+  | "this." "id" "(" exprs ")" {$$ = new MethodInvocation(new ThisExpression(driver.loc), $2, $4, driver.loc);};
+  | expr "." "id" "(" ")" {$$ = new MethodInvocation($1, $3, nullptr, driver.loc);}
+  | expr "." "id" "(" exprs ")" {$$ = new MethodInvocation($1, $3, $5, driver.loc);};
 
 
 exprs:
-    expr {$$ = new ExpressionList(nullptr, driver.loc); $$->AddExpression($1);}
+    expr {$$ = new ExpressionList(driver.loc); $$->AddExpression($1);}
   | exprs "," expr {$1->AddExpression($3); $$ = $1;};
 
 field_invocation:
@@ -259,8 +259,8 @@ expr:
   | expr "%" expr {$$ = new ModExpression($1, $3, driver.loc);}
   | expr "[" expr "]" {$$ = new IndexExpression($1, $3, driver.loc);}
   | expr "." "length" {$$ = new LengthExpression($1, driver.loc);}
-  | "new" simple_type "[" expr "]" {}
-  | "new" type_identifier "(" ")" {}
+  | "new" simple_type "[" expr "]" { $$ = new AllocExpression(Type($2.type_name, true), driver.loc); }
+  | "new" type_identifier "(" ")" { $$ = new AllocExpression(Type($2), driver.loc); }
   | "!" expr {$$ = new NotExpression($2, driver.loc);}
   | "(" expr ")" {$$ = $2;}
   | "id" {$$ = new IdentExpression($1, driver.loc);}
@@ -273,7 +273,7 @@ expr:
 
 
 %%
-
+// TODO new and { statements }
 void yy::parser::error(const location_type& l, const std::string& m)
 {
   std::cerr << l << ": " << m << "\n";

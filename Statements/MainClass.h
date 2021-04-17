@@ -11,7 +11,7 @@
 
 class MainClass: public Statement {
 public:
-    MainClass(StatementList* statements, Scope* scope, yy::location loc);
+    MainClass(StatementList* statements, yy::location loc);
     void Accept(Visitor* visitor) override;
     StatementList* statements;
 };

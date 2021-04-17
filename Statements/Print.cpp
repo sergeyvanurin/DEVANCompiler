@@ -8,6 +8,6 @@ void Print::Accept(Visitor *visitor) {
     visitor->Visit(this);
 }
 
-Print::Print(Expression *expr, Scope *scope, yy::location loc): expr(expr), Statement(scope, loc) {
+Print::Print(Expression *expr, yy::location loc): expr(expr), Statement(loc) {
 
 }

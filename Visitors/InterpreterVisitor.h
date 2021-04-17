@@ -24,11 +24,10 @@ class InterpreterVisitor: public Visitor {
     void Visit(MulExpression *expression) override;
     void Visit(NumExpression *statement) override;
     void Visit(Program *program) override;
-    void Visit(Scope *scope) override;
     void Visit(StatementList *statements) override;
     void Visit(SubExpression *expression) override;
     void Visit(VarAssignment *statement) override;
-    void Visit(VarDeclaration *statement) override;
+    void Visit(LocalVarDeclaration *statement) override;
     void Visit(While *statement) override;
     void Visit(IndexExpression* expression) override;
     void Visit(LogicalAndExpression* expression) override;
@@ -51,7 +50,13 @@ class InterpreterVisitor: public Visitor {
     void Visit(Return* statement) override;
     void Visit(ExpressionList* statement) override;
     void Visit(MethodInvocation* statement) override;
+    void Visit(ScopeBlock* statement) override;
 
+public:
+    void Visit(FieldDeclaration *statement) override;
+
+public:
+    void Visit(AllocExpression *expression) override;
 
 private:
     std::map<std::string, int> variables;

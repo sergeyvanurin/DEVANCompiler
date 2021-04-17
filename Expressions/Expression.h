@@ -14,16 +14,23 @@ public:
     explicit Expression(yy::location loc): BaseElement(loc) {}
     virtual std::variant<int, std::string> eval() const = 0;
 
-    std::string GetType(ScopeLayer *scope) {
-        if (expr_type_.empty()){
+    Type GetType(ScopeLayer *scope) {
+        if (expr_type_.type_name.empty()){
             expr_type_ = EvalType(scope);
         }
         return expr_type_;
     }
 
+    Type GetType() const {
+        if (expr_type_.type_name.empty()){
+            throw std::runtime_error("Type not evaluated");
+        }
+        return expr_type_;
+    }
+
 private:
-    virtual std::string EvalType(ScopeLayer *scope) = 0;
-    std::string expr_type_;
+    virtual Type EvalType(ScopeLayer *scope) = 0;
+    Type expr_type_;
 };
 
 

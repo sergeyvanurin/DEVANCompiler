@@ -1,14 +1,15 @@
 //
-// Created by arseny on 06.04.2021.
+// Created by Sergey Vanurin on 06.04.2021.
 //
 
 #include "ComparisonExpression.h"
 
-std::string ComparisonExpression::EvalType(ScopeLayer *scope) {
-    if (expr1->GetType(scope) != "int" || expr2->GetType(scope) != "int") {
+Type ComparisonExpression::EvalType(ScopeLayer *scope) {
+    if (expr1->GetType(scope) != Type("int") || expr2->GetType(scope) != Type("int")) {
+        std::cerr << loc << std::endl;
         throw std::runtime_error("TypeError: Cant compare non-int types");
     }
-    return "bool";
+    return Type("bool");
 }
 
 ComparisonExpression::ComparisonExpression(Expression *expr1, Expression *expr2, yy::location loc) : BinaryExpression(

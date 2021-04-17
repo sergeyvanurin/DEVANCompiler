@@ -11,7 +11,7 @@
 
 class VarAssignment: public Statement {
 public:
-    VarAssignment(Expression* var_name, Expression *new_value, Scope *scope, yy::location loc);
+    VarAssignment(Expression* var_name, Expression *new_value, yy::location loc);
     void Accept(Visitor* visitor) override;
     Expression* var_name;
     Expression* new_value;

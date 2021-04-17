@@ -12,7 +12,7 @@
 
 class FormalsList : public Statement {
 public:
-    FormalsList(Scope* Scope, yy::location loc);
+    FormalsList(yy::location loc);
     void AddFormal(Formal* formal);
     void Accept(Visitor* visitor) override;
 

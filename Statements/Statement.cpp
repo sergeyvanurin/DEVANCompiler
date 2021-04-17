@@ -4,6 +4,6 @@
 #include "Statement.h"
 
 
-Statement::Statement(Scope *scope, yy::location loc): scope(scope), BaseElement(loc) {
+Statement::Statement(yy::location loc): BaseElement(loc) {
 
 }

@@ -6,109 +6,73 @@
 
 #include "Objects/Int.h"
 #include <algorithm>
+#include <Statements/MethodDeclaration.h>
+#include "Symbols/STMethod.h"
+#include "Statements/FormalsList.h"
 
+const int THIS_OFFSET = -POINTER_SIZE;
 
-ScopeLayer::ScopeLayer(ScopeLayer* parent): parent_(parent) {
-    std::cout << "Constructor called" << std::endl;
-    std::cout << "End contstructor called" << std::endl;
-
-    parent_->AddChild(this);
+ScopeLayer::ScopeLayer(ScopeLayer *parent) : parent_(parent), offsets_(parent->GetCurrentOffset()) {
+    if (parent_ != nullptr)
+        parent_->AddChild(this);
 }
 
-void ScopeLayer::AttachParent() {
-
+ScopeLayer::ScopeLayer(ScopeLayer *parent, long long int new_offset) : parent_(parent), offsets_(new_offset) {
+    if (parent_ != nullptr)
+        parent->AddChild(this);
 }
 
-ScopeLayer::ScopeLayer(): parent_(nullptr) {}
-
-void ScopeLayer::DeclareVariable(const STVariable& var) {
-    if (variables_.find(var.GetName()) != variables_.end()) {
-        throw std::runtime_error("Variable has been declared");
-    }
-
-    variables_.emplace(var.GetName(), var);
-    values_[var] = std::make_shared<Int>(0);
-    offsets_[var] = symbols_.size();
-    symbols_.push_back(var); // symbols_[offsets_[symbol]] === symbol
-}
-
-void ScopeLayer::Put(STVariable symbol, std::shared_ptr<Object> value) {
-    ScopeLayer* current_layer = this;
-
-    while (!current_layer->Has(symbol) && current_layer->parent_ != nullptr) {
-        current_layer = current_layer->parent_;
-    }
-    if (current_layer->Has(symbol)) {
-        current_layer->values_.find(symbol)->second = value;
-    } else {
-        throw std::runtime_error("Variable not declared");
-    }
-}
-
-bool ScopeLayer::Has(const BaseSymbol& symbol) const {
-    return std::find(symbols_.begin(), symbols_.end(), symbol) != symbols_.end();
-}
+ScopeLayer::ScopeLayer() : parent_(nullptr) {}
 
 
-std::shared_ptr<Object> ScopeLayer::Get(STVariable symbol) {
-    ScopeLayer* current_layer = this;
-
-    while (!current_layer->Has(symbol) && current_layer->parent_ != nullptr) {
-        current_layer = current_layer->parent_;
-    }
-    if (current_layer->Has(symbol)) {
-        return current_layer->values_.find(symbol)->second;
-    } else {
-        throw std::runtime_error("Variable not declared");
-    }
-}
-
-ScopeLayer* ScopeLayer::GetChild(size_t index) {
+ScopeLayer *ScopeLayer::GetChild(size_t index) {
     std::cout << "Children of scope: " << children_.size() << std::endl;
     return children_[index];
 }
 
-ScopeLayer* ScopeLayer::AddChild(ScopeLayer* child) {
+ScopeLayer *ScopeLayer::AddChild(ScopeLayer *child) {
     children_.push_back(child);
     return child;
 }
 
-ScopeLayer* ScopeLayer::GetParent() const {
+ScopeLayer *ScopeLayer::GetParent() const {
     return parent_;
 }
 
-void ScopeLayer::DeclareClass(const STClass& class_decl) {
-    if (classes_.find(class_decl.GetName()) != classes_.end()) {
+void ScopeLayer::DeclareClass(const STClass &class_decl) {
+    if (classes_.count(class_decl.GetName())) {
         throw std::runtime_error("Class has been declared");
     }
 
     classes_.emplace(class_decl.GetName(), class_decl);
+    EnterClass(&classes_.at(class_decl.GetName()));
 }
 
-void ScopeLayer::DeclareMethod(const STMethod& method) {
-    if (classes_.find(method.GetName()) != classes_.end()) {
-        throw std::runtime_error("Method has been declared");
-    }
-
-    methods_.emplace(method.GetName(), method);
-}
-
-bool ScopeLayer::HasVariableAtLayer(const std::string& var_name) const {
+bool ScopeLayer::HasVariableAtLayer(const std::string &var_name) const {
     return variables_.count(var_name);
 }
 
-void ScopeLayer::EnterClass(STClass *cur_class) {
+
+void ScopeLayer::EnterClass(const STClass *cur_class) {
     current_class_ = cur_class;
 }
 
-STClass *ScopeLayer::GetCurrentClass() const {
-    return current_class_;
+const STClass *ScopeLayer::GetCurrentClass() const {
+    if (current_class_ != nullptr) {
+        return current_class_;
+    }
+    if (parent_ != nullptr) {
+        return parent_->GetCurrentClass();
+    }
+    return nullptr;
 }
 
-STClass *ScopeLayer::GetClassByName(const std::string& class_name) {
-    if (!classes_.count(class_name))
+STClass *ScopeLayer::GetClassByName(const std::string &class_name) {
+    if (classes_.count(class_name))
+        return &classes_.at(class_name);
+    if (parent_ == nullptr)
         return nullptr;
-    return &classes_.at(class_name);
+    return parent_->GetClassByName(class_name);
 }
 
 STVariable *ScopeLayer::GetVariableByName(const std::string &var_name) {
@@ -117,4 +81,44 @@ STVariable *ScopeLayer::GetVariableByName(const std::string &var_name) {
     if (parent_ == nullptr)
         return nullptr;
     return parent_->GetVariableByName(var_name);
+}
+
+long long ScopeLayer::GetCurrentOffset() const {
+    return current_offset_;
+}
+
+void ScopeLayer::DeclareMethod(const std::string &method_name) {
+    current_method_ = GetCurrentClass()->FindMethodByName(method_name);
+    current_offset_ = THIS_OFFSET;
+    for (const auto &arg: current_method_->arguments) {
+        current_offset_ -= arg.type.GetSize();
+    }
+}
+
+void ScopeLayer::DeclareLocalVariable(const STVariable &var) {
+    if (variables_.count(var.GetName())) {
+        throw std::runtime_error("Variable '" + var.GetName() + "' has been declared in this scope");
+    }
+    if (current_offset_ == THIS_OFFSET)
+        current_offset_ = 0;
+
+    variables_.emplace(var.GetName(), var);
+    std::cout << "Local variable '" << var.GetName() << "' in method '" << current_method_->GetName() << "' of type '"
+              << var.type.ToString() << "' has offset: " << current_offset_ << std::endl;
+    offsets_.emplace(var.GetName(), current_offset_);
+    current_offset_ += var.type.GetSize();
+}
+
+const STMethod *ScopeLayer::GetCurrentMethod() const {
+    if (current_method_ != nullptr) {
+        return current_method_;
+    }
+    if (parent_ != nullptr) {
+        return parent_->GetCurrentMethod();
+    }
+    return nullptr;
+}
+
+long long ScopeLayer::GetOffsetOfVariable(const std::string &var_name) const {
+    return offsets_.at(var_name);
 }

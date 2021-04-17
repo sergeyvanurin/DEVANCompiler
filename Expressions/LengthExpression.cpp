@@ -17,7 +17,11 @@ std::variant<int, std::string> LengthExpression::eval() const {
     return 0;
 }
 
-std::string LengthExpression::EvalType(ScopeLayer *scope) {
-    // TODO check if array
-    return std::string();
+Type LengthExpression::EvalType(ScopeLayer *scope) {
+    auto type = array_expr->GetType(scope);
+    if (!type.is_array){
+        std::cerr << loc << std::endl;
+        throw std::runtime_error("Only array have length");
+    }
+    return Type("int");
 }

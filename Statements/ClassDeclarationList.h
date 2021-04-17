@@ -10,7 +10,7 @@
 
 class ClassDeclarationList : public Statement {
 public:
-    ClassDeclarationList(Scope *scope, yy::location loc);
+    ClassDeclarationList(yy::location loc);
     void Accept(Visitor* visitor) override;
     void AddClassDeclaration(ClassDeclaration* class_declaration);
 

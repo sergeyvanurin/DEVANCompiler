@@ -8,6 +8,6 @@ void Return::Accept(Visitor *visitor) {
     visitor->Visit(this);
 }
 
-Return::Return(Expression *expr, Scope *scope, yy::location loc): expr(expr), Statement(scope, loc) {
+Return::Return(Expression *expr, yy::location loc): expr(expr), Statement(loc) {
 
 }

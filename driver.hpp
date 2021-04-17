@@ -8,6 +8,7 @@
 #include "parser.hpp"
 #include "Visitors/PrintVisitor.h"
 #include "Visitors/InterpreterVisitor.h"
+#include "Visitors/SymbolTreeVisitor.h"
 
 
 class Driver {
@@ -15,12 +16,6 @@ public:
     Driver();
 
     std::map<std::string, int> variables;
-
-    std::vector<Scope*> scopes;
-    int current_scope = 0;
-    void add_scope();
-    Scope* get_scope();
-    void remove_scope();
 
     int parse(const std::string& filename);
     std::string file;

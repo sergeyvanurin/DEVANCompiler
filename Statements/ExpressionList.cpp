@@ -4,7 +4,7 @@
 
 #include "ExpressionList.h"
 
-ExpressionList::ExpressionList(Scope *scope, yy::location loc) : Statement(scope, loc) {
+ExpressionList::ExpressionList(yy::location loc) : Statement(loc) {
 
 }
 

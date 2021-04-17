@@ -12,10 +12,9 @@
 
 class VarDeclaration: public Statement {
 public:
-    VarDeclaration(Type* type, const std::string& var_name, Scope* scope, yy::location loc);
-    void Accept(Visitor* visitor) override;
+    VarDeclaration(Type type, std::string  var_name, yy::location loc);
     std::string var_name;
-    Type* type;
+    Type type;
 };
 
 
