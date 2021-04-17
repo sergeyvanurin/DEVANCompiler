@@ -30,6 +30,6 @@ public:
 
     Program* program;
     void print_tree(const std::string& filename) const;
-    void run();
+    int run();
 
 };
