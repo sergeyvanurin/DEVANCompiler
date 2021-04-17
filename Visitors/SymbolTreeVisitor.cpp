@@ -70,7 +70,13 @@ void SymbolTreeVisitor::Visit(Program *program) {
 
 void SymbolTreeVisitor::Visit(StatementList *statements) {
     for (Statement *statement : statements->statements) {
-        statement->Accept(this);
+        try {
+            statement->Accept(this);
+        }
+        catch (const std::runtime_error &e) {
+            std::cerr << e.what();
+            throw e;
+        }
     }
 }
 

@@ -20,9 +20,14 @@ void Driver::print_tree(const std::string& filename) const {
     program->Accept(&visitor);
 }
 
-void Driver::run() {
+int Driver::run() {
     SymbolTreeVisitor scope_visitor = SymbolTreeVisitor();
-    scope_visitor.Visit(program);
+    try {
+        scope_visitor.Visit(program);
+    }
+    catch (const std::runtime_error &e) {
+        return 1;
+    }
 
     std::cout << "Symbol tree built" << std::endl;
 
